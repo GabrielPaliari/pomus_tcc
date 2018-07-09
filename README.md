@@ -24,3 +24,13 @@ Realize as migrações iniciais, crie um usuário e inicie o servidor:
 (pomus_tcc) $ python manage.py createsuperuser
 (pomus_tcc) $ python manage.py runserver
 ```
+O aplicativo está utilizando o rest framework e rest-auth para implementar uma autenticação baseada em sessão. Depois do login é necessário armazenar o cookie para manter o usuário conectado ao sistema. 
+Foi utilizado este [guia](https://wsvincent.com/django-rest-framework-user-authentication-tutorial/)
+
+Endpoints
+```
+Login: http://127.0.0.1:8000/api/rest-auth/login/
+Logout: http://127.0.0.1:8000/api/rest-auth/logout/
+Registro: http://127.0.0.1:8000/api/rest-auth/registration/
+Usuários: http://127.0.0.1:8000/api/usuarios/
+```
