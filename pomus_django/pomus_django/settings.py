@@ -143,9 +143,9 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'usuarios.Usuario'
 
-#Permite apenas requisições de usuários logados:
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    )
-}
+# Permite apenas requisições de usuários logados:
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     )
+# }
