@@ -1,7 +1,7 @@
 # pomus_tcc
 Plataforma para auxiliar os alunos da escola politécnica a compartilharem conteúdo de estudo das disciplinas de graduação. Trabalho de TCC de Victor Funabashi e Gabriel Paliari Zanoni.
 
-#Primeiro setup
+## Primeiro setup
 
 Tenha certeza de que o Python 3.6.x e pipenv já estão instalados
 Clone o repositório e configure o ambiente virtual:
