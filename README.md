@@ -46,5 +46,5 @@ Para iniciar a interface basta utilizar o comando:
 npm start
 ```
 
-Foi usado o tema [Material Kit React](https://demos.creative-tim.com/material-kit-react/?&_ga=2.155633340.644274421.1531353904-451048210.1528598066#/) para implementar a interface. Este tema consiste em uma série de componentes já implementados, utilizando o React e a biblioteca [Material UI](https://material-ui.com/). 
+Foi usado o tema [Material Kit React](https://demos.creative-tim.com/material-kit-react/?&_ga=2.155633340.644274421.1531353904-451048210.1528598066#/) para implementar a interface. Este tema consiste em uma série de componentes já implementados, utilizando o React e a biblioteca [Material UI](https://material-ui.com/). Uma documentação detalhada dos componentes do tema pode ser encontrada no seguinte link: [documentação Material Kit](https://demos.creative-tim.com/material-kit-react/?&_ga=2.155633340.644274421.1531353904-451048210.1528598066#/documentation/tabs)
 
