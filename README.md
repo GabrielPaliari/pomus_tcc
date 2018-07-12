@@ -3,6 +3,7 @@ Plataforma para auxiliar os alunos da escola politécnica a compartilharem conte
 
 ## Primeiro setup
 
+### Django
 Tenha certeza de que o Python 3.6.x e pipenv já estão instalados
 Clone o repositório e configure o ambiente virtual:
 ```$ git clone https://github.com/GabrielPaliari/pomus_tcc.git
@@ -10,8 +11,6 @@ $ cd pomus_tcc
 $ pipenv install
 $ pipenv shell
 ```
-
-
 
 Certifique-se de que o mysql client está instalado.
 Se não estiver, rode o comando: `pip install mysqlclient`
@@ -34,3 +33,18 @@ Logout: http://127.0.0.1:8000/api/rest-auth/logout/
 Registro: http://127.0.0.1:8000/api/rest-auth/registration/
 Usuários: http://127.0.0.1:8000/api/usuarios/
 ```
+
+### React
+
+Para fazer o setup do react, certifique-se de que o [nodejs](https://nodejs.org/en/) está instalado na máquina, entre na pasta frontend e execute o comando para instalar as dependências.   
+```
+cd frontend
+npm install
+```
+Para iniciar a interface basta utilizar o comando:
+```
+npm start
+```
+
+Foi usado o tema [Material Kit React](https://demos.creative-tim.com/material-kit-react/?&_ga=2.155633340.644274421.1531353904-451048210.1528598066#/) para implementar a interface. Este tema consiste em uma série de componentes já implementados, utilizando o React e a biblioteca [Material UI](https://material-ui.com/). 
+
