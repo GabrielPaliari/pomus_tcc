@@ -1,0 +1,63 @@
+/*! =========================================================
+ *
+ * Material Kit React v1.0.0 based on Material Kit Free - v2.0.2 (Bootstrap 4.0.0 Final Edition)
+ *
+ * =========================================================
+ *
+ * Product Page: https://www.creative-tim.com/product/material-kit-pro
+ * Available with purchase of license from https://www.creative-tim.com/product/material-kit-pro
+ * Copyright 2018 Creative Tim (https://www.creative-tim.com)
+ * License Creative Tim (https://www.creative-tim.com/license)
+ *
+ * ========================================================= */
+
+@import "core/variables/colors";
+
+//paleta gerada em: https://coolors.co/34e1fc-32fc9b-21ea6e-21c679-315f55
+$blueLight:   #34E1FC;
+$aquaLight:   #32FC9B;
+$greenLight:  #21EA6E;
+$greenMedium: #21C679;
+$greenDark:   #315F55;
+
+button.EditButton {
+  margin-right: 15px;
+}
+div.DiscContainer {
+  max-width: 70%;
+  margin: 20px auto;
+}
+button.AddButton {
+  margin: 20px 0 0 auto;
+  background-color: $greenLight;
+  &:hover {
+    background-color: $greenMedium;
+  }
+}
+div.ListItem {
+  padding-right: 40px; 
+}
+.DiscList {
+  max-height: 300px;
+  overflow: auto;
+}
+.ClickContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+  margin-right: auto;
+} 
+hr.TopDivider {
+  margin-bottom: 3px;
+}
+hr.BottomDivider {
+  margin-top: 3px;
+}
+header.Header-absolute-13 {
+  background-color: $greenDark;
+  color: white;
+}
+div.IconAvatar {
+  background-color: $greenDark;
+}

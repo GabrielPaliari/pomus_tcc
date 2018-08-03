@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'rest_auth.registration',
-    'django.contrib.sites'
+    'django.contrib.sites',
+    'corsheaders'
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'pomus_django.urls'
@@ -150,3 +152,12 @@ AUTH_USER_MODEL = 'usuarios.Usuario'
 #         'rest_framework.permissions.IsAuthenticated',
 #     )
 # }
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:3030',
+# )
+# CORS_ORIGIN_REGEX_WHITELIST = (
+#     'localhost:3030',
+# )

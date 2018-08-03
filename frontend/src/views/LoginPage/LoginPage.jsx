@@ -5,10 +5,10 @@ import InputAdornment from "material-ui/Input/InputAdornment";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
 import LockOutline from "@material-ui/icons/LockOutline";
-import People from "@material-ui/icons/People";
+// import People from "@material-ui/icons/People";
 // core components
 import Header from "components/Header/Header.jsx";
-import HeaderLinks from "components/Header/HeaderLinks.jsx";
+// import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -145,7 +145,7 @@ class LoginPage extends React.Component {
                       <Button simple color="success" size="lg">
                         Registre-se
                       </Button>
-                      <Button type="submit" color="success" size="lg">
+                      <Button href="disciplinas" type="submit" color="success" size="lg">
                         Entrar
                       </Button>
                     </CardFooter>

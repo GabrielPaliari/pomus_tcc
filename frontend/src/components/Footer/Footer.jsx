@@ -16,23 +16,23 @@ function Footer({ ...props }) {
     [classes.footer]: true,
     [classes.footerWhiteFont]: whiteFont
   });
-  const aClasses = classNames({
-    [classes.a]: true,
-    [classes.footerWhiteFont]: whiteFont
-  });
+  // const aClasses = classNames({
+  //   [classes.a]: true,
+  //   [classes.footerWhiteFont]: whiteFont 
+  // });
   return (
     <footer className={footerClasses}>
       <div className={classes.container}>
         <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
-              <a href="#" className={classes.block}>
+              <a href="" className={classes.block}>
                 projeto
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a
-                href="#"
+                href=""
                 className={classes.block}
               >
                 Sobre Nós
