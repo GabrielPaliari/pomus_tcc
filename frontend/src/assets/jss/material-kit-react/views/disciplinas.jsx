@@ -8,7 +8,7 @@ import { greenDark } from "assets/jss/material-kit-react.jsx";
 const disciplinasStyle = {
   container: {
     ...container,
-    zIndex: "2",
+    zIndex: "2", 
     position: "relative",
     paddingTop: "10vh",
     height: "100vh",
@@ -36,7 +36,7 @@ const disciplinasStyle = {
       left: "0",
       top: "0",
       content: '""',
-      backgroundColor: aquaLight,
+      backgroundColor: greenDark,
     }
   },
   form: {
@@ -73,7 +73,7 @@ const disciplinasStyle = {
     height: "20px",    
   },
   navBarGreen: {
-    backgroundColor: greenDark,
+    backgroundColor: "#CCCCCC",
   }
 };
 

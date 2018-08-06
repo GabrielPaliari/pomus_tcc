@@ -1,7 +1,6 @@
 import React from "react";
 import withStyles from "material-ui/styles/withStyles";
 
-import Header from "components/Header/Header.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 
 import ListaDisciplinas from "views/Disciplinas/ListaDisciplinas.jsx";
@@ -10,11 +9,8 @@ import disciplinasStyle from "assets/jss/material-kit-react/views/disciplinas.js
 
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-
 import Divider from '@material-ui/core/Divider';
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import IconButton from "components/CustomButtons/IconButton.jsx";
-import Search from "@material-ui/icons/Search";
+
 import AddModal from "views/Disciplinas/AddModal.jsx";
 import DetailsModal from "views/Disciplinas/DetailsModal.jsx";
 import EditModal from "views/Disciplinas/EditModal.jsx";
@@ -176,9 +172,7 @@ class Disciplinas extends React.Component {
           for (let i = 0; i < disciplinas.length; i++) {
             if (disciplinas[i]["id"] === disciplina["id"]) {
               disciplinas[i] = disciplina;
-              this.setState(prevState => ({
-                disciplinas
-              }))
+              this.setState({disciplinas});
             } 
           }
           this.handleClose();
@@ -254,60 +248,26 @@ class Disciplinas extends React.Component {
 
 
   componentDidMount() {
-    this.fetchDisc();
+    //this.fetchDisc();
   }
 
-  render() {
-    const { classes, ...rest } = this.props;          
+  render() {      
     return (
-      <div>
-        <Header
-          className="navBarGreen"
-          absolute
-          brand="Pomus"
-          {...rest}
-          rightLinks={
-            <div>              
-              <CustomInput
-                white
-                inputRootCustomClasses={classes.inputRootCustomClasses}
-                formControlProps={{
-                  className: classes.formControl
-                }}
-                inputProps={{
-                  placeholder: "Buscar",
-                  inputProps: {
-                    "aria-label": "Buscar",
-                    className: classes.searchInput
-                  }
-                }}
-              />
-              <IconButton color="white">
-                <Search className={classes.searchIcon} />
-              </IconButton>
-            </div>
-          }
-        />
-        <div
-          className={classes.pageHeader}
-        >
-          <div className={classes.container}>
-            <GridContainer direction="column" className="DiscContainer">                  
-              <h2>Disciplinas</h2>  
-              <Divider className="TopDivider"/>  
-              <ListaDisciplinas 
-                disciplinas={this.state.disciplinas} 
-                deleteDisc={this.deleteDisc}
-                showDetails={this.showDetails}
-                openEdit={this.openEdit}/>
-              <Divider className="BottomDivider"/>
-              <Button variant="fab" mini aria-label="Adicionar" className="AddButton"
-                      onClick={this.handleOpen}>
-                <AddIcon />
-              </Button> 
-            </GridContainer>
-          </div>
-        </div>                
+      <div>        
+        <GridContainer direction="column" className="DiscContainer">                  
+          <h2>Disciplinas</h2>  
+          <Divider className="TopDivider"/>  
+          <ListaDisciplinas 
+            disciplinas={this.state.disciplinas} 
+            deleteDisc={this.deleteDisc}
+            showDetails={this.showDetails}
+            openEdit={this.openEdit}/>
+          <Divider className="BottomDivider"/>
+          <Button variant="fab" mini aria-label="Adicionar" className="AddButton"
+                  onClick={this.handleOpen}>
+            <AddIcon />
+          </Button> 
+        </GridContainer>                            
         <DetailsModal 
           selectedDisc={this.state.selectedDisc} 
           detailsOpen={this.state.detailsOpen}
