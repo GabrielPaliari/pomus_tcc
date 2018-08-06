@@ -159,7 +159,7 @@ class AutoComplete extends React.Component {
           <Select
             classes={classes}
             options={this.props.disciplinas.map(disc => ({
-              value: disc.url,
+              value: disc.id,
               label: disc.codigo,
             }))}
             components={components}
