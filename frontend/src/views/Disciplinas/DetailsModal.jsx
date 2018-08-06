@@ -57,7 +57,7 @@ class DetailsModal extends React.Component {
       if (preReq.length === 0 && preReqUrls.length !== 0) {
         for (let i = 0; i < preReqUrls.length; i++) {
           for (let k = 0; k < disciplinas.length; k++) {
-            if (disciplinas[k]["url"] === preReqUrls[i]) {
+            if (disciplinas[k]["id"] === preReqUrls[i]) {
               preReq.push(disciplinas[k].codigo);
             }        
           }                               

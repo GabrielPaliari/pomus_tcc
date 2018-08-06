@@ -106,7 +106,7 @@ class LoginPage extends React.Component {
                   <form className={classes.form} onSubmit={this.handleFormSubmit}>
                     <CardHeader color="success" className={classes.cardHeader}>
                       <h4>Pomus</h4>
-                      <div className={classes.socialLine}>
+                      {/* <div className={classes.socialLine}>
                         <IconButton
                           href="#pablo"
                           target="_blank"
@@ -139,7 +139,7 @@ class LoginPage extends React.Component {
                             }
                           />
                         </IconButton>
-                      </div>
+                      </div> */}
                     </CardHeader>                                        
                     <p className={classes.divider}>Login</p>
                     <CardBody>                      
@@ -153,6 +153,7 @@ class LoginPage extends React.Component {
                     />
                     <TextField
                       name="password"
+                      type="password"
                       label="Senha"
                       placeholder="Senha"
                       margin="normal"

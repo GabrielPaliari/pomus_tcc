@@ -155,8 +155,9 @@ class Disciplinas extends React.Component {
       for (let i = 0; i < preReq.length; i++) {
         preRequisitos.push(preReq[i].value);
       };
-      disciplina.preRequisitos = preRequisitos;   
-      fetch(disciplina.url, {
+      disciplina.preRequisitos = preRequisitos;  
+      let url = API + DISC_QUERY + disciplina.id +"/"; 
+      fetch(url, {
         method: 'put',
         body: JSON.stringify(disciplina),
         headers:{
@@ -225,9 +226,9 @@ class Disciplinas extends React.Component {
     if (preReqUrls.length > 0) {
       for (let i = 0; i < preReqUrls.length; i++) {
         for (let k = 0; k < disciplinas.length; k++) {
-          if (disciplinas[k]["url"] === preReqUrls[i]) {
+          if (disciplinas[k]["id"] === preReqUrls[i]) {
             let option = {
-              value: disciplinas[k]["url"], 
+              value: disciplinas[k]["id"], 
               label: disciplinas[k]["codigo"]
             }
             this.setState(prevState => ({
@@ -248,7 +249,7 @@ class Disciplinas extends React.Component {
 
 
   componentDidMount() {
-    //this.fetchDisc();
+    this.fetchDisc();
   }
 
   render() {      
