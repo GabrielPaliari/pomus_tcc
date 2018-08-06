@@ -106,40 +106,6 @@ class LoginPage extends React.Component {
                   <form className={classes.form} onSubmit={this.handleFormSubmit}>
                     <CardHeader color="success" className={classes.cardHeader}>
                       <h4>Pomus</h4>
-                      <div className={classes.socialLine}>
-                        <IconButton
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i
-                            className={classes.socialIcons + " fab fa-twitter"}
-                          />
-                        </IconButton>
-                        <IconButton
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i
-                            className={classes.socialIcons + " fab fa-facebook"}
-                          />
-                        </IconButton>
-                        <IconButton
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i
-                            className={
-                              classes.socialIcons + " fab fa-google-plus-g"
-                            }
-                          />
-                        </IconButton>
-                      </div>
                     </CardHeader>                                        
                     <p className={classes.divider}>Login</p>
                     <CardBody>                      
@@ -148,6 +114,9 @@ class LoginPage extends React.Component {
                       label="Usuário"
                       placeholder="Usuário"
                       margin="normal"
+                      inputProps={{
+                        maxLength: 150,
+                      }}
                       className={classes.textField} 
                       onChange={this.handleInputChange}
                     />
@@ -156,9 +125,14 @@ class LoginPage extends React.Component {
                       label="Senha"
                       placeholder="Senha"
                       margin="normal"
+                      type="password"
+                      inputProps={{
+                        maxLength: 150,
+                      }}
                       className={classes.textField} 
                       onChange={this.handleInputChange} 
-                    />
+                    >
+                    </TextField>
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button simple color="success" size="lg">
