@@ -104,6 +104,12 @@ const headerStyle = {
     boxShadow:
       "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 12px -5px rgba(233, 30, 99, 0.46)"
   },
+  navbarColor: {
+    backgroundColor: "#21C679",
+    color: "#FFFFFF",
+    boxShadow:
+      "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 12px -5px rgba(0, 0, 0, 0.46)"
+  },
   transparent: {
     backgroundColor: "transparent !important",
     boxShadow: "none",
@@ -145,6 +151,7 @@ const headerStyle = {
     textAlign: "left",
     paddingRight: "0px",
     paddingLeft: "0",
+    backgroundColor: "#21C679",
     ...transition
     // "&:before,&:after": {
     //   position: "absolute",

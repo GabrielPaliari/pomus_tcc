@@ -13,23 +13,38 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   paper: {
-    margin: '20px auto',    
-    width: 800,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
+    padding: theme.spacing.unit * 1,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
   },
-  bigField: {
-    width: 420
+  root: {
+    flexGrow: 1,
+    margin: "30px auto",
+    padding: 40,
+    maxWidth: "900px",  
+  },
+  field: {
+    padding: theme.spacing.unit * 1,
   },
   container: {
-    paddingLeft: 20,
-    maxHeight: "75vh",
-    overflow: "auto"
+    padding: 20,
+    marginTop: 20,
+    maxHeight: "70vh",    
+    overflow: "auto",
   },
+  title: {
+    padding: theme.spacing.unit * 1,
+    textAlign: 'center',
+    fontSize: '0.9em',        
+  },
+  group: {
+    alignItens: "center",
+  }, 
   createButton: {
     marginLeft: 260,
   },
@@ -74,46 +89,77 @@ class DetailsModal extends React.Component {
             onClose={this.props.handleClose}
           >
           
-            <div className={classes.paper}>
+            <Paper className={classes.root}>
+              
               <h2 variant="title" id="modal-title">
-                {selectedDisc.codigo}
+                {selectedDisc.codigo + " - " + selectedDisc.nome }
               </h2>                                      
-              <Divider />
-              <div className={classes.container}>
-              <Table className={classes.table}>
-                <TableHead >
-                  <TableRow>
-                    <TableCell className={classes.thead}>Coluna</TableCell>
-                    <TableCell className={classes.thead}>Valor</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {keys.map(key => {
-                    if (key !== "preRequisitos") {
-                      return (
-                        <TableRow key={key}>
-                          <TableCell component="th" scope="row">
-                            <b>{key}</b>
-                          </TableCell>
-                          <TableCell>{selectedDisc[key]}</TableCell>
-                          </TableRow>
-                      );                      
-                    } else {
-                      return (
-                        <TableRow key={key}>
-                          <TableCell component="th" scope="row">
-                            <b>{key}</b>
-                          </TableCell>
-                          <TableCell>{preReq.join(", ")}</TableCell>
-                          </TableRow>
-                      ); 
-                    }
-                  })}
-                </TableBody>
-              </Table>           
-              </div>
+              <Divider />              
+              <Grid className={classes.container} container spacing={24}>
+                {/* Créditos: */}
+                <Grid item container className={classes.group} spacing={24}>
+                  <Grid item xs={6} sm={3}>                  
+                    <h6 className={classes.title}>Créditos Aula:</h6>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>                  
+                    <Paper className={classes.paper}>{selectedDisc.creditosA}</Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>                  
+                    <h6 className={classes.title}>Créditos Trabalho:</h6>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>                  
+                    <Paper className={classes.paper}>{selectedDisc.creditosT}</Paper>
+                  </Grid>
+                </Grid>
+                {/* Data: */}
+                <Grid item container className={classes.group} spacing={24}>
+                  <Grid item xs={6} sm={3}>                  
+                    <h6 className={classes.title}>Data de Início:</h6>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>                  
+                    <Paper className={classes.paper}>{selectedDisc.dataIni}</Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>                  
+                    <h6 className={classes.title}>Data de Término</h6>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>                  
+                    <Paper className={classes.paper}>{selectedDisc.dataFim}</Paper>
+                  </Grid>
+                </Grid>
+                {/* Descrição: 
+                <Grid item container className={classes.group}>
+                  <Grid item xs={4} sm={2}>                  
+                    <h6 className={classes.title}>Descrição:</h6>
+                  </Grid>
+                  <Grid item xs={12} sm={10}>                  
+                    <Paper className={classes.field}>{selectedDisc.descricao}</Paper>
+                  </Grid>
+                </Grid>*/}
+                {/* Objetivos: */}
+                <Grid item container className={classes.group}>
+                  <Grid item xs={4} sm={2}>                  
+                    <h6 className={classes.title}>Objetivos:</h6>
+                  </Grid>
+                  <Grid item xs={12} sm={10}>                  
+                    <Paper className={classes.field}>
+                      {selectedDisc.objetivos ? selectedDisc.objetivos : "-"}
+                    </Paper>
+                  </Grid>
+                </Grid>
+                {/* Programa: */}
+                <Grid item container className={classes.group}>
+                  <Grid item xs={4} sm={2}>                  
+                    <h6 className={classes.title}>Programa:</h6>
+                  </Grid>
+                  <Grid item xs={12} sm={10}>                  
+                    <Paper className={classes.field}>
+                      {selectedDisc.programa ? selectedDisc.programa : "-"}
+                    </Paper>
+                  </Grid>
+                </Grid>                
+              </Grid>                   
               <DetailsModalWrapped />
-            </div>
+            </Paper>
           </Modal>
           </MuiThemeProvider>
         </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AuthService from 'views/Components/AuthService';
 import withAuth from 'views/Components/withAuth';
 import Disciplinas from "views/Disciplinas/Disciplinas.jsx";
+import UsuarioDisciplinas from "views/UsuarioDisciplinas/UsuarioDisciplinas.jsx";
 
 
 import Header from "components/Header/Header.jsx";
@@ -30,16 +31,24 @@ class App extends Component {
     Auth.logout()
     this.props.history.replace('/login');
   }
+  
   render() {                
-    const { classes, ...rest } = this.props;  
+    const { classes, user, ...rest} = this.props;  
+    let disciplinasDiv;
+    console.log(user);
+    if (user.is_superuser) {      
+      disciplinasDiv = <Disciplinas user={user}/>
+    } else {
+      disciplinasDiv = <UsuarioDisciplinas user={user}/>
+    }  
     return (
       <div className="App">
         <MuiThemeProvider theme={appTheme}>
         <div>
           <Header
-            color="success"
+            color="info"
             absolute
-            brand={"Pomus - Usuário: " + this.props.user.user_id}
+            brand={"Pomus - " + user.name + ", Cultive o conhecimento"}
             {...rest}
             rightLinks={
               <div>              
@@ -69,7 +78,7 @@ class App extends Component {
           />
           <div className={classes.pageHeader}>
             <div className={classes.container}>
-              <Disciplinas userId={this.props.user.user_id}/>
+              {disciplinasDiv}                          
             </div>
           </div>
         </div>

@@ -14,6 +14,7 @@
 @import "core/variables/colors";
 
 //paleta gerada em: https://coolors.co/34e1fc-32fc9b-21ea6e-21c679-315f55
+//https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=00796B&secondary.color=A7FFEB 
 $blueLight:   #34E1FC;
 $aquaLight:   #32FC9B;
 $greenLight:  #21EA6E;
@@ -55,5 +56,8 @@ hr.BottomDivider {
   margin-top: 3px;
 }
 div.IconAvatar {
+  background-color: $greenDark;
+}
+#headerbar {
   background-color: $greenDark;
 }

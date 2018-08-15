@@ -1,8 +1,8 @@
-from rest_framework import generics
+from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Usuario
+from .serializers import UsuarioSerializer
 
-from . import models
-from . import serializers
-
-class UsuarioListView(generics.ListCreateAPIView):
-    queryset = models.Usuario.objects.all()
-    serializer_class = serializers.UsuarioSerializer
+class UsuarioView(viewsets.ModelViewSet):
+  queryset = Usuario.objects.all()
+  serializer_class = UsuarioSerializer

@@ -3,6 +3,10 @@ import AuthService from './AuthService';
 
 export default function withAuth(AuthComponent) {
   const Auth = new AuthService('http://localhost:8000/api/');
+  const API = 'http://localhost:8000/api/';
+  const DISC_QUERY = 'disciplinas/';
+  const USER_QUERY = 'usuarios/';
+
 
   return class AuthWrapped extends Component {
     constructor() {
@@ -19,10 +23,12 @@ export default function withAuth(AuthComponent) {
       else {
           try {
               const profile = Auth.getProfile();
-              // console.log(profile);
-              this.setState({
-                  user: profile
-              })
+              console.log(profile);              
+                fetch(API + USER_QUERY + profile.user_id + "/")
+                  .then(response => response.json())
+                  .then(data => {
+                    this.setState({ user: data })
+                  });              
           }
           catch(err){
               Auth.logout()
