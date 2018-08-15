@@ -69,12 +69,10 @@ class App extends Component {
                 <IconButton color="white">
                   <Search className={classes.searchIcon} />
                 </IconButton>
-                <div name="logoff" className="headerNavigation">
-                  <IconButton color="white" onClick={this.handleLogout.bind(this)}>
-                    <ExitIcon />
-                  </IconButton>
-                  Sair
-                </div>
+                <IconButton color="white" onClick={this.handleLogout.bind(this)}>
+                  <ExitIcon />
+                </IconButton>
+                Sair
 
               </div>
             }
