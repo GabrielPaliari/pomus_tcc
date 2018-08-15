@@ -52,7 +52,7 @@ class App extends Component {
             {...rest}
             rightLinks={
               <div>              
-                <CustomInput
+                {/* <CustomInput
                   white
                   inputRootCustomClasses={classes.inputRootCustomClasses}
                   formControlProps={{
@@ -65,13 +65,16 @@ class App extends Component {
                       className: classes.searchInput
                     }
                   }}
-                />
+                /> */}
                 <IconButton color="white">
                   <Search className={classes.searchIcon} />
                 </IconButton>
-                <IconButton color="white" onClick={this.handleLogout.bind(this)}>
-                  <ExitIcon />
-                </IconButton>
+                <div name="logoff" className="headerNavigation">
+                  <IconButton color="white" onClick={this.handleLogout.bind(this)}>
+                    <ExitIcon />
+                  </IconButton>
+                  Sair
+                </div>
 
               </div>
             }

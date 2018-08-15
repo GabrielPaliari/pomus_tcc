@@ -61,7 +61,10 @@ class AddModal extends React.Component {
               name="codigo"
               label="Código da Disciplina"
               placeholder="ex.: MAT2454"
-              margin="normal"  
+              margin="normal"
+              inputProps={{
+                maxLength: 7,
+              }}  
               className={classes.textField}     
               //value={this.props.newDisc.codigo}       
               onChange={this.props.handleInputChange}
@@ -72,6 +75,9 @@ class AddModal extends React.Component {
               label="Nome"
               placeholder="ex.: Cálculo"
               margin="normal"
+              inputProps={{
+                maxLength: 70,
+              }}
               className={classes.textField} 
               //value={this.props.newDisc.nome}
               onChange={this.props.handleInputChange}
@@ -81,6 +87,9 @@ class AddModal extends React.Component {
               name="descricao"
               label="Descrição"
               placeholder="Máx.: 400 caracteres"
+              inputProps={{
+                maxLength: 400,
+              }}
               margin="normal"
               multiline
               rowsMax="3"
@@ -131,6 +140,9 @@ class AddModal extends React.Component {
               label="Objetivos"
               placeholder="Máx.: 500 caracteres"
               margin="normal"
+              inputProps={{
+                maxLength: 400,
+              }}
               multiline
               rowsMax="3"
               className={classes.bigField} 
@@ -142,6 +154,9 @@ class AddModal extends React.Component {
               label="Programa"
               placeholder="Máx.: 1000 caracteres"
               margin="normal"
+              inputProps={{
+                maxLength: 600,
+              }}
               multiline
               rowsMax="3"
               className={classes.bigField} 

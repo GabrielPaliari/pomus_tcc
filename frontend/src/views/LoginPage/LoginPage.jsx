@@ -148,6 +148,9 @@ class LoginPage extends React.Component {
                       label="Usuário"
                       placeholder="Usuário"
                       margin="normal"
+                      inputProps={{
+                        maxLength: 150,
+                      }}
                       className={classes.textField} 
                       onChange={this.handleInputChange}
                     />
@@ -157,9 +160,14 @@ class LoginPage extends React.Component {
                       label="Senha"
                       placeholder="Senha"
                       margin="normal"
+                      type="password"
+                      inputProps={{
+                        maxLength: 150,
+                      }}
                       className={classes.textField} 
                       onChange={this.handleInputChange} 
-                    />
+                    >
+                    </TextField>
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button simple color="success" size="lg">
