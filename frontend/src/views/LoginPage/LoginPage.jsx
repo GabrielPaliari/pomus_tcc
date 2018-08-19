@@ -38,7 +38,8 @@ class LoginPage extends React.Component {
     this.state = {
       cardAnimaton: "cardHidden",
       username: "",
-      password:"",
+      password: "",
+      erro: false,
     };    
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -61,14 +62,14 @@ class LoginPage extends React.Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
-   
+
     this.Auth.login(this.state.username,this.state.password)
     .then(res =>{
        this.props.history.replace('/');
     })
     .catch(err =>{
-        alert(err);
-    })
+      this.setState({erro: true});
+    });
   }
 
   handleInputChange = (event) => {
@@ -76,6 +77,14 @@ class LoginPage extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     this.setState({[name]: value});    
+  }
+
+  showError() {
+    if(this.state.erro) {
+      return (<div className="alert-danger alert-login" name="erroLogin">
+                Usuário ou senha inválidos
+              </div>);
+    }
   }
   
 
@@ -105,69 +114,37 @@ class LoginPage extends React.Component {
                 <Card className={classes[this.state.cardAnimaton]}>
                   <form className={classes.form} onSubmit={this.handleFormSubmit}>
                     <CardHeader color="success" className={classes.cardHeader}>
-                      <h4>Pomus</h4>
-                      {/* <div className={classes.socialLine}>
-                        <IconButton
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i
-                            className={classes.socialIcons + " fab fa-twitter"}
-                          />
-                        </IconButton>
-                        <IconButton
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i
-                            className={classes.socialIcons + " fab fa-facebook"}
-                          />
-                        </IconButton>
-                        <IconButton
-                          href="#pablo"
-                          target="_blank"
-                          color="transparent"
-                          onClick={e => e.preventDefault()}
-                        >
-                          <i
-                            className={
-                              classes.socialIcons + " fab fa-google-plus-g"
-                            }
-                          />
-                        </IconButton>
-                      </div> */}
-                    </CardHeader>                                        
-                    <p className={classes.divider}>Login</p>
-                    <CardBody>                      
-                    <TextField
-                      name="username"
-                      label="Usuário"
-                      placeholder="Usuário"
-                      margin="normal"
-                      inputProps={{
-                        maxLength: 150,
-                      }}
-                      className={classes.textField} 
-                      onChange={this.handleInputChange}
-                    />
-                    <TextField
-                      name="password"
-                      type="password"
-                      label="Senha"
-                      placeholder="Senha"
-                      margin="normal"
-                      type="password"
-                      inputProps={{
-                        maxLength: 150,
-                      }}
-                      className={classes.textField} 
-                      onChange={this.handleInputChange} 
-                    >
-                    </TextField>
+                      <h4>Pomus - Login</h4>
+                    </CardHeader>
+                    {this.showError()}
+                    <CardBody>
+                      <TextField
+                        model="username"
+                        name="username"
+                        label="Usuário"
+                        placeholder="Usuário"
+                        margin="normal"
+                        inputProps={{
+                          maxLength: 150,
+                        }}
+                        className={classes.textField} 
+                        onChange={this.handleInputChange}
+                      />
+                      <TextField
+                        model="password"
+                        name="password"
+                        type="password"
+                        label="Senha"
+                        placeholder="Senha"
+                        margin="normal"
+                        type="password"
+                        inputProps={{
+                          maxLength: 150,
+                        }}
+                        className={classes.textField} 
+                        onChange={this.handleInputChange} 
+                      >
+                      </TextField>
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button simple color="success" size="lg">

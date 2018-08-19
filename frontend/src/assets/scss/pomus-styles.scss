@@ -20,6 +20,8 @@ $aquaLight:   #32FC9B;
 $greenLight:  #21EA6E;
 $greenMedium: #21C679;
 $greenDark:   #315F55;
+$alertBack:   #f2dedf;
+$alertText:   #9f493e;
 
 button.EditButton {
   margin-right: 15px;
@@ -27,6 +29,19 @@ button.EditButton {
 div.DiscContainer {
   max-width: 70%;
   margin: 20px auto;
+}
+.alert-danger {
+  background-color: $alertBack;
+  color: $alertText;
+  text-align: center;
+  margin: auto 20px auto 20px;
+  font-weight: 400;
+}
+.alert-login {
+  border-radius: 8px;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  font-size: medium;
 }
 button.AddButton {
   margin: 20px 0 0 auto;
