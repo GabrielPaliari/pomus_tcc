@@ -32,9 +32,7 @@ class UsuarioDisciplinas extends React.Component {
       open: false,
       detailsOpen: false,
       editOpen: false,
-      selectedDisc: {
-        preRequisitos: [],
-      },    
+      selectedDisc: null,    
       addDisciplina: {},   
       codigoExiste: false        
     };
@@ -53,12 +51,15 @@ class UsuarioDisciplinas extends React.Component {
   handleChangeSel = name => value => {
     this.setState({
       [name]: value,
+      selectedDisc: value.disc
     });
-    console.log(this.state.addDisciplina);
   };
 
   handleOpen = () => {
-    this.setState({ open: true });
+    this.setState({ 
+      open: true,
+      selectedDisc: null, 
+    });
   };
 
   handleClose = () => {
@@ -226,6 +227,7 @@ class UsuarioDisciplinas extends React.Component {
           handleOpen={this.handleOpen} 
           handleClose={this.handleClose} 
           addDisc={this.addDisc}
+          selectedDisc={this.state.selectedDisc}
           open={this.state.open}
           handleChangeSel={this.handleChangeSel}/>
       </div>

@@ -2,24 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import TextField from '@material-ui/core/TextField';
 import Button from 'components/CustomButtons/Button.jsx';
 import green from '@material-ui/core/colors/green';
 
 import AutoComplete from "views/UsuarioDisciplinas/AutoComplete.jsx"
+import Details from "views/UsuarioDisciplinas/Details.jsx"
 
 import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   paper: {
     margin: '20px auto',    
-    width: theme.spacing.unit * 70,
+    width: '85vw',
+    maxWidth: 1000,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
+    paddingBottom: 40,
+    position: "relative"
   },
   textField: {
-    marginRight: 20,
+    margin: '0 auto',
     width: 200,
   },
   bigField: {
@@ -27,11 +30,16 @@ const styles = theme => ({
   },
   container: {
     paddingLeft: 20,
-    maxHeight: "75vh",
-    overflow: "auto"
+    maxHeight: "55vh",
+    minHeight: 250,
+    overflow: "auto",
+    overflowX: "hidden",
+    marginBottom: 50
   },
   createButton: {
-    marginLeft: 260,
+    position: 'absolute',
+    bottom: 20,
+    right: 70
   }  
 });
 
@@ -41,14 +49,14 @@ const theme = createMuiTheme({
   },
 });
 
-class UsuarioAddModal extends React.Component {  
+class UsuarioAddModal extends React.Component {     
   render() {
-    const { classes } = this.props;        
+    const { classes, open } = this.props;        
     return (
       <div>
         <MuiThemeProvider theme={theme}>
         <Modal          
-          open={this.props.open}
+          open={open}
           onClose={this.props.handleClose}
         >
           <div className={classes.paper}>
@@ -58,11 +66,12 @@ class UsuarioAddModal extends React.Component {
             <Divider />
             <div className={classes.container}>
             <AutoComplete 
+              className={classes.textField}
               disciplinas={this.props.disciplinas}
-              addDisciplina={this.props.addDisciplina}
               handleChange={this.props.handleChangeSel}/>
-            <Button onClick={this.props.addDisc} className={classes.createButton} type="button" color="success">Adicionar Disciplina</Button>            
+            <Details selectedDisc={this.props.selectedDisc}/>
             </div>
+            <Button disabled={!this.props.selectedDisc} onClick={this.props.addDisc} className={classes.createButton} type="button" color="success">Adicionar Disciplina</Button>            
             <UsuarioAddModalWrapped />
           </div>
         </Modal>

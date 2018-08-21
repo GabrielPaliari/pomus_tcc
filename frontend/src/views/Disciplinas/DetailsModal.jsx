@@ -8,11 +8,6 @@ import green from '@material-ui/core/colors/green';
 
 import Divider from '@material-ui/core/Divider';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
@@ -34,7 +29,7 @@ const styles = theme => ({
   container: {
     padding: 20,
     marginTop: 20,
-    maxHeight: "70vh",    
+    maxHeight: "50vh",    
     overflow: "auto",
   },
   title: {
@@ -45,9 +40,6 @@ const styles = theme => ({
   group: {
     alignItens: "center",
   }, 
-  createButton: {
-    marginLeft: 260,
-  },
   thead: {
     fontSize: "1em",
   } 
@@ -126,15 +118,6 @@ class DetailsModal extends React.Component {
                     <Paper className={classes.paper}>{selectedDisc.dataFim}</Paper>
                   </Grid>
                 </Grid>
-                {/* Descrição: 
-                <Grid item container className={classes.group}>
-                  <Grid item xs={4} sm={2}>                  
-                    <h6 className={classes.title}>Descrição:</h6>
-                  </Grid>
-                  <Grid item xs={12} sm={10}>                  
-                    <Paper className={classes.field}>{selectedDisc.descricao}</Paper>
-                  </Grid>
-                </Grid>*/}
                 {/* Objetivos: */}
                 <Grid item container className={classes.group}>
                   <Grid item xs={4} sm={2}>                  

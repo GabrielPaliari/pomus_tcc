@@ -15,8 +15,8 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     height: 50,
-    width: 420,
-    marginTop: 20
+    width: "60%",
+    margin: "20px auto"
   },
   input: {
     display: 'flex',

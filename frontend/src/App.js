@@ -6,7 +6,7 @@ import UsuarioDisciplinas from "views/UsuarioDisciplinas/UsuarioDisciplinas.jsx"
 
 
 import Header from "components/Header/Header.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
+// import CustomInput from "components/CustomInput/CustomInput.jsx";
 import IconButton from "components/CustomButtons/IconButton.jsx";
 import Search from "@material-ui/icons/Search";
 import ExitIcon from "@material-ui/icons/ExitToApp";
