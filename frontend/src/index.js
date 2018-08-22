@@ -11,7 +11,7 @@ import App from "App.js";
 ReactDOM.render(
     <Router>
         <div>
-          <Route exact path='/' component={App} />          
+          <Route path='/app' component={App} />          
           <Route exact path='/login' component={LoginPage} />
         </div>
     </Router>,
