@@ -40,10 +40,11 @@ class LoginPage extends React.Component {
       username: "",
       name: "",
       email: "",
-      nusp: "",
+      nusp: 0,
       password: "",
       passwordConfirm: "",
       erro: false,
+      senhasDistintas: false,
     };    
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
@@ -75,6 +76,19 @@ class LoginPage extends React.Component {
   handleFormSubmit(e) {
     e.preventDefault();
 
+    var mail = this.state.email;
+    if (mail.substring(mail.length-7) === "@usp.br") {
+
+    }
+    else {
+      mail = mail + "@usp.br";
+      this.setState({email: mail});
+    }
+
+    if(this.state.password != this.state.passwordConfirm) {
+      this.setState({erro: true});
+    }
+
     console.log(this.state);
     // this.Auth.login(this.state.username,this.state.password)
     // .then(res =>{
@@ -99,8 +113,8 @@ class LoginPage extends React.Component {
     if (/\D/g.test(target.value)){
 			// Filter non-digits from input value.
       target.value = target.value.replace(/\D/g, '');
-      this.setState({[name]: target.value});
-		}   
+    }
+    this.setState({[name]: target.value});
   };
 
   handleContinuousChange = (event) => {
@@ -110,13 +124,16 @@ class LoginPage extends React.Component {
     if (/[^a-zA-Z0-9_.-]/g.test(target.value)){
 			// Filter non-digits from input value.
       target.value = target.value.replace(/[^a-zA-Z0-9_.-]/g, '');
-      this.setState({[name]: target.value});
-		}   
+    }
+    this.setState({[name]: target.value});
   };
 
   showError() {
-    if(this.state.erro) {
-      return (<div className="alert-danger alert-login" name="erroLogin">
+    if(!this.state.erro) {
+      return;
+    }
+    else {
+      return (<div className="alert-danger alert-login" name="erroSignIn">
                 Usuário ou senha inválidos
               </div>);
     }
