@@ -36,7 +36,7 @@ const appTheme = createMuiTheme({
 
 class App extends Component {
   handleLogout(){
-    Auth.logout()
+    Auth.logout();
     this.props.history.replace('/login');
   }
   
@@ -114,7 +114,7 @@ class App extends Component {
                     )}/>    
                   <Route exact path='/app' render={() => (
                     <div>
-                      <h3>Perfil - Bem Vindx!</h3>
+                      <h3>Perfil - Bem Vinde!</h3>
                     </div>  
                     )}/>                                      
               </div>              

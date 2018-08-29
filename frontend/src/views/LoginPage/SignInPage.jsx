@@ -38,12 +38,18 @@ class LoginPage extends React.Component {
     this.state = {
       cardAnimaton: "cardHidden",
       username: "",
+      name: "",
+      email: "",
+      nusp: "",
       password: "",
+      passwordConfirm: "",
       erro: false,
     };    
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleNumberChange = this.handleNumberChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.signIn = this.signIn.bind(this);
+    this.handleContinuousChange = this.handleContinuousChange.bind(this);
+    this.back = this.back.bind(this);
     this.Auth = new AuthService();
   }
   componentDidMount() {
@@ -57,20 +63,26 @@ class LoginPage extends React.Component {
   }
 
   componentWillMount(){
-    if(this.Auth.loggedIn())
-        this.props.history.replace('/app');
+    if(this.Auth.loggedIn()) {
+      this.props.history.replace('/');
+    }
+  }
+
+  back = (event) => {
+    this.props.history.replace('/login');
   }
 
   handleFormSubmit(e) {
     e.preventDefault();
 
-    this.Auth.login(this.state.username,this.state.password)
-    .then(res =>{
-       this.props.history.replace('/app');
-    })
-    .catch(err =>{
-      this.setState({erro: true});
-    });
+    console.log(this.state);
+    // this.Auth.login(this.state.username,this.state.password)
+    // .then(res =>{
+    //    this.props.history.replace('/');
+    // })
+    // .catch(err =>{
+    //   this.setState({erro: true});
+    // });
   }
 
   handleInputChange = (event) => {
@@ -78,7 +90,29 @@ class LoginPage extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     this.setState({[name]: value});    
-  }
+  };
+
+  handleNumberChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+
+    if (/\D/g.test(target.value)){
+			// Filter non-digits from input value.
+      target.value = target.value.replace(/\D/g, '');
+      this.setState({[name]: target.value});
+		}   
+  };
+
+  handleContinuousChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+
+    if (/[^a-zA-Z0-9_.-]/g.test(target.value)){
+			// Filter non-digits from input value.
+      target.value = target.value.replace(/[^a-zA-Z0-9_.-]/g, '');
+      this.setState({[name]: target.value});
+		}   
+  };
 
   showError() {
     if(this.state.erro) {
@@ -87,10 +121,7 @@ class LoginPage extends React.Component {
               </div>);
     }
   }
-
-  signIn = (event) => {
-    this.props.history.replace('/signin');
-  }
+  
 
   render() {
     const { classes, ...rest } = this.props;            
@@ -118,7 +149,7 @@ class LoginPage extends React.Component {
                 <Card className={classes[this.state.cardAnimaton]}>
                   <form className={classes.form} onSubmit={this.handleFormSubmit}>
                     <CardHeader color="success" className={classes.cardHeader}>
-                      <h4>Pomus - Login</h4>
+                      <h4>Pomus - SignIn</h4>
                     </CardHeader>
                     {this.showError()}
                     <CardBody>
@@ -135,9 +166,61 @@ class LoginPage extends React.Component {
                         onChange={this.handleInputChange}
                       />
                       <TextField
+                        model="name"
+                        name="name"
+                        label="Nome Completo"
+                        placeholder="Nome Completo"
+                        margin="normal"
+                        inputProps={{
+                          maxLength: 150,
+                        }}
+                        className={classes.textField} 
+                        onChange={this.handleInputChange}
+                      />
+                      <div>
+                        <TextField
+                          model="email"
+                          name="email"
+                          label="e-mail"
+                          placeholder="e-mail"
+                          margin="normal"
+                          inputProps={{
+                            maxLength: 150,
+                          }}
+                          className={classes.textField} 
+                          onChange={this.handleContinuousChange}
+                          style = {{
+                            width: 230,
+                            marginRight: '0px',
+                          }}
+                        />
+                        <TextField
+                          margin="normal"
+                          label="@usp.br"
+                          className={classes.textField}
+                          style = {{
+                            width: 60,
+                            marginLeft: '0px',
+                            marginRight: '0px',
+                          }}
+                          disabled
+                        />
+                      </div>
+                      <TextField
+                        model="nusp"
+                        name="nusp"
+                        label="NUSP"
+                        placeholder="NUSP"
+                        margin="normal"
+                        inputProps={{
+                          maxLength: 150,
+                        }}
+                        className={classes.textField} 
+                        onChange={this.handleNumberChange}
+                      />
+                      <TextField
                         model="password"
                         name="password"
-                        type="password"
                         label="Senha"
                         placeholder="Senha"
                         margin="normal"
@@ -147,16 +230,29 @@ class LoginPage extends React.Component {
                         }}
                         className={classes.textField} 
                         onChange={this.handleInputChange} 
-                      >
-                      </TextField>
+                      />
+                      <TextField
+                        model="passwordConfirm"
+                        name="passwordConfirm"
+                        type="passwordConfirm"
+                        label="Confirme Senha"
+                        placeholder="Confirme Senha"
+                        margin="normal"
+                        type="password"
+                        inputProps={{
+                          maxLength: 150,
+                        }}
+                        className={classes.textField} 
+                        onChange={this.handleInputChange} 
+                      />
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button simple color="success" size="lg"
-                        onClick={this.signIn}>
-                        Registre-se
+                        onClick={this.back}>
+                        Voltar
                       </Button>
                       <Button type="submit" color="success" size="lg">
-                        Entrar
+                        Registrar
                       </Button>
                     </CardFooter>
                   </form>
