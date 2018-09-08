@@ -43,7 +43,7 @@ class LoginPage extends React.Component {
     };    
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.signIn = this.signIn.bind(this);
+    this.signUp = this.signUp.bind(this);
     this.Auth = new AuthService();
   }
   componentDidMount() {
@@ -88,8 +88,8 @@ class LoginPage extends React.Component {
     }
   }
 
-  signIn = (event) => {
-    this.props.history.replace('/signin');
+  signUp = (event) => {
+    this.props.history.replace('/signup');
   }
 
   render() {
@@ -151,7 +151,7 @@ class LoginPage extends React.Component {
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button simple color="success" size="lg"
-                        onClick={this.signIn}>
+                        onClick={this.signUp}>
                         Registre-se
                       </Button>
                       <Button type="submit" color="success" size="lg">

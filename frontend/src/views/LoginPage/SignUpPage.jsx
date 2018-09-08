@@ -85,18 +85,26 @@ class LoginPage extends React.Component {
       this.setState({email: mail});
     }
 
+    /* Validações */
+
     if(this.state.password != this.state.passwordConfirm) {
       this.setState({erro: true});
+    } else {
+      this.setState({erro: false});
+    }
+
+    if(this.state.password.length < 8) {
+      this.setState({erro: true});
+    } else {
+      this.setState({erro: false});
     }
 
     console.log(this.state);
-    // this.Auth.login(this.state.username,this.state.password)
-    // .then(res =>{
-    //    this.props.history.replace('/');
-    // })
-    // .catch(err =>{
-    //   this.setState({erro: true});
-    // });
+
+    if ( !this.state.erro ) {
+     this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password, this.state.passwordConfirm);
+    }
+    
   }
 
   handleInputChange = (event) => {
@@ -133,7 +141,7 @@ class LoginPage extends React.Component {
       return;
     }
     else {
-      return (<div className="alert-danger alert-login" name="erroSignIn">
+      return (<div className="alert-danger alert-login" name="erroSignUp">
                 Usuário ou senha inválidos
               </div>);
     }
@@ -166,7 +174,7 @@ class LoginPage extends React.Component {
                 <Card className={classes[this.state.cardAnimaton]}>
                   <form className={classes.form} onSubmit={this.handleFormSubmit}>
                     <CardHeader color="success" className={classes.cardHeader}>
-                      <h4>Pomus - SignIn</h4>
+                      <h4>Pomus - Sign Up</h4>
                     </CardHeader>
                     {this.showError()}
                     <CardBody>
