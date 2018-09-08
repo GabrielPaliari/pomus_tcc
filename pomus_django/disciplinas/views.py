@@ -16,8 +16,8 @@ class TopicoListView(generics.ListAPIView):
 
   def get_queryset(self):
       """
-      Optionally restricts the returned purchases to a given user,
-      by filtering against a `disciplina` query parameter in the URL.
+      Optionally restricts the returned 'topicos' to a given 'disciplina',
+      by filtering against a `disc_id` query parameter in the URL.
       """
       queryset = Topico.objects.all()
       disciplina = self.request.query_params.get('disc_id', None)
@@ -29,3 +29,18 @@ class TopicoListView(generics.ListAPIView):
 class ArquivoView(viewsets.ModelViewSet):
   queryset = Arquivo.objects.all()
   serializer_class = ArquivoSerializer
+
+class ArquivoListView(generics.ListAPIView):
+  serializer_class = ArquivoSerializer
+
+  def get_queryset(self):
+      """
+      Optionally restricts the returned 'arquivos' to a given 'topico',
+      by filtering against a `topic_id` query parameter in the URL.
+      """
+      queryset = Arquivo.objects.all()
+      topico = self.request.query_params.get('topic_id', None)      
+      if topico is not None:
+          queryset = queryset.filter(topico_pai=topico)
+      return queryset
+  
