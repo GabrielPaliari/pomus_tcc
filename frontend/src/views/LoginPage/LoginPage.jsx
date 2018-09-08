@@ -13,7 +13,7 @@ import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import IconButton from "components/CustomButtons/IconButton.jsx";
+// import IconButton from "components/CustomButtons/IconButton.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -141,7 +141,6 @@ class LoginPage extends React.Component {
                         label="Senha"
                         placeholder="Senha"
                         margin="normal"
-                        type="password"
                         inputProps={{
                           maxLength: 150,
                         }}

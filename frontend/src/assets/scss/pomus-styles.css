@@ -61,3 +61,87 @@ div.IconAvatar {
 
 #headerbar {
   background-color: #315F55; }
+
+button.createTopicBtn {
+  width: fit-content;
+  margin-left: 10px; }
+
+.bigTextArea {
+  width: 450px; }
+
+.titleField {
+  width: 450px; }
+
+.dropFilesZone {
+  border: 1px dashed #21C679;
+  border-radius: 5px;
+  width: 250px;
+  height: 100px;
+  margin: 20px auto;
+  padding: 10px; }
+  .dropFilesZone:hover {
+    cursor: pointer; }
+  .dropFilesZone p {
+    font-size: 12px;
+    text-align: center; }
+
+.dropActive {
+  background-color: rgba(33, 234, 110, 0.7); }
+
+.dropReject {
+  background-color: coral; }
+
+.filesDiv {
+  margin-left: 20px; }
+  .filesDiv ul {
+    list-style: none; }
+    .filesDiv ul li {
+      margin-bottom: 7px; }
+      .filesDiv ul li div {
+        display: flex;
+        align-items: center;
+        max-width: 90%;
+        height: 20px; }
+        .filesDiv ul li div p {
+          margin: 0; }
+        .filesDiv ul li div span.material-icons {
+          margin-right: 7px;
+          font-size: 1.2em; }
+        .filesDiv ul li div .delFileIcon {
+          margin-left: auto;
+          border-radius: 50%; }
+          .filesDiv ul li div .delFileIcon:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.1); }
+        .filesDiv ul li div .fileIcon {
+          color: green; }
+
+.addFormContainer {
+  position: relative;
+  margin: 30px auto;
+  margin-top: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 40px 60px;
+  border-radius: 5px; }
+
+.warnMsg {
+  background-color: #f2dedf;
+  color: #9f493e;
+  text-align: center;
+  margin: 20px;
+  padding: 5px;
+  font-weight: 400;
+  border-radius: 5px; }
+  .warnMsg p {
+    margin: 0; }
+
+.greenText {
+  color: #4caf50; }
+
+.pMarginOut {
+  margin: 0; }
+
+button.closeFormButon {
+  position: absolute;
+  top: 0;
+  right: 0; }

@@ -2,7 +2,7 @@
 // // // Footer styles
 // #############################
 
-import { container, primaryColor } from "assets/jss/material-kit-react.jsx";
+import { container, infoColor } from "assets/jss/material-kit-react.jsx";
 
 const footerStyle = {
   block: {
@@ -26,7 +26,7 @@ const footerStyle = {
     float: "right!important"
   },
   footer: {
-    padding: "0.9375rem 0",
+    paddingTop: "0.5rem",
     textAlign: "center",
     display: "flex",
     zIndex: "2",
@@ -35,7 +35,7 @@ const footerStyle = {
     width: "100%"
   },
   a: {
-    color: primaryColor,
+    color: infoColor,
     textDecoration: "none",
     backgroundColor: "transparent"
   },

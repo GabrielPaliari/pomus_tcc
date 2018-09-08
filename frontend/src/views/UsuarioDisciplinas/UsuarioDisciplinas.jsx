@@ -13,7 +13,7 @@ import Divider from '@material-ui/core/Divider';
 
 import UsuarioAddModal from "views/UsuarioDisciplinas/UsuarioAddModal.jsx";
 import DetailsModal from "views/Disciplinas/DetailsModal.jsx";
-import EditModal from "views/Disciplinas/EditModal.jsx";
+// import EditModal from "views/Disciplinas/EditModal.jsx";
 
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -36,16 +36,8 @@ class UsuarioDisciplinas extends React.Component {
       addDisciplina: {},   
       codigoExiste: false        
     };
-    this.handleInputChange = this.handleInputChange.bind(this)
     this.deleteDisc = this.deleteDisc.bind(this);
     this.showDetails = this.showDetails.bind(this);
-  }
-  
-  handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;   
-
   }
 
   handleChangeSel = name => value => {
@@ -200,7 +192,7 @@ class UsuarioDisciplinas extends React.Component {
     return (
       <div>        
         <GridContainer direction="column" className="DiscContainer">                  
-          <h2>Suas Disciplinas:</h2>  
+          <h3>Suas Disciplinas</h3>  
           <p>Clique no botão + para adicionar disciplinas à sua lista.</p> 
           <Divider className="TopDivider"/>  
           <ListaDisciplinas 

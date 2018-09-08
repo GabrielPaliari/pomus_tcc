@@ -1,6 +1,6 @@
 import { container } from "assets/jss/material-kit-react.jsx";
 // import { blueLight } from "assets/jss/material-kit-react.jsx";
-import { aquaLight } from "assets/jss/material-kit-react.jsx";
+// import { aquaLight } from "assets/jss/material-kit-react.jsx";
 // import { greenLight } from "assets/jss/material-kit-react.jsx";
 // import { greenMedium } from "assets/jss/material-kit-react.jsx";
 import { greenDark } from "assets/jss/material-kit-react.jsx";
@@ -74,7 +74,7 @@ const disciplinasStyle = {
   },
   navBarGreen: {
     backgroundColor: "#CCCCCC",
-  }
+  },
 };
 
 export default disciplinasStyle;

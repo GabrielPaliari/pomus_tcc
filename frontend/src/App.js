@@ -3,15 +3,18 @@ import AuthService from 'views/Components/AuthService';
 import withAuth from 'views/Components/withAuth';
 import Disciplinas from "views/Disciplinas/Disciplinas.jsx";
 import UsuarioDisciplinas from "views/UsuarioDisciplinas/UsuarioDisciplinas.jsx";
+import Topicos from "views/Topicos/Topicos.jsx";
+
+import Footer from "components/Footer/Footer.jsx";
+import classNames from "classnames";
 import List from "material-ui/List";
 import ListItem from "material-ui/List/ListItem";
-
 import Header from "components/Header/Header.jsx";
 // import CustomInput from "components/CustomInput/CustomInput.jsx";
-import IconButton from "components/CustomButtons/IconButton.jsx";
+// import IconButton from "components/CustomButtons/IconButton.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import Search from "@material-ui/icons/Search";
-import HomeIcon from "@material-ui/icons/Home";
+// import Search from "@material-ui/icons/Search";
+// import HomeIcon from "@material-ui/icons/Home";
 import ExitIcon from "@material-ui/icons/ExitToApp";
 import Icon from '@material-ui/core/Icon';
 
@@ -41,12 +44,11 @@ class App extends Component {
   }
   
   render() {                
-    const { classes, user, ...rest} = this.props;  
+    const { classes, user, history, ...rest} = this.props;  
     console.log(user);  
     return (
         <div className="App">
-          <MuiThemeProvider theme={appTheme}>
-          <div>
+          <MuiThemeProvider theme={appTheme}>          
             <Header
               color="info"
               absolute
@@ -104,22 +106,25 @@ class App extends Component {
                 }
               
             />
-            <div className={classes.pageHeader}>              
+            <div className={classNames(classes.main, classes.mainRaised)}>
               <div className={classes.container}>
-                  <Route path='/app/disciplinas' render={() => (
-                    <UsuarioDisciplinas user={user}/>
-                    )}/>                         
-                  <Route path='/app/admin' render={() => (
-                    <Disciplinas user={user}/>
-                    )}/>    
-                  <Route exact path='/app' render={() => (
-                    <div>
-                      <h3>Perfil - Bem Vinde!</h3>
-                    </div>  
-                    )}/>                                      
+                <Route path='/app/disciplinas' render={() => (
+                  <UsuarioDisciplinas user={user}/>
+                  )}/>                         
+                <Route path='/app/admin' render={() => (
+                  <Disciplinas user={user}/>
+                  )}/>    
+                <Route exact path='/app' render={() => (
+                  <div>
+                    <h3>Perfil - Bem Vinde!</h3>
+                  </div>  
+                  )}/>    
+                <Route path='/app/topicos' render={() => (
+                  <Topicos user={user} search={this.props.history.location.search}/> 
+                  )}/>                                    
               </div>              
             </div>
-          </div>
+            <Footer />
           </MuiThemeProvider>
         </div>
     );
