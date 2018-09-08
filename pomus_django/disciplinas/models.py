@@ -26,7 +26,6 @@ class Topico(models.Model):
   criado_em  = models.DateTimeField(editable = False)
   editado_em = models.DateTimeField(editable = False)
   editado_por = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, symmetrical=False, related_name='editor') 
-  # comentarios = 
 
   
   def save(self, *args, **kwargs):
@@ -42,6 +41,6 @@ class Topico(models.Model):
 class Arquivo(models.Model):
   nome        = models.CharField(max_length=200)
   upload      = models.FileField(upload_to='uploads/')
-  topico_pai  = models.ForeignKey(Topico, on_delete=models.CASCADE)
-  formato = models.CharField(max_length=10)
-  tamanhoKB = models.DecimalField(max_digits=12, decimal_places=1)
+  topico_pai  = models.ForeignKey(Topico, on_delete=models.CASCADE, blank=True)
+  formato = models.CharField(max_length=10, blank=True)
+  tamanho = models.DecimalField(max_digits=12, decimal_places=1, blank=True)

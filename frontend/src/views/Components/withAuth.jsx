@@ -4,7 +4,7 @@ import AuthService from './AuthService';
 export default function withAuth(AuthComponent) {
   const Auth = new AuthService('http://localhost:8000/api/');
   const API = 'http://localhost:8000/api/';
-  const DISC_QUERY = 'disciplinas/';
+//   const DISC_QUERY = 'disciplinas/';
   const USER_QUERY = 'usuarios/';
 
 

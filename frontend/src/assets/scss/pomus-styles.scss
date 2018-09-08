@@ -22,6 +22,7 @@ $greenMedium: #21C679;
 $greenDark:   #315F55;
 $alertBack:   #f2dedf;
 $alertText:   #9f493e;
+$success:     #4caf50;
 
 button.EditButton {
   margin-right: 15px;
@@ -75,4 +76,103 @@ div.IconAvatar {
 }
 #headerbar {
   background-color: $greenDark;
+}
+button.createTopicBtn {
+  width: fit-content;
+  margin-left: 10px;
+}
+.bigTextArea {
+  width: 450px;  
+}
+.titleField {
+  width: 450px;  
+}
+.dropFilesZone {
+  border: 1px dashed $greenMedium;
+  border-radius: 5px;
+  width: 250px;  
+  height: 100px;
+  margin: 20px auto;
+  padding: 10px;
+  &:hover {
+    cursor: pointer
+  } 
+  p {
+    font-size: 12px;
+    text-align: center;
+  } 
+} 
+.dropActive {
+  background-color: rgba($greenLight, 0.7);
+}
+.dropReject {
+  background-color: coral;
+}
+.filesDiv {  
+  margin-left: 20px; 
+  ul {  
+    list-style: none;
+    li {
+      margin-bottom: 7px;       
+      div {
+        display: flex;
+        align-items: center;
+        max-width: 90%;
+        height: 20px;
+        p {
+          margin: 0;
+        }
+        span.material-icons {
+          margin-right: 7px;
+          font-size: 1.2em;
+        }
+        .delFileIcon {
+          margin-left: auto;
+          border-radius: 50%;
+          &:hover {
+            cursor: pointer;
+            background-color: rgba(0,0,0,0.1);
+          }
+        }
+        .fileIcon {
+          color: green;
+        }
+      }
+    }
+    
+  }
+}
+.addFormContainer {
+  position: relative;
+  margin: 30px auto;
+  margin-top: 50px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  padding: 40px 60px;
+  border-radius: 5px;  
+}
+.warnMsg {
+  p {
+    margin: 0;
+  }
+  background-color: $alertBack;
+  color: $alertText;
+  text-align: center;
+  margin: 20px; 
+  padding: 5px;
+  font-weight: 400;
+  border-radius: 5px;
+}
+
+.greenText {
+  color: $success;
+}
+
+.pMarginOut {
+  margin: 0;
+}
+
+button.closeFormButon {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

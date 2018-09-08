@@ -36,10 +36,6 @@ class ListaDisciplinas extends React.Component {
               <Button variant="fab" color="primary" mini aria-label="Edit" className="EditButton" onClick={() => (this.props.openEdit(disc))}>
                 <Icon>edit_icon</Icon>
               </Button> 
-              <Button 
-                variant="fab" mini aria-label="Delete" onClick={() => (this.props.deleteDisc(disc))}>
-                <DeleteIcon />
-              </Button>                         
             </ListItem>            
           )}                    
         </List>

@@ -8,7 +8,7 @@ router = routers.DefaultRouter()
 router.register('disciplinas', views.DisicplinaView) 
 router.register('topicos', views.TopicoView) 
 router.register('usuarios', UsuarioView) 
-router.register('arquivo', views.ArquivoView) 
+router.register('arquivos', views.ArquivoView) 
 
 urlpatterns = [
   path('', include(router.urls)),

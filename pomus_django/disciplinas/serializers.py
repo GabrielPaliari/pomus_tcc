@@ -38,4 +38,4 @@ class ArquivoSerializer(serializers.ModelSerializer):
                     'upload',
                     'topico_pai',
                     'formato',
-                    'tamanhoKB')
+                    'tamanho')

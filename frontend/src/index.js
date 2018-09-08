@@ -13,6 +13,7 @@ ReactDOM.render(
         <div>
           <Route path='/app' component={App} />          
           <Route exact path='/login' component={LoginPage} />
+          <Route exact path='/' component={LoginPage} />
         </div>
     </Router>,
   document.getElementById("root")

@@ -256,7 +256,7 @@ class Disciplinas extends React.Component {
     return (
       <div>        
         <GridContainer direction="column" className="DiscContainer">                  
-          <h2>Disciplinas</h2>  
+          <h3>Administrar Disciplinas do Sistema</h3>  
           <Divider className="TopDivider"/>  
           <ListaDisciplinas 
             disciplinas={this.state.disciplinas} 
