@@ -30,9 +30,7 @@ const footerStyle = {
     textAlign: "center",
     display: "flex",
     zIndex: "2",
-    position: "absolute",
-    bottom: "30px",
-    width: "100%"
+    position: "relative"
   },
   a: {
     color: infoColor,
