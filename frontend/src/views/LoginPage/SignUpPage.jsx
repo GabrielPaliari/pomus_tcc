@@ -102,7 +102,7 @@ class LoginPage extends React.Component {
     console.log(this.state);
 
     if ( !this.state.erro ) {
-     this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password, this.state.passwordConfirm);
+     this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password);
     }
     
   }

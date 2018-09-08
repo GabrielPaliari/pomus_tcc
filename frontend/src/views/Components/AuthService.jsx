@@ -1,4 +1,5 @@
 import decode from 'jwt-decode';
+
 export default class AuthService {
     // Initializing important variables
     constructor(domain) {
@@ -6,6 +7,32 @@ export default class AuthService {
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
+    }
+
+    signup(username, name, email, nusp, password) {
+        var usuario =  {
+            'name': name,
+            'username': username,
+            'email': email,
+            'nusp': nusp,
+            'password': password
+        };
+
+        fetch(`${this.domain}usuarios/`, {
+            method: 'post',
+            body: JSON.stringify(usuario),
+            headers: {
+                'Content-Type': 'application/json'
+              }
+          })    
+          .then(response => {
+            if(response.ok) response.json()
+            else {
+                console.log(response);
+                alert("Ocorreu algum erro no sistema.");
+            }
+          } )
+          ; 
     }
 
     login(username, password) {
