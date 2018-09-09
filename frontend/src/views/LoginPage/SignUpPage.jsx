@@ -94,12 +94,20 @@ class LoginPage extends React.Component {
 
     var mail = this.state.email;
     if (mail.substring(mail.length-7) === "@usp.br") {
-      this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password);
+      var that = this;
+      this.setState({email: mail}, () => {
+        this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password).then(function() {
+          that.props.history.replace('/login');
+        });
+      });
     }
     else {
       mail = mail + "@usp.br";
+      var that = this;
       this.setState({email: mail}, () => {
-        this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password);
+        this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password).then(function() {
+          that.props.history.replace('/login');
+        });
       });
     }
     
