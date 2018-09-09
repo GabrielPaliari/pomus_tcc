@@ -13,4 +13,5 @@ router.register('arquivos', views.ArquivoView)
 urlpatterns = [
   path('', include(router.urls)),
   path('topicos_disc/', views.TopicoListView.as_view()),
+  path('arquivos_topic/', views.ArquivoListView.as_view()),
 ]
