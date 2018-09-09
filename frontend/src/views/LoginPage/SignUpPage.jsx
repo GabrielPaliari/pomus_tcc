@@ -76,33 +76,31 @@ class LoginPage extends React.Component {
   handleFormSubmit(e) {
     e.preventDefault();
 
-    var mail = this.state.email;
-    if (mail.substring(mail.length-7) === "@usp.br") {
-
-    }
-    else {
-      mail = mail + "@usp.br";
-      this.setState({email: mail});
-    }
-
     /* Validações */
 
     if(this.state.password != this.state.passwordConfirm) {
       this.setState({erro: true});
+      return;
     } else {
       this.setState({erro: false});
     }
 
     if(this.state.password.length < 8) {
       this.setState({erro: true});
+      return;
     } else {
       this.setState({erro: false});
     }
 
-    console.log(this.state);
-
-    if ( !this.state.erro ) {
-     this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password);
+    var mail = this.state.email;
+    if (mail.substring(mail.length-7) === "@usp.br") {
+      this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password);
+    }
+    else {
+      mail = mail + "@usp.br";
+      this.setState({email: mail}, () => {
+        this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password);
+      });
     }
     
   }

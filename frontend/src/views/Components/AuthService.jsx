@@ -32,7 +32,7 @@ export default class AuthService {
                 console.log(response);
                 alert("Ocorreu algum erro no sistema.");
             }
-          } )
+          })
           ; 
     }
 
