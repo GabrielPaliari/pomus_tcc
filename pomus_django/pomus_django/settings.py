@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'disciplinas'
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 SITE_ID = 1
 
@@ -145,6 +145,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'usuarios.Usuario'
+
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'victorfunabashi@gmail.com'
+EMAIL_HOST_PASSWORD = 'Fun@b@shi'
 
 # Permite apenas requisições de usuários logados:
 REST_FRAMEWORK = {
