@@ -15,10 +15,11 @@ export default class AuthService {
             'username': username,
             'email': email,
             'nusp': nusp,
-            'password': password
+            'password1': password,
+            'password2': password
         };
 
-        fetch(`${this.domain}usuarios/`, {
+        fetch(`${this.domain}rest-auth/registration/`, {
             method: 'post',
             body: JSON.stringify(usuario),
             headers: {
