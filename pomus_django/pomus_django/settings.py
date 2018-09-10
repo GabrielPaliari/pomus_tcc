@@ -160,8 +160,8 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Pomus] '
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'pomus.96.oo@gmail.com'
-EMAIL_HOST_PASSWORD = '#p2o0m1u8s'
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'hostEmail@gmail.com'
+EMAIL_HOST_PASSWORD = 'password'
 
 # Permite apenas requisições de usuários logados:
 REST_FRAMEWORK = {
