@@ -318,7 +318,7 @@ class Topicos extends React.Component {
                 </Button> 
     }   
     return (             
-        <GridContainer direction="column" className="DiscContainer">  
+        <GridContainer direction="column" className="mainContainer">  
           <h3>Tópicos</h3>                
           {pageHeader}
           <Divider className="TopDivider"/>  

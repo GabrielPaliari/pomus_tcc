@@ -27,8 +27,9 @@ $success:     #4caf50;
 button.EditButton {
   margin-right: 15px;
 }
-div.DiscContainer {
-  max-width: 70%;
+div.DiscContainer,
+div.mainContainer {
+  max-width: 80%;
   margin: 20px auto;
 }
 .alert-danger {
@@ -82,10 +83,10 @@ button.createTopicBtn {
   margin-left: 10px;
 }
 .bigTextArea {
-  width: 450px;  
+  width: 100%;  
 }
 .titleField {
-  width: 450px;  
+  width: 100%;  
 }
 .dropFilesZone {
   border: 1px dashed $greenMedium;
@@ -110,6 +111,7 @@ button.createTopicBtn {
 }
 .filesDiv {  
   margin-left: 20px; 
+  margin-bottom: 20px;
   ul {  
     list-style: none;
     li {
@@ -126,9 +128,24 @@ button.createTopicBtn {
           margin-right: 7px;
           font-size: 1.2em;
         }
+        .fileName {
+          color: grey;
+        }
         .delFileIcon {
-          margin-left: auto;
           border-radius: 50%;
+          &:hover {
+            cursor: pointer;
+            background-color: rgba(0,0,0,0.1);
+          }
+        }
+        .downloadFileIcon {
+          margin: 0 10px 0 auto;          
+          height: 20px;
+          border-radius: 50%;
+          color: $greenMedium;
+          span {
+            margin-right: 0;
+          }
           &:hover {
             cursor: pointer;
             background-color: rgba(0,0,0,0.1);
@@ -142,13 +159,22 @@ button.createTopicBtn {
     
   }
 }
-.addFormContainer {
+.addFormContainer,
+.topicContainer {
+  width: 80%;
   position: relative;
   margin: 30px auto;
   margin-top: 50px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  padding: 40px 60px;
+  padding: 30px 60px;
+  padding-bottom: 60px;
   border-radius: 5px;  
+  .EditButtonT {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 15px;
+  }
 }
 .warnMsg {
   p {

@@ -13,8 +13,9 @@
 button.EditButton {
   margin-right: 15px; }
 
-div.DiscContainer {
-  max-width: 70%;
+div.DiscContainer,
+div.mainContainer {
+  max-width: 80%;
   margin: 20px auto; }
 
 .alert-danger {
@@ -67,10 +68,10 @@ button.createTopicBtn {
   margin-left: 10px; }
 
 .bigTextArea {
-  width: 450px; }
+  width: 100%; }
 
 .titleField {
-  width: 450px; }
+  width: 100%; }
 
 .dropFilesZone {
   border: 1px dashed #21C679;
@@ -92,7 +93,8 @@ button.createTopicBtn {
   background-color: coral; }
 
 .filesDiv {
-  margin-left: 20px; }
+  margin-left: 20px;
+  margin-bottom: 20px; }
   .filesDiv ul {
     list-style: none; }
     .filesDiv ul li {
@@ -107,22 +109,42 @@ button.createTopicBtn {
         .filesDiv ul li div span.material-icons {
           margin-right: 7px;
           font-size: 1.2em; }
+        .filesDiv ul li div .fileName {
+          color: grey; }
         .filesDiv ul li div .delFileIcon {
-          margin-left: auto;
           border-radius: 50%; }
           .filesDiv ul li div .delFileIcon:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.1); }
+        .filesDiv ul li div .downloadFileIcon {
+          margin: 0 10px 0 auto;
+          height: 20px;
+          border-radius: 50%;
+          color: #21C679; }
+          .filesDiv ul li div .downloadFileIcon span {
+            margin-right: 0; }
+          .filesDiv ul li div .downloadFileIcon:hover {
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.1); }
         .filesDiv ul li div .fileIcon {
           color: green; }
 
-.addFormContainer {
+.addFormContainer,
+.topicContainer {
+  width: 80%;
   position: relative;
   margin: 30px auto;
   margin-top: 50px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  padding: 40px 60px;
+  padding: 30px 60px;
+  padding-bottom: 60px;
   border-radius: 5px; }
+  .addFormContainer .EditButtonT,
+  .topicContainer .EditButtonT {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 15px; }
 
 .warnMsg {
   background-color: #f2dedf;

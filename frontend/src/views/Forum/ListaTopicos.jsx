@@ -37,7 +37,7 @@ class ListaTopicos extends React.Component {
       topicList =  <List className="DiscList">
                     {topicos.map(topic =>
                       <ListItem button key={topic.id} className="ListItem">
-                        <Link  className="ClickContainer" to={'topicos/forum?topic_id=' + topic.id}>
+                        <Link  className="ClickContainer" to={'topicos?topic_id=' + topic.id}>
                         <Avatar className="IconAvatar">
                           <Icon>subject_icon</Icon>
                         </Avatar>

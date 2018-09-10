@@ -4,6 +4,7 @@ import withAuth from 'views/Components/withAuth';
 import Disciplinas from "views/Disciplinas/Disciplinas.jsx";
 import UsuarioDisciplinas from "views/UsuarioDisciplinas/UsuarioDisciplinas.jsx";
 import Topicos from "views/Topicos/Topicos.jsx";
+import Forum from "views/Forum/Forum.jsx";
 
 import Footer from "components/Footer/Footer.jsx";
 import classNames from "classnames";
@@ -45,7 +46,7 @@ class App extends Component {
   
   render() {                
     const { classes, user, history, ...rest} = this.props;  
-    console.log(user);  
+    // console.log(user);  
     return (
         <div className="App">
           <MuiThemeProvider theme={appTheme}>          
@@ -119,8 +120,11 @@ class App extends Component {
                     <h3>Perfil - Bem Vindx!</h3>
                   </div>  
                   )}/>    
-                <Route path='/app/topicos' render={() => (
+                <Route exact path='/app/topicos' render={() => (
                   <Topicos user={user} search={this.props.history.location.search}/> 
+                  )}/>                                    
+                <Route path='/app/topicos/forum' render={() => (
+                  <Forum user={user} search={this.props.history.location.search}/> 
                   )}/>                                    
               </div>              
             </div>
