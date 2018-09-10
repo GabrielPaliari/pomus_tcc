@@ -134,7 +134,7 @@ class Forum extends React.Component {
 
   handleClose = () => {
     this.setState({ 
-      isEditing: false 
+      isEditing: false
     });    
   };
 
@@ -374,7 +374,7 @@ class Forum extends React.Component {
                           onClick={this.updateTopic} 
                           type="button" 
                           color="success"
-                          className="createTopicBtn"
+                          className="finishEditBtn"
                           disabled={!this.state.selTopic.titulo || !this.state.selTopic.explicacao}>Finalizar edição</Button2>      
                       </Grid>   
                     </div> 

@@ -65,7 +65,13 @@ div.IconAvatar {
 
 button.createTopicBtn {
   width: fit-content;
-  margin-left: 10px; }
+  position: absolute;
+  bottom: 20px;
+  right: 40px; }
+
+button.finishEditBtn {
+  width: fit-content;
+  margin-left: auto; }
 
 .bigTextArea {
   width: 100%; }
@@ -95,6 +101,9 @@ button.createTopicBtn {
 .filesDiv {
   margin-left: 20px;
   margin-bottom: 20px; }
+  .filesDiv .newFileList {
+    max-width: 80%;
+    margin: 20px auto; }
   .filesDiv ul {
     list-style: none; }
     .filesDiv ul li {
@@ -114,6 +123,12 @@ button.createTopicBtn {
         .filesDiv ul li div .delFileIcon {
           border-radius: 50%; }
           .filesDiv ul li div .delFileIcon:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.1); }
+        .filesDiv ul li div .delFileRight {
+          border-radius: 50%;
+          margin-left: auto; }
+          .filesDiv ul li div .delFileRight:hover {
             cursor: pointer;
             background-color: rgba(0, 0, 0, 0.1); }
         .filesDiv ul li div .downloadFileIcon {
@@ -137,14 +152,17 @@ button.createTopicBtn {
   margin-top: 50px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   padding: 30px 60px;
-  padding-bottom: 60px;
+  padding-bottom: 50px;
   border-radius: 5px; }
   .addFormContainer .EditButtonT,
   .topicContainer .EditButtonT {
     position: absolute;
     bottom: 0;
     right: 0;
-    margin: 15px; }
+    margin: 20px; }
+
+.addFormContainer {
+  padding-bottom: 100px; }
 
 .warnMsg {
   background-color: #f2dedf;

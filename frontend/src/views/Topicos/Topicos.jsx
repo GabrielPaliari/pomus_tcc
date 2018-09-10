@@ -95,7 +95,11 @@ class Topicos extends React.Component {
 
   handleClose = () => {
     this.setState({ 
-      addOpen: false 
+      addOpen: false,
+      selTopic: {
+        titulo:  '',
+        explicacao:  '',
+      }  
     });    
   };
 
@@ -241,10 +245,10 @@ class Topicos extends React.Component {
                   <Grid direction="column" container spacing={24}>
                     <h3 className="greenText">Novo Tópico</h3> 
                     <Grid item >
-                      <p class="pMarginOut">Preencha o Formulário abaixo com título, explicação e associe os <br/>
+                      <p className="pMarginOut">Preencha o Formulário abaixo com título, explicação e associe os
                             arquivos dos anexos para criar um tópico para esta disciplina.</p>
                     </Grid>
-                    <Grid item xs={6} sm={3}>                                                             
+                    <Grid item>                                                             
                       <TextField
                         name="titulo"
                         label="Título"
@@ -257,7 +261,7 @@ class Topicos extends React.Component {
                         onChange={this.handleInputChange}
                       />
                     </Grid>
-                    <Grid item xs={6} sm={3}>                                                  
+                    <Grid item>                                                  
                       <TextField
                         name="explicacao"
                         label="Explicação"
@@ -288,17 +292,16 @@ class Topicos extends React.Component {
                         {fileNameMsg}
                         {maxSizeMsg}
                         {filesLabel}                                              
-                        <ul>
+                        <ul className="newFileList">
                           {
                             this.state.files.map(f => 
                               <li key={f.name}>
                                 <div>
                                   <Icon className='fileIcon'>attachment</Icon>                                  
                                   <p>{this.truncate(f.name, 20) + ' - ' + Math.round(f.size/1000) + ' Kbytes'}</p>
-                                  <Icon onClick={() => (this.deleteFile(f))} className='delFileIcon'>close</Icon>
+                                  <Icon onClick={() => (this.deleteFile(f))} className='delFileRight'>close</Icon>
                                 </div>
                               </li>)
-
                           }
                         </ul>
                       </aside>
