@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_auth',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'rest_auth.registration',
     'django.contrib.sites',
     'corsheaders',
@@ -146,13 +147,21 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'usuarios.Usuario'
 
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+LOGIN_REDIRECT_URL = "http://localhost:3000/login"
+LOGIN_URL = "http://localhost:3000/login"
+
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Pomus] '
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'victorfunabashi@gmail.com'
-EMAIL_HOST_PASSWORD = 'Fun@b@shi'
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'pomus.96.oo@gmail.com'
+EMAIL_HOST_PASSWORD = '#p2o0m1u8s'
 
 # Permite apenas requisições de usuários logados:
 REST_FRAMEWORK = {

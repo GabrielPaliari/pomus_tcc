@@ -47,5 +47,4 @@ urlpatterns = [
     url(r'^api/auth/token/obtain/$', TokenObtainPairView.as_view()),
     url(r'^api/auth/token/refresh/$', TokenRefreshView.as_view()),
     url(r'^api/echo/$', EchoView.as_view()),
-    url(r'^api/accounts/', include('allauth.urls'))
 ]

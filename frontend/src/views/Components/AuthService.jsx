@@ -19,7 +19,7 @@ export default class AuthService {
             'password2': password
         };
 
-        fetch(`${this.domain}rest-auth/registration/`, {
+        return fetch(`${this.domain}rest-auth/registration/`, {
             method: 'post',
             body: JSON.stringify(usuario),
             headers: {
@@ -27,7 +27,10 @@ export default class AuthService {
               }
           })    
           .then(response => {
-            if(response.ok) response.json()
+            if(response.ok) {
+                response.json();
+                return Promise.resolve();
+            }
             else {
                 console.log(response);
                 alert("Ocorreu algum erro no sistema.");
