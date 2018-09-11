@@ -3,3 +3,5 @@ frontend-basics/**
 .vscode/*
 
 .pyc
+
+pomus_django/uploads/**

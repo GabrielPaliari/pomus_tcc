@@ -18,6 +18,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 
+import AlertDialog from 'views/Alerts/AlertDialog.jsx';
+
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
 const TOPICS_DISC = 'topicos_disc/';
@@ -39,6 +41,7 @@ class Forum extends React.Component {
       isFullOfFiles: false,
       sameFileName: false,
       maxSizeOn: false,
+      dialogOpen: false,
       selTopic: {
         titulo:  '',
         explicacao:  '',
@@ -119,7 +122,7 @@ class Forum extends React.Component {
 
   handleOpen = () => {
     this.setState({ 
-      isEditing: true,
+      isEditing: true
      });
   };
   
@@ -238,7 +241,8 @@ class Forum extends React.Component {
           })         
           this.handleClose();
           console.log(this.state.topicos);
-          alert("Tópico modificado com sucesso!");                 
+          alert("Tópico modificado com sucesso!");
+          this.handleDialogClose();                 
       });                         
         
   };
@@ -248,6 +252,14 @@ class Forum extends React.Component {
     var index = files.indexOf(file);
     files.splice(index, 1);
     this.setState({files});
+  };
+
+  handleDialogOpen = () => {
+    this.setState({ dialogOpen: true });
+  };
+
+  handleDialogClose = () => {
+    this.setState({ dialogOpen: false });
   };
 
   truncate(string, maxSize) {        
@@ -371,12 +383,20 @@ class Forum extends React.Component {
                           </aside>
                         </div>
                         <Button2 
-                          onClick={this.updateTopic} 
+                          onClick={this.handleDialogOpen} 
                           type="button" 
                           color="success"
                           className="finishEditBtn"
                           disabled={!this.state.selTopic.titulo || !this.state.selTopic.explicacao}>Finalizar edição</Button2>      
-                      </Grid>   
+                      </Grid>
+                      <AlertDialog
+                        handleClose={this.handleDialogClose}
+                        open={this.state.dialogOpen}
+                        handleConfirm={this.updateTopic}
+                        title={"Finalizar Edição"}
+                        message={"Tem certeza que deseja finalizar a edição deste tópico? Essa operação não poderá ser desfeita."}
+                        confirmBtnText={"Editar"}
+                        cancelBtnText={"Cancelar"}></AlertDialog>   
                     </div> 
     } else {
       editOrDetail =  <div className="topicContainer">
