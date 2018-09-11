@@ -274,36 +274,8 @@ class Forum extends React.Component {
     // console.log(this.state.selTopic);
     // console.log(this.props.search);
     // console.log("Files: ");
-    // console.log(this.state.files);
     let disciplina = this.state.discPai;
-    let selTopic = this.state.selTopic;
-    let pageHeader = '';    
-    if (disciplina.codigo) {
-      pageHeader = <h3>{this.state.discPai.codigo + ' - ' + selTopic.titulo}</h3>;
-    }
-    let maxFilesMsg; 
-    if (this.state.isFullOfFiles) {
-      maxFilesMsg = <div className="warnMsg">
-                      <p>O número máximo de arquivos permitido por tópico é {MAXFILES}.</p>
-                    </div>;
-    }
-    let fileNameMsg; 
-    if (this.state.sameFileName) {
-      fileNameMsg = <div className="warnMsg">
-                      <p>Os arquivos submetidos devem ter nomes únicos.</p>
-                    </div>;
-    } 
-    let maxSizeMsg;
-    if (this.state.maxSizeOn) {
-      maxSizeMsg =  <div className="warnMsg">
-                      <p>Os arquivos submetidos podem ter no máximo {MAXFILESIZE/1000000}MB cada.</p>
-                    </div>;
-    }
-    let filesLabel;
-    if (this.state.files.length > 0) {
-      filesLabel =  <InputLabel>Arquivos:</InputLabel>
-    }
-    
+    let selTopic = this.state.selTopic;      
     
     const isEditing = this.state.isEditing;
     let editOrDetail 
@@ -359,10 +331,20 @@ class Forum extends React.Component {
                             </Dropzone>
                           </div>
                           <aside className="filesDiv">
-                            {maxFilesMsg}
-                            {fileNameMsg}
-                            {maxSizeMsg}
-                            {filesLabel}                                              
+                            { this.state.isFullOfFiles ?
+                              <div className="warnMsg">
+                                <p>O número máximo de arquivos permitido por tópico é {MAXFILES}.</p>
+                              </div> : '' }
+                            { this.state.sameFileName ?
+                              <div className="warnMsg">
+                                <p>Os arquivos submetidos devem ter nomes únicos.</p>
+                              </div> : '' } 
+                            { this.state.maxSizeOn ?
+                              <div className="warnMsg">
+                                <p>Os arquivos submetidos podem ter no máximo {MAXFILESIZE/1000000}MB cada.</p>
+                              </div> : '' }
+                            {this.state.files.length > 0 ?
+                              <InputLabel>Arquivos:</InputLabel> : '' }                                              
                             <ul>
                               {
                                 this.state.files.map(f => 
@@ -407,7 +389,7 @@ class Forum extends React.Component {
                           </Grid>
                           <Divider/> 
                           <Grid item>   
-                            <h4>Anexos:</h4>                
+                            {this.state.files.length > 0 ? <h4>Anexos:</h4> : ''}                
                             <div className="filesDiv">                                 
                                 <ul>
                                   {
@@ -427,16 +409,18 @@ class Forum extends React.Component {
                                 </ul>
                             </div>     
                           </Grid>
-                          <Button variant="fab" color="primary" mini aria-label="Edit" className="EditButtonT"
-                            onClick={this.handleOpen}>
-                            <Icon>edit_icon</Icon>
-                          </Button>                
+                            {this.props.user.id === selTopic.criado_por ? 
+                              <Button variant="fab" color="primary" mini aria-label="Edit" className="EditButtonT"
+                                onClick={this.handleOpen}>
+                                <Icon>edit_icon</Icon>
+                              </Button> : ''}                                         
                         </Grid>   
                       </div> 
     }   
     return (             
-        <GridContainer direction="column" className="mainContainer">                 
-          {pageHeader}
+        <GridContainer direction="column" className="mainContainer">                     
+          { disciplina.codigo ? 
+            <h3>{this.state.discPai.codigo + ' - ' + selTopic.titulo}</h3> : '' }
           <Divider className="TopDivider"/>  
             {editOrDetail}
           <Divider className="BottomDivider"/>
