@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics
-from .models import Disciplina, Topico, Arquivo
-from .serializers import DisciplinaSerializer, TopicoSerializer, ArquivoSerializer
+from .models import Disciplina, Topico, Arquivo, Comentario
+from .serializers import DisciplinaSerializer, TopicoSerializer, ArquivoSerializer, ComentarioSerializer
 
 class DisicplinaView(viewsets.ModelViewSet):
   queryset = Disciplina.objects.all()
@@ -44,3 +44,20 @@ class ArquivoListView(generics.ListAPIView):
           queryset = queryset.filter(topico_pai=topico)
       return queryset
   
+class ComentarioView(viewsets.ModelViewSet):
+  queryset = Comentario.objects.all()
+  serializer_class = ComentarioSerializer
+
+class ComentarioListView(generics.ListAPIView):
+  serializer_class = ComentarioSerializer
+
+  def get_queryset(self):
+      """
+      Optionally restricts the returned 'Comentarios' to a given 'topico',
+      by filtering against a `topic_id` query parameter in the URL.
+      """
+      queryset = Comentario.objects.all()
+      topico = self.request.query_params.get('topic_id', None)      
+      if topico is not None:
+          queryset = queryset.filter(topico_pai=topico)
+      return queryset

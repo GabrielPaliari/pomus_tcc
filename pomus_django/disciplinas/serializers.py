@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Disciplina
 from .models import Topico
 from .models import Arquivo
+from .models import Comentario
 
 class DisciplinaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,3 +40,15 @@ class ArquivoSerializer(serializers.ModelSerializer):
                     'topico_pai',
                     'formato',
                     'tamanho')
+
+class ComentarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comentario
+        fields =   ('id',
+                    'titulo',
+                    'texto',
+                    'topico_pai',
+                    'criado_por',
+                    'curtidas',
+                    'criado_em',
+                    'editado_em')
