@@ -1,0 +1,8 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans %}Prezade '{{ user_display }}'!
+{% endblocktrans %}{% endautoescape %}
+{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Um novo usuário foi cadastrado com esse e-mail address.
+Para confirmar {{ activate_url }}. Caso não tenha sido você, favor ignorar esta mensagem.
+{% endblocktrans %}{% endautoescape %}
+{% blocktrans %}Atenciosamente,{% endblocktrans %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+{{ site_domain }}{% endblocktrans %}
