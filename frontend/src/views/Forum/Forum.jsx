@@ -3,14 +3,12 @@ import withStyles from "material-ui/styles/withStyles";
 
 import GridContainer from "components/Grid/GridContainer.jsx";
 
-import ListaTopicos from "views/Topicos/ListaTopicos.jsx";
 import TextField from '@material-ui/core/TextField';
 import disciplinasStyle from "assets/jss/material-kit-react/views/disciplinas.jsx";
 
 import Dropzone from 'react-dropzone'
 import Grid from '@material-ui/core/Grid';
 
-import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import Button2 from 'components/CustomButtons/Button.jsx';
 import Divider from '@material-ui/core/Divider';
@@ -18,7 +16,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 
-import AlertDialog from 'views/Alerts/AlertDialog.jsx';
+import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
