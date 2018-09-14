@@ -15,12 +15,21 @@ import AddModal from "views/Disciplinas/AddModal.jsx";
 import DetailsModal from "views/Disciplinas/DetailsModal.jsx";
 import EditModal from "views/Disciplinas/EditModal.jsx";
 
+import AuthService from 'views/Components/AuthService.jsx';
+
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
+const Auth = new AuthService('http://localhost:8000/api/');
+var profile =  {
+  user_id: 0
+};
 
 class Disciplinas extends React.Component {
   constructor(props) {
     super(props);
+    if(Auth.loggedIn()) {
+      profile = Auth.getProfile();
+    }
     // we use this to make the card to appear after the page has been rendered
     this.state = {
       disciplinas: [],
@@ -40,7 +49,8 @@ class Disciplinas extends React.Component {
         dataFim:  "2018-12-01",
         objetivos:"",
         programa: "",
-        preRequisitos: [] 
+        preRequisitos: [],
+        criado_por: profile.user_id
       },      
       preRequisitos: [],   
       codigoExiste: false        
@@ -48,6 +58,7 @@ class Disciplinas extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.deleteDisc = this.deleteDisc.bind(this);
     this.showDetails = this.showDetails.bind(this);
+    console.log("usuario: "+profile);
   }
   
   handleInputChange = (event) => {
