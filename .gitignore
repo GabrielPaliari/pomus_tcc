@@ -4,4 +4,6 @@ frontend-basics/**
 
 .pyc
 
-pomus_django/uploads/**
+uploads/
+
+__pycache__/
