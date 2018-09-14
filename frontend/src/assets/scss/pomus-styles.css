@@ -186,3 +186,20 @@ button.closeFormButon {
   position: absolute;
   top: 0;
   right: 0; }
+
+button.addCommentBtn {
+  color: white;
+  background-color: #4caf50;
+  float: right; }
+  button.addCommentBtn:hover {
+    background-color: #388e3c; }
+
+.delFileIcon {
+  border-radius: 50%;
+  font-size: 1em !important;
+  position: absolute;
+  right: 5px;
+  top: 5px; }
+  .delFileIcon:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1); }

@@ -6,6 +6,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import TextField from '@material-ui/core/TextField';
 import disciplinasStyle from "assets/jss/material-kit-react/views/disciplinas.jsx";
 
+import ComentarioList from "views/Components/Comentarios/ComentarioList.jsx"
 import Dropzone from 'react-dropzone'
 import Grid from '@material-ui/core/Grid';
 
@@ -15,6 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import InputLabel from '@material-ui/core/InputLabel';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
 
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 
@@ -33,7 +35,6 @@ class Forum extends React.Component {
     super(props);
     // we use this to make the card to appear after the page has been rendered
     this.state = {
-      topicos: [],
       discPai: {},
       isEditing: false,
       isFullOfFiles: false,
@@ -52,7 +53,7 @@ class Forum extends React.Component {
         topico_pai: '',
         formato: '',
         tamanho: '',
-      }    
+      }
     };
     this.handleInputChange = this.handleInputChange.bind(this)
   }
@@ -60,12 +61,6 @@ class Forum extends React.Component {
   componentDidMount() {
     this.fetchData();
   }
-
-  fetchTopics = () => {
-    fetch(API + TOPICS_DISC + this.props.search)
-      .then(response => response.json())
-      .then(data => this.setState({ topicos: data }));
-  };
   
   fetchData = () => {  
     const topicId = this.props.search.split('=')[1];   
@@ -274,11 +269,15 @@ class Forum extends React.Component {
     // console.log("Files: ");
     let disciplina = this.state.discPai;
     let selTopic = this.state.selTopic;      
-    
+    let commentaryList;
+    if (selTopic.id) {
+      commentaryList = <ComentarioList user={this.props.user} topicoPai={selTopic.id}></ComentarioList>;
+    }
+
     const isEditing = this.state.isEditing;
     let editOrDetail 
     if (isEditing) {
-      editOrDetail = <div className="topicContainer">
+      editOrDetail = <Paper className="topicContainer">
                       <IconButton onClick={this.closeEdit} className='closeFormButon'>
                         <Icon>close</Icon>
                       </IconButton>
@@ -377,9 +376,9 @@ class Forum extends React.Component {
                         message={"Tem certeza que deseja finalizar a edição deste tópico? Essa operação não poderá ser desfeita."}
                         confirmBtnText={"Editar"}
                         cancelBtnText={"Cancelar"}></AlertDialog>   
-                    </div> 
+                    </Paper> 
     } else {
-      editOrDetail =  <div className="topicContainer">
+      editOrDetail =  <Paper className="topicContainer">
                         <Grid direction="column" container spacing={24}>
                           <Grid item> 
                             <h4>Explicação:</h4> 
@@ -413,7 +412,7 @@ class Forum extends React.Component {
                                 <Icon>edit_icon</Icon>
                               </Button> : ''}                                         
                         </Grid>   
-                      </div> 
+                      </Paper> 
     }   
     return (             
         <GridContainer direction="column" className="mainContainer">                     
@@ -422,6 +421,7 @@ class Forum extends React.Component {
           <Divider className="TopDivider"/>  
             {editOrDetail}
           <Divider className="BottomDivider"/>
+          {commentaryList}
         </GridContainer>                            
       
     );
