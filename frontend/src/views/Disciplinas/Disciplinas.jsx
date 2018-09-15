@@ -15,12 +15,21 @@ import AddModal from "views/Disciplinas/AddModal.jsx";
 import DetailsModal from "views/Disciplinas/DetailsModal.jsx";
 import EditModal from "views/Disciplinas/EditModal.jsx";
 
+import AuthService from 'views/Components/AuthService.jsx';
+
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
+const Auth = new AuthService('http://localhost:8000/api/');
+var profile =  {
+  user_id: 0
+};
 
 class Disciplinas extends React.Component {
   constructor(props) {
     super(props);
+    if(Auth.loggedIn()) {
+      profile = Auth.getProfile();
+    }
     // we use this to make the card to appear after the page has been rendered
     this.state = {
       disciplinas: [],
@@ -29,6 +38,10 @@ class Disciplinas extends React.Component {
       editOpen: false,
       selectedDisc: {
         preRequisitos: [],
+      },
+      discUser: {
+        username: "",
+        email: "",
       },
       newDisc: {
         codigo:   "",
@@ -40,7 +53,8 @@ class Disciplinas extends React.Component {
         dataFim:  "2018-12-01",
         objetivos:"",
         programa: "",
-        preRequisitos: [] 
+        preRequisitos: [],
+        criado_por: profile.user_id,
       },      
       preRequisitos: [],   
       codigoExiste: false        
@@ -65,7 +79,6 @@ class Disciplinas extends React.Component {
     this.setState({
       [name]: value,
     });
-    console.log(this.state.preRequisitos);
   };
 
   handleOpen = () => {
@@ -127,7 +140,6 @@ class Disciplinas extends React.Component {
             disciplinas: [...prevState.disciplinas, data]
           }))
           this.handleClose();
-          console.log(this.state.disciplinas);
           alert("Disciplina "+disciplina.codigo+" criada com sucesso!"); 
         }          
       });                         
@@ -155,7 +167,7 @@ class Disciplinas extends React.Component {
       for (let i = 0; i < preReq.length; i++) {
         preRequisitos.push(preReq[i].value);
       };
-      disciplina.preRequisitos = preRequisitos;  
+      disciplina.preRequisitos = preRequisitos;
       let url = API + DISC_QUERY + disciplina.id +"/"; 
       fetch(url, {
         method: 'put',
@@ -172,12 +184,11 @@ class Disciplinas extends React.Component {
           let disciplinas = this.state.disciplinas;
           for (let i = 0; i < disciplinas.length; i++) {
             if (disciplinas[i]["id"] === disciplina["id"]) {
-              disciplinas[i] = disciplina;
+              disciplinas[i] = data;
               this.setState({disciplinas});
             } 
           }
           this.handleClose();
-          console.log(this.state.disciplinas);
           alert("Disciplina "+disciplina.codigo+" editada com sucesso!"); 
         }          
       });                         
@@ -207,20 +218,29 @@ class Disciplinas extends React.Component {
     } 
   };
 
-  showDetails = (disc) => {   
-    this.setState({
-      selectedDisc: disc      
-    }, function()  {
-      this.openDetails();
-    });     
+  showDetails = (disc) => {
+    fetch(API + 'usuarios/' + disc.criado_por + "/")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ discUser: data }, () => {
+          disc.criado_em = disc["criado_em"].replace('T', ' ');
+          disc.editado_em = disc["editado_em"].replace('T', ' ');
+          disc.criado_em = disc["criado_em"].substring(0, 19);
+          disc.editado_em = disc["editado_em"].substring(0, 19);
+          this.setState({
+            selectedDisc: disc      
+          }, function()  {
+            this.openDetails();
+          });
+        });
+      });
   };
 
   openDetails = () => {
     this.setState({detailsOpen: true});
   }
 
-  openEdit = (disc) => {   
-    console.log(disc);    
+  openEdit = (disc) => {
     let preReqUrls = disc["preRequisitos"];
     let disciplinas = this.state.disciplinas;
     if (preReqUrls.length > 0) {
@@ -274,7 +294,8 @@ class Disciplinas extends React.Component {
           detailsOpen={this.state.detailsOpen}
           handleOpen={this.openDetails} 
           handleClose={this.handleClose} 
-          disciplinas={this.state.disciplinas}/>
+          disciplinas={this.state.disciplinas}
+          discUser={this.state.discUser}/>
         <AddModal 
           disciplinas={this.state.disciplinas} 
           newDisc={this.state.newDisc}

@@ -29,6 +29,10 @@ class UsuarioDisciplinas extends React.Component {
       disciplinas: [],
       disciplinasUsuario: [],
       disciplinasRestantes: [],
+      discUser: {
+        username: "",
+        email: "",
+      },
       open: false,
       detailsOpen: false,
       editOpen: false,
@@ -144,11 +148,21 @@ class UsuarioDisciplinas extends React.Component {
   };
 
   showDetails = (disc) => {   
-    this.setState({
-      selectedDisc: disc      
-    }, function()  {
-      this.openDetails();
-    });     
+    fetch(API + 'usuarios/' + disc.criado_por + "/")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ discUser: data }, () => {
+          disc.criado_em = disc["criado_em"].replace('T', ' ');
+          disc.editado_em = disc["editado_em"].replace('T', ' ');
+          disc.criado_em = disc["criado_em"].substring(0, 19);
+          disc.editado_em = disc["editado_em"].substring(0, 19);
+          this.setState({
+            selectedDisc: disc      
+          }, function()  {
+            this.openDetails();
+          });
+        });
+      });    
   };
 
   openDetails = () => {
@@ -213,7 +227,8 @@ class UsuarioDisciplinas extends React.Component {
           detailsOpen={this.state.detailsOpen}
           handleOpen={this.openDetails} 
           handleClose={this.handleClose} 
-          disciplinas={this.state.disciplinas}/>
+          disciplinas={this.state.disciplinas}
+          discUser={this.state.discUser}/>
         <UsuarioAddModal 
           disciplinas={this.state.disciplinasRestantes} 
           handleOpen={this.handleOpen} 
