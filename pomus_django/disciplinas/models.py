@@ -73,4 +73,21 @@ class Comentario(models.Model):
     return super(Comentario, self).save(*args, **kwargs)
 
   def __str__(self):
-    return "%s - topico: %s" % (self.titulo, self.topico_pai.titulo)
+    return "%s - topico: %s" % (self.texto, self.topico_pai.titulo)
+
+class Resposta(models.Model):
+  texto = models.CharField(max_length=1000)
+  comentario_pai = models.ForeignKey(Comentario, on_delete=models.CASCADE, blank=True)
+  criado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+  criado_em  = models.DateTimeField(editable = False)
+  editado_em = models.DateTimeField(editable = False)
+
+  def save(self, *args, **kwargs):
+    ''' On save, update timestamps '''
+    if not self.id:
+        self.criado_em = timezone.now()
+    self.editado_em = timezone.now()
+    return super(Resposta, self).save(*args, **kwargs)
+
+  def __str__(self):
+    return "%s - topico: %s" % (self.texto)
