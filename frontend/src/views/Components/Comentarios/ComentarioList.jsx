@@ -169,7 +169,7 @@ class ComentarioList extends React.Component {
             open={this.state.dialogOpen}
             handleConfirm={this.deleteComment}
             title={"Deletar comentário"}
-            message={"Tem certeza que deseja deltar este comentário? Essa operação não poderá ser desfeita."}
+            message={"Tem certeza que deseja deletar este comentário? Esta operação não poderá ser desfeita."}
             confirmBtnText={"Deletar"}
             cancelBtnText={"Cancelar"}></AlertDialog>   
       </Grid>                                  

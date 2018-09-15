@@ -194,12 +194,12 @@ button.addCommentBtn {
   button.addCommentBtn:hover {
     background-color: #388e3c; }
 
-.delFileIcon {
+.ComIcon {
   border-radius: 50%;
   font-size: 1em !important;
   position: absolute;
   right: 5px;
   top: 5px; }
-  .delFileIcon:hover {
+  .ComIcon:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1); }

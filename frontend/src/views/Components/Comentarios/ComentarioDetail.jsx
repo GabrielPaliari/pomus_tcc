@@ -13,6 +13,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 
+import Textarea from 'react-textarea-autosize';
+
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 
 const API = 'http://localhost:8000/api/';
@@ -25,12 +27,25 @@ class ComentarioDetail extends React.Component {
     super(props);
     // we use this to make the card to appear after the page has been rendered
     this.state = {
-      autor: {},               
+      autor: {},      
+      editing: false,  
+      commentEdit: {}, 
+      edited: false,      
     };
+    this.textInput = React.createRef();
   }
   
   componentDidMount() {
     this.fetchAutor();
+    let comentario = this.props.comentario;
+    if (comentario) {
+      this.setState({
+        commentEdit: {
+          id: comentario.id,
+          texto: comentario.texto
+        }
+      })      
+    }
   }
   
   fetchAutor = () => {  
@@ -39,8 +54,10 @@ class ComentarioDetail extends React.Component {
       const userUrl = API + USER + userId + '/';
       fetch(userUrl)
         .then(response => response.json())
-        .then(data => {        
-          this.setState({ autor: data });              
+        .then(data => {                  
+          this.setState({ 
+            autor: data,            
+          });                        
         }); 
     }
   };
@@ -53,6 +70,48 @@ class ComentarioDetail extends React.Component {
     this.setState({ dialogOpen: false });
   };
 
+  editCom = () => {
+    this.setState({editing: true});
+  }
+  
+  finishEdit = (comentario) => {
+    let commentEdit = this.state.commentEdit;
+    if (comentario.criado_por === this.props.user.id && commentEdit.texto) {
+      comentario.texto = commentEdit.texto; 
+      console.log(comentario)
+      fetch(API + COMENTARIOS + comentario.id + '/', {
+        method: 'put',
+        body: JSON.stringify(comentario),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      })   
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          editing: false,
+          edited: true
+        });   
+      })   
+    }     
+  }
+
+  cancelEdit = () => {
+    this.setState({editing: false});    
+  }
+
+  handleInputChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    let commentEdit = {...this.state.commentEdit};
+    commentEdit[name] = value; 
+    this.setState({commentEdit});  
+    // console.log(this.state.selTopic);  
+  }
+
   truncate(string, maxSize) {        
     if (string.length > maxSize) {
       return (string.substring(0,maxSize) + "...");
@@ -64,22 +123,43 @@ class ComentarioDetail extends React.Component {
   render() {   
     const { comentario, classes, user } = this.props;   
     let delIcon; 
-    if (comentario.criado_por === user.id) {
-      delIcon = <Icon onClick={() => (this.props.del(comentario))} className='delFileIcon'>close</Icon> 
+    let editIcon; 
+    let editing = this.state.editing;
+    let edited = this.state.edited || (comentario.criado_em !== comentario.editado_em);
+    if (comentario.criado_por === user.id) {      
+      delIcon = <Icon onClick={() => (this.props.del(comentario))} className='ComIcon'>delete</Icon> 
+      editIcon = <Icon onClick={() => (this.editCom())} style={{right: 25, color: '#4caf50'}} className='ComIcon'>edit</Icon> 
     }
-    if (comentario) {
+    if (comentario && !editing) {
       return (             
           <Paper className={classes.commentaryPaper}>
             <b className={classes.userName}>{this.state.autor.username}</b>                                                           
             <span className={classes.date}>
               {" - " + comentario.criado_em.substring(11,16) +
                 ' - ' + comentario.criado_em.substring(8,10) + 
-                '/' + comentario.criado_em.substring(5,7) + 
-                '/' + comentario.criado_em.substring(0,4)}</span>           
+                '/' + comentario.criado_em.substring(5,7) +
+                ( edited ? ' (edited)' : '')}</span>           
             <p>{comentario.texto}</p>   
             {delIcon}        
+            {editIcon}        
           </Paper>                                      
       );
+    } else if (comentario && editing) {
+      return (
+        <Paper className={classes.commentaryPaper}>
+          <Icon onClick={() => (this.cancelEdit())} style={{right: 25}} className='ComIcon'>close</Icon> 
+          <Icon onClick={() => (this.finishEdit(comentario))} style={{color: '#4caf50'}} className='ComIcon'>done</Icon> 
+          <Textarea name="texto"  
+                    value={this.state.commentEdit.texto}                
+                    minRows={2}
+                    maxRows={10}
+                    maxLength={1000}
+                    className={classes.commTextArea}
+                    onChange={this.handleInputChange}                      
+                    placeholder="Edite o seu comentário..."
+                    ref={this.textInput}/>
+        </Paper>   
+      )   
     } else {
       return (        
         <p>loading...</p>
