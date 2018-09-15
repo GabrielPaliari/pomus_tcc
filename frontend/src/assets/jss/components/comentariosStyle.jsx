@@ -40,6 +40,26 @@ const comentariosStyle = {
   },
   section: {
     padding: '10px 30px'    
+  },
+  LikeBtn: {
+    position: 'absolute !important', 
+    borderRadius: '50% !important',
+    padding: '5px !important',
+    minWidth: '0 !important',
+    width: '36px !important',
+    top: 42,
+    left: -40
+  },
+  LikeCount: {
+    left: -36,
+    top: 8,
+    padding: 2,
+    position: 'absolute !important',
+    minWidth: '0 !important',
+    borderBottom: '1px solid #4caf50',    
+    width: 30,
+    height: 30,
+    textAlign: 'center',    
   }
 };
 

@@ -30,7 +30,8 @@ class ComentarioDetail extends React.Component {
       autor: {},      
       editing: false,  
       commentEdit: {}, 
-      edited: false,      
+      edited: false,  
+      liked: false,    
     };
     this.textInput = React.createRef();
   }
@@ -60,7 +61,7 @@ class ComentarioDetail extends React.Component {
           });                        
         }); 
     }
-  };
+  };  
 
   handleDialogOpen = () => {
     this.setState({ dialogOpen: true });
@@ -112,6 +113,32 @@ class ComentarioDetail extends React.Component {
     // console.log(this.state.selTopic);  
   }
 
+  likeComment = (comentario) => {
+      let curtidas = comentario.curtidas;
+      let userId = this.props.user.id;
+      let index = curtidas.indexOf(userId);
+      if (index === -1) {
+        curtidas.push(userId);
+        this.setState({liked: true})
+      } else {
+        curtidas.splice(index, 1);
+        this.setState({liked: false})
+      } 
+      comentario.curtidas = curtidas;      
+      console.log(comentario)
+      fetch(API + COMENTARIOS + comentario.id + '/', {
+        method: 'put',
+        body: JSON.stringify(comentario),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      })   
+      .then(response => response.json())
+      .then(data => {        
+        console.log(data);           
+      }) 
+  }
+
   truncate(string, maxSize) {        
     if (string.length > maxSize) {
       return (string.substring(0,maxSize) + "...");
@@ -126,9 +153,10 @@ class ComentarioDetail extends React.Component {
     let editIcon; 
     let editing = this.state.editing;
     let edited = this.state.edited || (comentario.criado_em !== comentario.editado_em);
+    let liked = comentario.curtidas.indexOf(user.id) !== -1 || this.state.liked;
     if (comentario.criado_por === user.id) {      
-      delIcon = <Icon onClick={() => (this.props.del(comentario))} className='ComIcon'>delete</Icon> 
-      editIcon = <Icon onClick={() => (this.editCom())} style={{right: 25, color: '#4caf50'}} className='ComIcon'>edit</Icon> 
+      delIcon = <Icon onClick={() => (this.props.del(comentario))} className='ComIcon'>delete</Icon>;
+      editIcon = <Icon onClick={() => (this.editCom())} style={{right: 25, color: '#4caf50'}} className='ComIcon'>edit</Icon>; 
     }
     if (comentario && !editing) {
       return (             
@@ -139,9 +167,13 @@ class ComentarioDetail extends React.Component {
                 ' - ' + comentario.criado_em.substring(8,10) + 
                 '/' + comentario.criado_em.substring(5,7) +
                 ( edited ? ' (edited)' : '')}</span>           
-            <p>{comentario.texto}</p>   
+            <p>{comentario.texto}</p>  
             {delIcon}        
             {editIcon}        
+            <Button onClick={() => (this.likeComment(comentario))} className={classes.LikeBtn}>
+              <Icon style={{color: liked ?  '#4caf50' : '#CCCCCC', fontSize: 20}}>thumb_up</Icon>               
+            </Button>
+            <span className={classes.LikeCount}>{comentario.curtidas.length}</span> 
           </Paper>                                      
       );
     } else if (comentario && editing) {
