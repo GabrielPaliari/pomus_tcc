@@ -3,22 +3,12 @@ import withStyles from "material-ui/styles/withStyles";
 
 import comentariosStyle from "assets/jss/components/comentariosStyle.jsx";
 
-import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
 import Button from '@material-ui/core/Button';
-import Button2 from 'components/CustomButtons/Button.jsx';
-import Divider from '@material-ui/core/Divider';
-import InputLabel from '@material-ui/core/InputLabel';
 import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-
 import Textarea from 'react-textarea-autosize';
 
-import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
-
 const API = 'http://localhost:8000/api/';
-const TOPIC = 'topicos/';
 const USER = 'usuarios/';
 const COMENTARIOS = 'comentarios/';
 
