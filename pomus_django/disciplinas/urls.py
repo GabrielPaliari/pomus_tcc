@@ -5,7 +5,7 @@ from rest_framework import routers
 from django.conf.urls import url, include
 
 router = routers.DefaultRouter()
-router.register('disciplinas', views.DisicplinaView) 
+router.register('disciplinas', views.DisciplinaView) 
 router.register('topicos', views.TopicoView) 
 router.register('usuarios', UsuarioView) 
 router.register('arquivos', views.ArquivoView) 

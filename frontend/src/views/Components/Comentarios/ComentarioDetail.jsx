@@ -62,7 +62,11 @@ class ComentarioDetail extends React.Component {
   }
 
   render() {   
-    const { comentario, classes } = this.props;   
+    const { comentario, classes, user } = this.props;   
+    let delIcon; 
+    if (comentario.criado_por === user.id) {
+      delIcon = <Icon onClick={() => (this.props.del(comentario))} className='delFileIcon'>close</Icon> 
+    }
     if (comentario) {
       return (             
           <Paper className={classes.commentaryPaper}>
@@ -73,7 +77,7 @@ class ComentarioDetail extends React.Component {
                 '/' + comentario.criado_em.substring(5,7) + 
                 '/' + comentario.criado_em.substring(0,4)}</span>           
             <p>{comentario.texto}</p>   
-            <Icon onClick={() => (this.props.del(comentario))} className='delFileIcon'>close</Icon>         
+            {delIcon}        
           </Paper>                                      
       );
     } else {
