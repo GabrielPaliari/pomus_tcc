@@ -54,7 +54,8 @@ class Disciplinas extends React.Component {
         objetivos:"",
         programa: "",
         preRequisitos: [],
-        criado_por: profile.user_id
+        criado_por: profile.user_id,
+        editado_em: "",
       },      
       preRequisitos: [],   
       codigoExiste: false        
@@ -126,6 +127,7 @@ class Disciplinas extends React.Component {
         preRequisitos.push(preReq[i].value);
       };
       disciplina.preRequisitos = preRequisitos;   
+      disciplina.editado_em = new Date().toISOString();
       fetch(API + DISC_QUERY, {
         method: 'post',
         body: JSON.stringify(disciplina),
@@ -171,6 +173,7 @@ class Disciplinas extends React.Component {
         preRequisitos.push(preReq[i].value);
       };
       disciplina.preRequisitos = preRequisitos;  
+      disciplina.editado_em = new Date().toISOString();
       let url = API + DISC_QUERY + disciplina.id +"/"; 
       fetch(url, {
         method: 'put',
@@ -227,6 +230,10 @@ class Disciplinas extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ discUser: data }, () => {
+          disc.criado_em = disc["criado_em"].replace('T', ' ');
+          disc.editado_em = disc["editado_em"].replace('T', ' ');
+          disc.criado_em = disc["criado_em"].substring(0, 19);
+          disc.editado_em = disc["editado_em"].substring(0, 19);
           this.setState({
             selectedDisc: disc      
           }, function()  {
