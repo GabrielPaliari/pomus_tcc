@@ -150,10 +150,9 @@ class DetailsModal extends React.Component {
                       {discUser.username}
                     </Paper>
                   </Grid>
-                </Grid>              
-              </Grid>
-              {/* Data: */}
-              <Grid item container className={classes.group} spacing={24}>
+                </Grid>
+                {/* Data: */}
+                <Grid item container className={classes.group} spacing={24}>
                   <Grid item xs={6} sm={3}>                  
                     <h6 className={classes.title}>Criada em:</h6>
                   </Grid>
@@ -166,7 +165,8 @@ class DetailsModal extends React.Component {
                   <Grid item xs={6} sm={3}>                  
                     <Paper className={classes.paper}>{selectedDisc.editado_em}</Paper>
                   </Grid>
-                </Grid>              
+                </Grid>             
+              </Grid>             
               <DetailsModalWrapped />
             </Paper>
           </Modal>
