@@ -135,8 +135,9 @@ class ComentarioDetail extends React.Component {
       })   
       .then(response => response.json())
       .then(data => {        
-        console.log(data);           
+        this.props.handleLiked(data);          
       }) 
+      
   }
 
   truncate(string, maxSize) {        
@@ -166,12 +167,12 @@ class ComentarioDetail extends React.Component {
               {" - " + comentario.criado_em.substring(11,16) +
                 ' - ' + comentario.criado_em.substring(8,10) + 
                 '/' + comentario.criado_em.substring(5,7) +
-                ( edited ? ' (edited)' : '')}</span>           
+                ( edited ? ' (editado)' : '')}</span>           
             <p>{comentario.texto}</p>  
             {delIcon}        
             {editIcon}        
             <Button onClick={() => (this.likeComment(comentario))} className={classes.LikeBtn}>
-              <Icon style={{color: liked ?  '#4caf50' : '#CCCCCC', fontSize: 20}}>thumb_up</Icon>               
+              <Icon style={{color: liked ?  '#4caf50' : '#CCCCCC'}}>thumb_up</Icon>               
             </Button>
             <span className={classes.LikeCount}>{comentario.curtidas.length}</span> 
           </Paper>                                      

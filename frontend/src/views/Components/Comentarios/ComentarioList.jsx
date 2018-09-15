@@ -35,12 +35,13 @@ class ComentarioList extends React.Component {
       newComment: {
         texto: '',
       },
-      cToDel: {}           
+      cToDel: {},
+      orderString: 'curtidas'         
     };
   }
   
   componentDidMount() {
-    this.fetchList()
+    this.fetchList();    
   }
 
   fetchList = () => {  
@@ -122,6 +123,20 @@ class ComentarioList extends React.Component {
     this.setState({ dialogOpen: false });
   };
 
+  handleLiked = (c) => {
+    let comentarios = this.state.comentarios;
+    comentarios.forEach((comment, index) => {
+      if (c.id === comment.id) {
+        comentarios[index] = c;
+      }
+    }); 
+    this.setState({ comentarios });
+  };
+
+  orderBy = (orderString) => {
+    this.setState({orderString});
+  }
+
   truncate(string, maxSize) {        
     if (string.length > maxSize) {
       return (string.substring(0,maxSize) + "...");
@@ -131,17 +146,24 @@ class ComentarioList extends React.Component {
   }
 
   render() {   
-    const { newComm, user , classes } = this.props;
-    // console.log(this.state);    
+    const { user , classes } = this.props;     
     return (             
       <Grid item sm={12}>  
         <div className={classes.section}>
+          <span className={classes.orderSpan}>Ordenar por: <Button onClick={() => (this.orderBy('curtidas'))}>curtidas</Button> | <Button onClick={() => (this.orderBy('data'))}>Data de criação</Button></span>
           <h5>Comentários</h5>
           <ul className={classes.commentsList}>
-            {
-              this.state.comentarios.map(c => 
+            {this.state.comentarios
+              .sort((a, b) => {
+                if (this.state.orderString === 'curtidas') {
+                  return a.curtidas.length < b.curtidas.length;
+                } else if (this.state.orderString === 'data') {
+                  return a.criado_em < b.criado_em; 
+                }                
+              })
+              .map(c => 
                 <li key={c.id}>
-                  <ComentarioDetail user={user} comentario={c} del={this.prepareDel}></ComentarioDetail>
+                  <ComentarioDetail user={user} comentario={c} del={this.prepareDel} handleLiked={this.handleLiked}></ComentarioDetail>
                 </li>)
             }
           </ul>

@@ -48,10 +48,10 @@ const comentariosStyle = {
     minWidth: '0 !important',
     width: '36px !important',
     top: 42,
-    left: -40
+    left: -44
   },
   LikeCount: {
-    left: -36,
+    left: -40,
     top: 8,
     padding: 2,
     position: 'absolute !important',
