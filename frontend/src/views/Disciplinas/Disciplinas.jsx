@@ -55,7 +55,6 @@ class Disciplinas extends React.Component {
         programa: "",
         preRequisitos: [],
         criado_por: profile.user_id,
-        editado_em: "",
       },      
       preRequisitos: [],   
       codigoExiste: false        
@@ -125,7 +124,6 @@ class Disciplinas extends React.Component {
         preRequisitos.push(preReq[i].value);
       };
       disciplina.preRequisitos = preRequisitos;   
-      disciplina.editado_em = new Date().toISOString();
       fetch(API + DISC_QUERY, {
         method: 'post',
         body: JSON.stringify(disciplina),
@@ -169,8 +167,7 @@ class Disciplinas extends React.Component {
       for (let i = 0; i < preReq.length; i++) {
         preRequisitos.push(preReq[i].value);
       };
-      disciplina.preRequisitos = preRequisitos;  
-      disciplina.editado_em = new Date().toISOString();
+      disciplina.preRequisitos = preRequisitos;
       let url = API + DISC_QUERY + disciplina.id +"/"; 
       fetch(url, {
         method: 'put',
@@ -187,7 +184,7 @@ class Disciplinas extends React.Component {
           let disciplinas = this.state.disciplinas;
           for (let i = 0; i < disciplinas.length; i++) {
             if (disciplinas[i]["id"] === disciplina["id"]) {
-              disciplinas[i] = disciplina;
+              disciplinas[i] = data;
               this.setState({disciplinas});
             } 
           }

@@ -16,7 +16,7 @@ class Disciplina(models.Model):
   preRequisitos = models.ManyToManyField("self", blank=True, symmetrical=False)
   criado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
   criado_em  = models.DateTimeField(default='2018-08-01', editable = False)
-  editado_em = models.DateTimeField(default='2018-08-01')
+  editado_em = models.DateTimeField(default='2018-08-01', editable = False)
   
   def save(self, *args, **kwargs):
     ''' On save, update timestamps '''
