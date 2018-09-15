@@ -63,7 +63,6 @@ class Disciplinas extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.deleteDisc = this.deleteDisc.bind(this);
     this.showDetails = this.showDetails.bind(this);
-    console.log("usuario: "+profile);
   }
   
   handleInputChange = (event) => {
@@ -81,7 +80,6 @@ class Disciplinas extends React.Component {
     this.setState({
       [name]: value,
     });
-    console.log(this.state.preRequisitos);
   };
 
   handleOpen = () => {
@@ -144,7 +142,6 @@ class Disciplinas extends React.Component {
             disciplinas: [...prevState.disciplinas, data]
           }))
           this.handleClose();
-          console.log(this.state.disciplinas);
           alert("Disciplina "+disciplina.codigo+" criada com sucesso!"); 
         }          
       });                         
@@ -195,7 +192,6 @@ class Disciplinas extends React.Component {
             } 
           }
           this.handleClose();
-          console.log(this.state.disciplinas);
           alert("Disciplina "+disciplina.codigo+" editada com sucesso!"); 
         }          
       });                         
@@ -247,8 +243,7 @@ class Disciplinas extends React.Component {
     this.setState({detailsOpen: true});
   }
 
-  openEdit = (disc) => {   
-    console.log(disc);    
+  openEdit = (disc) => {
     let preReqUrls = disc["preRequisitos"];
     let disciplinas = this.state.disciplinas;
     if (preReqUrls.length > 0) {
