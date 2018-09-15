@@ -53,7 +53,7 @@ const theme = createMuiTheme({
 
 class DetailsModal extends React.Component {  
   render() {
-    const { classes, selectedDisc, disciplinas } = this.props;
+    const { classes, selectedDisc, disciplinas, discUser } = this.props;
     let keys = [];    
     let preReq = [];    
     if (selectedDisc){      
@@ -139,8 +139,34 @@ class DetailsModal extends React.Component {
                       {selectedDisc.programa ? selectedDisc.programa : "-"}
                     </Paper>
                   </Grid>
-                </Grid>                
-              </Grid>                   
+                </Grid>  
+                {/* Usuário: */}
+                <Grid item container className={classes.group}>
+                  <Grid item xs={4} sm={2}>                  
+                    <h6 className={classes.title}>Criada por:</h6>
+                  </Grid>
+                  <Grid item xs={12} sm={10}>                  
+                    <Paper className={classes.field}>
+                      {discUser.username}
+                    </Paper>
+                  </Grid>
+                </Grid>              
+              </Grid>
+              {/* Data: */}
+              <Grid item container className={classes.group} spacing={24}>
+                  <Grid item xs={6} sm={3}>                  
+                    <h6 className={classes.title}>Criada em:</h6>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>                  
+                    <Paper className={classes.paper}>{selectedDisc.criado_em}</Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>                  
+                    <h6 className={classes.title}>Editada em:</h6>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>                  
+                    <Paper className={classes.paper}>{selectedDisc.editado_em}</Paper>
+                  </Grid>
+                </Grid>              
               <DetailsModalWrapped />
             </Paper>
           </Modal>

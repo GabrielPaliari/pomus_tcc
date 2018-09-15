@@ -39,6 +39,10 @@ class Disciplinas extends React.Component {
       selectedDisc: {
         preRequisitos: [],
       },
+      discUser: {
+        username: "",
+        email: "",
+      },
       newDisc: {
         codigo:   "",
         nome:     "",
@@ -218,12 +222,18 @@ class Disciplinas extends React.Component {
     } 
   };
 
-  showDetails = (disc) => {   
-    this.setState({
-      selectedDisc: disc      
-    }, function()  {
-      this.openDetails();
-    });     
+  showDetails = (disc) => {
+    fetch(API + 'usuarios/' + disc.criado_por + "/")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ discUser: data }, () => {
+          this.setState({
+            selectedDisc: disc      
+          }, function()  {
+            this.openDetails();
+          });
+        });
+      });
   };
 
   openDetails = () => {
@@ -285,7 +295,8 @@ class Disciplinas extends React.Component {
           detailsOpen={this.state.detailsOpen}
           handleOpen={this.openDetails} 
           handleClose={this.handleClose} 
-          disciplinas={this.state.disciplinas}/>
+          disciplinas={this.state.disciplinas}
+          discUser={this.state.discUser}/>
         <AddModal 
           disciplinas={this.state.disciplinas} 
           newDisc={this.state.newDisc}
