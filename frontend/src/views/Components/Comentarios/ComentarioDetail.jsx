@@ -10,6 +10,8 @@ import Textarea from 'react-textarea-autosize';
 
 import RespostasList from 'views/Components/Respostas/RespostasList.jsx';
 
+import AuthService from "views/Components/AuthService.jsx";
+
 const API = 'http://localhost:8000/api/';
 const USER = 'usuarios/';
 const COMENTARIOS = 'comentarios/';
@@ -27,6 +29,7 @@ class ComentarioDetail extends React.Component {
       showResp: false,
     };
     this.textInput = React.createRef();
+    this.Auth = new AuthService();
   }
   
   componentDidMount() {
@@ -42,18 +45,27 @@ class ComentarioDetail extends React.Component {
     }
   }
   
-  fetchAutor = () => {  
-    if (this.props.comentario) {       
-      const userId = this.props.comentario.criado_por;   
-      const userUrl = API + USER + userId + '/';
-      fetch(userUrl)
-        .then(response => response.json())
-        .then(data => {                  
-          this.setState({ 
-            autor: data,            
-          });                        
-        }); 
+  fetchAutor = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
     }
+    else {
+      if (this.props.comentario) {       
+        const userId = this.props.comentario.criado_por;   
+        const userUrl = API + USER + userId + '/';
+        fetch(userUrl, {
+          headers: {
+            'Authorization': 'Bearer ' + this.Auth.getToken()
+          }
+        })
+          .then(response => response.json())
+          .then(data => {                  
+            this.setState({ 
+              autor: data,            
+            });                        
+          }); 
+      }
+    } 
   };  
 
   handleDialogOpen = () => {
@@ -69,25 +81,31 @@ class ComentarioDetail extends React.Component {
   }
   
   finishEdit = (comentario) => {
-    let commentEdit = this.state.commentEdit;
-    if (comentario.criado_por === this.props.user.id && commentEdit.texto) {
-      comentario.texto = commentEdit.texto; 
-      console.log(comentario)
-      fetch(API + COMENTARIOS + comentario.id + '/', {
-        method: 'put',
-        body: JSON.stringify(comentario),
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })   
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState({
-          editing: false,
-          edited: true
-        });   
-      })   
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let commentEdit = this.state.commentEdit;
+      if (comentario.criado_por === this.props.user.id && commentEdit.texto) {
+        comentario.texto = commentEdit.texto; 
+        console.log(comentario)
+        fetch(API + COMENTARIOS + comentario.id + '/', {
+          method: 'put',
+          body: JSON.stringify(comentario),
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.Auth.getToken()
+          }
+        })   
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          this.setState({
+            editing: false,
+            edited: true
+          });   
+        })   
+      }
     }     
   }
 
@@ -107,6 +125,10 @@ class ComentarioDetail extends React.Component {
   }
 
   likeComment = (comentario) => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
       let curtidas = comentario.curtidas;
       let userId = this.props.user.id;
       let index = curtidas.indexOf(userId);
@@ -123,14 +145,15 @@ class ComentarioDetail extends React.Component {
         method: 'put',
         body: JSON.stringify(comentario),
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.Auth.getToken()
         }
       })   
       .then(response => response.json())
       .then(data => {        
         this.props.handleLiked(data);          
       }) 
-      
+    }
   }
 
   toggleShow = () => {

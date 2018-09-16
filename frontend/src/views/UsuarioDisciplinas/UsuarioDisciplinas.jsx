@@ -14,6 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import UsuarioAddModal from "views/UsuarioDisciplinas/UsuarioAddModal.jsx";
 import DetailsModal from "views/Disciplinas/DetailsModal.jsx";
 // import EditModal from "views/Disciplinas/EditModal.jsx";
+import AuthService from "views/Components/AuthService.jsx";
 
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -42,6 +43,7 @@ class UsuarioDisciplinas extends React.Component {
     };
     this.deleteDisc = this.deleteDisc.bind(this);
     this.showDetails = this.showDetails.bind(this);
+    this.Auth = new AuthService();
   }
 
   handleChangeSel = name => value => {
@@ -68,101 +70,129 @@ class UsuarioDisciplinas extends React.Component {
     
   };
 
-  fetchDisc = () => {    
-    fetch(API + DISC_QUERY)
-      .then(response => response.json())
-      .then(data => {
-        let disciplinasUsuario = [];
-        let idsDisc = this.props.user.disciplinas;
-        let disciplinasRestantes = data.slice(0);
-        for (let i = 0; i < idsDisc.length; i++) {
-          for (let j = 0; j < data.length; j++) {
-            if (idsDisc[i] === data[j]['id']) {
-              disciplinasUsuario.push(data[j]);
-              let index = disciplinasRestantes.indexOf(data[j]);
-              disciplinasRestantes.splice(index, 1);
-            } 
-          } 
+  fetchDisc = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      var that = this;
+      fetch(API + DISC_QUERY, {
+        headers: {
+          'Authorization': 'Bearer ' + this.Auth.getToken()
         }
-        
-        console.log(idsDisc);
-        console.log(disciplinasRestantes);
-        this.setState({ 
-          disciplinasUsuario,
-          disciplinasRestantes,
-          disciplinas: data
-        }); 
-      });
+      })
+        .then(response => response.json())
+        .then(data => {
+          let disciplinasUsuario = [];
+          let idsDisc = that.props.user.disciplinas;
+          let disciplinasRestantes = data.slice(0);
+          for (let i = 0; i < idsDisc.length; i++) {
+            for (let j = 0; j < data.length; j++) {
+              if (idsDisc[i] === data[j]['id']) {
+                disciplinasUsuario.push(data[j]);
+                let index = disciplinasRestantes.indexOf(data[j]);
+                disciplinasRestantes.splice(index, 1);
+              } 
+            } 
+          }
+          this.setState({ 
+            disciplinasUsuario,
+            disciplinasRestantes,
+            disciplinas: data
+          }); 
+        });
+    }
   };
 
   addDisc = () => {
-    let disciplina = this.state.addDisciplina;
-    let user = this.props.user;
-    user['disciplinas'].push(disciplina.value);
-    
-    fetch(API + USER_QUERY + this.props.user.id + "/", {
-        method: 'put',
-        body: JSON.stringify(user),
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })    
-      .then(response => response.json())
-      .then(data => {
-        var disciplinasRestantes = [...this.state.disciplinasRestantes]; // make a separate copy of the array
-        var index = disciplinasRestantes.indexOf(disciplina.disc)
-        disciplinasRestantes.splice(index, 1);
-        this.setState(prevState => ({
-          disciplinasUsuario: [...prevState.disciplinasUsuario, disciplina.disc],
-          disciplinasRestantes
-        }))
-        this.handleClose();                  
-      });
-  };
-
-  deleteDisc = (disc) => {    
-    let d = window.confirm("Você deseja realmente retirar a disciplina " + disc.codigo + " da sua lista?");
-    if (d === true) {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let disciplina = this.state.addDisciplina;
       let user = this.props.user;
-      user['disciplinas'].splice(user['disciplinas'].indexOf(disc.id), 1);
+      user['disciplinas'].push(disciplina.value);
       
       fetch(API + USER_QUERY + this.props.user.id + "/", {
           method: 'put',
           body: JSON.stringify(user),
           headers:{
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.Auth.getToken()
           }
         })    
         .then(response => response.json())
-        .then(data => {                
-          var disciplinasUsuario = [...this.state.disciplinasUsuario]; // make a separate copy of the array
-          var index = disciplinasUsuario.indexOf(disc);
-          disciplinasUsuario.splice(index, 1);
+        .then(data => {
+          var disciplinasRestantes = [...this.state.disciplinasRestantes]; // make a separate copy of the array
+          var index = disciplinasRestantes.indexOf(disciplina.disc)
+          disciplinasRestantes.splice(index, 1);
           this.setState(prevState => ({
-            disciplinasRestantes: [...prevState.disciplinasRestantes, disc],
-            disciplinasUsuario
+            disciplinasUsuario: [...prevState.disciplinasUsuario, disciplina.disc],
+            disciplinasRestantes
           }));
-          this.handleClose();         
+          this.handleClose();
         });
     }
   };
 
-  showDetails = (disc) => {   
-    fetch(API + 'usuarios/' + disc.criado_por + "/")
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ discUser: data }, () => {
-          disc.criado_em = disc["criado_em"].replace('T', ' ');
-          disc.editado_em = disc["editado_em"].replace('T', ' ');
-          disc.criado_em = disc["criado_em"].substring(0, 19);
-          disc.editado_em = disc["editado_em"].substring(0, 19);
-          this.setState({
-            selectedDisc: disc      
-          }, function()  {
-            this.openDetails();
+  deleteDisc = (disc) => {
+    let d = window.confirm("Você deseja realmente retirar a disciplina " + disc.codigo + " da sua lista?");
+    if (d === true) {
+      if (!this.Auth.loggedIn()) {
+        this.props.history.replace('/login')
+      }
+      else {
+        let user = this.props.user;
+        user['disciplinas'].splice(user['disciplinas'].indexOf(disc.id), 1);
+        
+        fetch(API + USER_QUERY + this.props.user.id + "/", {
+            method: 'put',
+            body: JSON.stringify(user),
+            headers:{
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + this.Auth.getToken()
+            }
+          })    
+          .then(response => response.json())
+          .then(data => {                
+            var disciplinasUsuario = [...this.state.disciplinasUsuario]; // make a separate copy of the array
+            var index = disciplinasUsuario.indexOf(disc);
+            disciplinasUsuario.splice(index, 1);
+            this.setState(prevState => ({
+              disciplinasRestantes: [...prevState.disciplinasRestantes, disc],
+              disciplinasUsuario
+            }));
+            this.handleClose();
+          });
+      }
+    }
+  };
+
+  showDetails = (disc) => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      fetch(API + 'usuarios/' + disc.criado_por + "/", {
+        headers: {
+          'Authorization': 'Bearer ' + this.Auth.getToken()
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ discUser: data }, () => {
+            disc.criado_em = disc["criado_em"].replace('T', ' ');
+            disc.editado_em = disc["editado_em"].replace('T', ' ');
+            disc.criado_em = disc["criado_em"].substring(0, 19);
+            disc.editado_em = disc["editado_em"].substring(0, 19);
+            this.setState({
+              selectedDisc: disc      
+            }, function()  {
+              this.openDetails();
+            });
           });
         });
-      });    
+    }   
   };
 
   openDetails = () => {

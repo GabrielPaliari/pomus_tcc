@@ -19,6 +19,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 
+import AuthService from "views/Components/AuthService.jsx";
 
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
@@ -54,7 +55,8 @@ class Topicos extends React.Component {
         tamanho: '',
       }    
     };
-    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.Auth = new AuthService();
   }
   
   componentDidMount() {
@@ -63,17 +65,34 @@ class Topicos extends React.Component {
   }
 
   fetchTopics = () => {
-    fetch(API + TOPICS_DISC + this.props.search)
-      .then(response => response.json())
-      .then(data => this.setState({ topicos: data }));
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      fetch(API + TOPICS_DISC + this.props.search, {
+        headers: {
+          'Authorization': 'Bearer ' + this.Auth.getToken()
+        }
+      })
+        .then(response => response.json())
+        .then(data => this.setState({ topicos: data }));
+    }
   };
   
   fetchDiscPai = () => {     
-    const url = API + DISC_QUERY + this.props.search.slice(-1) + '/';
-    console.log(url); 
-    fetch(url)
-      .then(response => response.json())
-      .then(data => this.setState({ discPai: data }));
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      const url = API + DISC_QUERY + this.props.search.slice(-1) + '/';
+      fetch(url, {
+        headers: {
+          'Authorization': 'Bearer ' + this.Auth.getToken()
+        }
+      })
+        .then(response => response.json())
+        .then(data => this.setState({ discPai: data }));
+    }
   };
 
   handleInputChange = (event) => {
@@ -83,8 +102,7 @@ class Topicos extends React.Component {
 
     let selTopic = {...this.state.selTopic};
     selTopic[name] = value; 
-    this.setState({selTopic});  
-    // console.log(this.state.selTopic);  
+    this.setState({selTopic});
 
   }
 
@@ -146,7 +164,11 @@ class Topicos extends React.Component {
     console.log(this.state.files);
   }
 
-  createTopic = () => {    
+  createTopic = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
       let topico = this.state.selTopic;
       topico.criado_por = this.props.user.id;
       topico.disc_pai = this.state.discPai.id;
@@ -154,7 +176,8 @@ class Topicos extends React.Component {
         method: 'post',
         body: JSON.stringify(topico),
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.Auth.getToken()
         }
       })    
       .then(response => response.json())
@@ -175,6 +198,7 @@ class Topicos extends React.Component {
               body: data,
               headers: {
                 Accept: 'application/json, text/plain, */*',
+                'Authorization': 'Bearer ' + this.Auth.getToken()
               },
             })    
             .then(response => response.json())
@@ -188,8 +212,8 @@ class Topicos extends React.Component {
           this.handleClose();
           console.log(this.state.topicos);
           alert("Tópico criado com sucesso!");                 
-      });                         
-        
+      });
+    }
   };
 
   deleteFile = (file) => {                   
