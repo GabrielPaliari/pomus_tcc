@@ -17,6 +17,8 @@ import Divider from '@material-ui/core/Divider';
 import InputLabel from '@material-ui/core/InputLabel';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+
 
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
@@ -238,7 +240,7 @@ class Topicos extends React.Component {
     const addOpen = this.state.addOpen;
     let addForm 
     if (addOpen) {
-      addForm = <div className="addFormContainer">
+      addForm = <Paper className="addFormContainer">
                   <IconButton onClick={this.handleClose} className='closeFormButon'>
                     <Icon>close</Icon>
                   </IconButton>
@@ -313,7 +315,7 @@ class Topicos extends React.Component {
                       className="createTopicBtn"
                       disabled={!this.state.selTopic.titulo || !this.state.selTopic.explicacao}>Criar Tópico</Button2>      
                   </Grid>            
-                </div> 
+                </Paper> 
     } else {
       addForm = <Button variant="fab" mini aria-label="Adicionar" className="AddButton"
                   onClick={this.handleOpen}>

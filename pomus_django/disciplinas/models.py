@@ -58,7 +58,6 @@ class Arquivo(models.Model):
 
 
 class Comentario(models.Model):
-  titulo      = models.CharField(max_length=100)  
   texto       = models.CharField(max_length=1000)
   topico_pai  = models.ForeignKey(Topico, on_delete=models.CASCADE, blank=True)
   criado_por  = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

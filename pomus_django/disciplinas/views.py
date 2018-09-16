@@ -3,7 +3,7 @@ from rest_framework import viewsets, generics
 from .models import Disciplina, Topico, Arquivo, Comentario
 from .serializers import DisciplinaSerializer, TopicoSerializer, ArquivoSerializer, ComentarioSerializer
 
-class DisicplinaView(viewsets.ModelViewSet):
+class DisciplinaView(viewsets.ModelViewSet):
   queryset = Disciplina.objects.all()
   serializer_class = DisciplinaSerializer
 
