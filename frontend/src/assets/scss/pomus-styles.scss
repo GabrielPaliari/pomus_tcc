@@ -23,6 +23,7 @@ $greenDark:   #315F55;
 $alertBack:   #f2dedf;
 $alertText:   #9f493e;
 $success:     #4caf50;
+$successDark: #388e3c;
 
 button.EditButton {
   margin-right: 15px;
@@ -223,4 +224,49 @@ button.closeFormButon {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+button.addCommentBtn {
+  color: white;
+  background-color: $success;
+  float: right;
+  margin: 0 20px 10px 0; 
+  bottom: 10px;  
+  &:hover {
+    background-color: $successDark;
+  }
+}
+
+.ComIcon {
+  border-radius: 50%;
+  font-size: 1em !important;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
+  }
+}
+
+.RespIcon {
+  border-radius: 50%;
+  font-size: 1em !important;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
+  }
+}
+
+.ExpandIcon {
+  border-radius: 50%;
+  font-size: 1.5em !important;
+  margin-left: 10px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
+  }
 }
