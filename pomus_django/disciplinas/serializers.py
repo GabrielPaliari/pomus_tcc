@@ -3,6 +3,7 @@ from .models import Disciplina
 from .models import Topico
 from .models import Arquivo
 from .models import Comentario
+from .models import Resposta
 
 class DisciplinaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,5 +53,15 @@ class ComentarioSerializer(serializers.ModelSerializer):
                     'topico_pai',
                     'criado_por',
                     'curtidas',
+                    'criado_em',
+                    'editado_em')
+
+class RespostaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Resposta
+        fields =   ('id',
+                    'texto',
+                    'comentario_pai',
+                    'criado_por',
                     'criado_em',
                     'editado_em')

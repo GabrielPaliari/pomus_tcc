@@ -190,7 +190,9 @@ button.closeFormButon {
 button.addCommentBtn {
   color: white;
   background-color: #4caf50;
-  float: right; }
+  float: right;
+  margin: 0 20px 10px 0;
+  bottom: 10px; }
   button.addCommentBtn:hover {
     background-color: #388e3c; }
 
@@ -201,5 +203,23 @@ button.addCommentBtn {
   right: 5px;
   top: 5px; }
   .ComIcon:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1); }
+
+.RespIcon {
+  border-radius: 50%;
+  font-size: 1em !important;
+  position: absolute;
+  right: 5px;
+  bottom: 5px; }
+  .RespIcon:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1); }
+
+.ExpandIcon {
+  border-radius: 50%;
+  font-size: 1.5em !important;
+  margin-left: 10px; }
+  .ExpandIcon:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.1); }

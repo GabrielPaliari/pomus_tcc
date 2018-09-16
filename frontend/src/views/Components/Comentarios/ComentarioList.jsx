@@ -7,20 +7,14 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
 import Button from '@material-ui/core/Button';
-import Button2 from 'components/CustomButtons/Button.jsx';
 import Divider from '@material-ui/core/Divider';
-import InputLabel from '@material-ui/core/InputLabel';
 import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
 
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 import ComentarioDetail from './ComentarioDetail.jsx';
 import Textarea from 'react-textarea-autosize';
 
 const API = 'http://localhost:8000/api/';
-const TOPIC = 'topicos/';
-const USER = 'usuarios/';
 const COMENTARIO = 'comentarios/';
 const COMENTARIO_TOPICO = 'comentarios_topic/';
 
@@ -151,7 +145,7 @@ class ComentarioList extends React.Component {
       <Grid item sm={12}>  
         <div className={classes.section}>
           <span className={classes.orderSpan}>Ordenar por: <Button onClick={() => (this.orderBy('curtidas'))}>curtidas</Button> | <Button onClick={() => (this.orderBy('data'))}>Data de criação</Button></span>
-          <h5>Comentários</h5>
+          <h4>Comentários</h4>
           <ul className={classes.commentsList}>
             {this.state.comentarios
               .sort((a, b) => {

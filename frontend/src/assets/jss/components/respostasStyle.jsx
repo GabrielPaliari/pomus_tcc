@@ -5,7 +5,7 @@ import { greenMedium } from "assets/jss/material-kit-react.jsx";
 import { greenDark } from "assets/jss/material-kit-react.jsx";
 import { successColor } from "assets/jss/material-kit-react.jsx";
 
-const comentariosStyle = {
+const respostasStyle = {
   userName: {
     color: greenMedium,
     fontWeight: "500"    
@@ -24,10 +24,12 @@ const comentariosStyle = {
     listStyle: 'none',
     padding: 0
   },
-  addComm: {
+  addResp: {
+    position: 'relative',
     padding: '10px 20px',
     width: "80%",
     margin: "20px auto",
+    backgroundColor: 'grey',
   },
   commTextArea: {
     width: '100%',
@@ -61,15 +63,19 @@ const comentariosStyle = {
     height: 30,
     textAlign: 'center',    
   },
-  orderSpan: {
-    float: 'right',
+  // RespCount
+  respCountSpan: {
+    display: 'flex',
+    margin: 10,
+    padding: 5,
+    "&:hover": {
+      cursor: "pointer"
+    } 
   },
-  RespList: {
-    backgroundColor: '#4bccda47',
-    margin: '20px auto',
-    borderRadius: 15,
-    width: '80%',    
-  }
+  respCount: {
+    marginBottom: 0,
+    textDecoration: 'underline'
+  },
 };
 
-export default comentariosStyle;
+export default respostasStyle;
