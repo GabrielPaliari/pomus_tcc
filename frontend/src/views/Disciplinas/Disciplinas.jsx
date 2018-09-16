@@ -14,8 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import AddModal from "views/Disciplinas/AddModal.jsx";
 import DetailsModal from "views/Disciplinas/DetailsModal.jsx";
 import EditModal from "views/Disciplinas/EditModal.jsx";
-
-import AuthService from 'views/Components/AuthService.jsx';
+import AuthService from "views/Components/AuthService.jsx";
 
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
@@ -62,6 +61,7 @@ class Disciplinas extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.deleteDisc = this.deleteDisc.bind(this);
     this.showDetails = this.showDetails.bind(this);
+    this.Auth = new AuthService();
   }
   
   handleInputChange = (event) => {
@@ -96,144 +96,181 @@ class Disciplinas extends React.Component {
   };
 
   fetchDisc = () => {
-    fetch(API + DISC_QUERY)
-      .then(response => response.json())
-      .then(data => this.setState({ disciplinas: data }));
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      fetch(API + DISC_QUERY, {
+        headers: {
+          'Authorization': 'Bearer ' + this.Auth.getToken()
+        }
+      })
+        .then(response => response.json())
+        .then(data => this.setState({ disciplinas: data }));
+    }
   };
 
   createDisc = () => {
-    let disciplina = this.state.newDisc;
-    let nomeNull = (disciplina.nome === "");
-    let codeNull = (disciplina.codigo === "");
-    // console.log(this.state.disciplinas);
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let disciplina = this.state.newDisc;
+      let nomeNull = (disciplina.nome === "");
+      let codeNull = (disciplina.codigo === "");
+      // console.log(this.state.disciplinas);
 
-    if (nomeNull || codeNull) {
-      let alertString = "Os campos seguintes não podem ser deixados em branco: \n"
-      if (nomeNull && codeNull) {
-        alertString += "Código da Disciplina, Nome";
-      } else if (codeNull) {
-        alertString += "Código da Disciplina";
-      } else {
-        alertString += "Nome";
-      }
-      alert(alertString);
-    } else {
-      let preReq = this.state.preRequisitos;
-      let preRequisitos = [];
-      for (let i = 0; i < preReq.length; i++) {
-        preRequisitos.push(preReq[i].value);
-      };
-      disciplina.preRequisitos = preRequisitos;   
-      fetch(API + DISC_QUERY, {
-        method: 'post',
-        body: JSON.stringify(disciplina),
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })    
-      .then(response => response.json())
-      .then(data => {
-        if (data.codigo[0] === "disciplina with this codigo already exists.") {
-          alert("Já existe uma disciplina com o código: "+disciplina.codigo); 
+      if (nomeNull || codeNull) {
+        let alertString = "Os campos seguintes não podem ser deixados em branco: \n"
+        if (nomeNull && codeNull) {
+          alertString += "Código da Disciplina, Nome";
+        } else if (codeNull) {
+          alertString += "Código da Disciplina";
         } else {
-          this.setState(prevState => ({
-            disciplinas: [...prevState.disciplinas, data]
-          }))
-          this.handleClose();
-          alert("Disciplina "+disciplina.codigo+" criada com sucesso!"); 
-        }          
-      });                         
-    }    
+          alertString += "Nome";
+        }
+        alert(alertString);
+      } else {
+        let preReq = this.state.preRequisitos;
+        let preRequisitos = [];
+        for (let i = 0; i < preReq.length; i++) {
+          preRequisitos.push(preReq[i].value);
+        };
+        disciplina.preRequisitos = preRequisitos;   
+        fetch(API + DISC_QUERY, {
+          method: 'post',
+          body: JSON.stringify(disciplina),
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.Auth.getToken()
+          }
+        })    
+        .then(response => response.json())
+        .then(data => {
+          if (data.codigo[0] === "disciplina with this codigo already exists.") {
+            alert("Já existe uma disciplina com o código: "+disciplina.codigo); 
+          } else {
+            this.setState(prevState => ({
+              disciplinas: [...prevState.disciplinas, data]
+            }))
+            this.handleClose();
+            alert("Disciplina "+disciplina.codigo+" criada com sucesso!"); 
+          }
+        });                         
+      }
+    }
   };
 
   editDisc = () => {
-    let disciplina = this.state.newDisc;
-    let nomeNull = (disciplina.nome === "");
-    let codeNull = (disciplina.codigo === "");    
-    
-    if (nomeNull || codeNull) {
-      let alertString = "Os campos seguintes não podem ser deixados em branco: \n"
-      if (nomeNull && codeNull) {
-        alertString += "Código da Disciplina, Nome";
-      } else if (codeNull) {
-        alertString += "Código da Disciplina";
-      } else {
-        alertString += "Nome";
-      }
-      alert(alertString);
-    } else {
-      let preReq = this.state.preRequisitos;
-      let preRequisitos = [];
-      for (let i = 0; i < preReq.length; i++) {
-        preRequisitos.push(preReq[i].value);
-      };
-      disciplina.preRequisitos = preRequisitos;
-      let url = API + DISC_QUERY + disciplina.id +"/"; 
-      fetch(url, {
-        method: 'put',
-        body: JSON.stringify(disciplina),
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })    
-      .then(response => response.json())
-      .then(data => {
-        if (data.codigo[0] === "disciplina with this codigo already exists.") {
-          alert("Já existe uma disciplina com o código: "+disciplina.codigo); 
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let disciplina = this.state.newDisc;
+      let nomeNull = (disciplina.nome === "");
+      let codeNull = (disciplina.codigo === "");    
+      
+      if (nomeNull || codeNull) {
+        let alertString = "Os campos seguintes não podem ser deixados em branco: \n"
+        if (nomeNull && codeNull) {
+          alertString += "Código da Disciplina, Nome";
+        } else if (codeNull) {
+          alertString += "Código da Disciplina";
         } else {
-          let disciplinas = this.state.disciplinas;
-          for (let i = 0; i < disciplinas.length; i++) {
-            if (disciplinas[i]["id"] === disciplina["id"]) {
-              disciplinas[i] = data;
-              this.setState({disciplinas});
-            } 
+          alertString += "Nome";
+        }
+        alert(alertString);
+      } else {
+        let preReq = this.state.preRequisitos;
+        let preRequisitos = [];
+        for (let i = 0; i < preReq.length; i++) {
+          preRequisitos.push(preReq[i].value);
+        };
+        disciplina.preRequisitos = preRequisitos;
+        let url = API + DISC_QUERY + disciplina.id +"/"; 
+        fetch(url, {
+          method: 'put',
+          body: JSON.stringify(disciplina),
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.Auth.getToken()
           }
-          this.handleClose();
-          alert("Disciplina "+disciplina.codigo+" editada com sucesso!"); 
-        }          
-      });                         
-    }    
+        })    
+        .then(response => response.json())
+        .then(data => {
+          if (data.codigo[0] === "disciplina with this codigo already exists.") {
+            alert("Já existe uma disciplina com o código: "+disciplina.codigo); 
+          } else {
+            let disciplinas = this.state.disciplinas;
+            for (let i = 0; i < disciplinas.length; i++) {
+              if (disciplinas[i]["id"] === disciplina["id"]) {
+                disciplinas[i] = data;
+                this.setState({disciplinas});
+              } 
+            }
+            this.handleClose();
+            alert("Disciplina "+disciplina.codigo+" editada com sucesso!"); 
+          }
+        });
+      }
+    }
   };
 
-  deleteDisc = (disc) => {    
-    
+  deleteDisc = (disc) => {
     let d = window.confirm("Você deseja realmente deletar a disciplina " + disc.codigo + "?");
     if (d === true) {
-        let url = API + DISC_QUERY + disc.id +"/";
-        // console.log(url);
-        fetch(url, {
-          method: 'delete',
-        })    
-        .then(response => {    
-          if(response.ok) {
-            let disciplinas = [...this.state.disciplinas]; 
-            let index = disciplinas.indexOf(disc);
-            disciplinas.splice(index, 1);
-            this.setState({disciplinas});
-            alert("Disciplina "+disc.codigo+" foi deletada com sucesso");  
-          } else {
-            alert("Ocorreu algum erro no sistema.");
-          }                                       
-        });
-    } 
+      if (!this.Auth.loggedIn()) {
+        this.props.history.replace('/login')
+      }
+      else {
+          let url = API + DISC_QUERY + disc.id +"/";
+          // console.log(url);
+          fetch(url, {
+            method: 'delete',
+            headers: {
+              'Authorization': 'Bearer ' + this.Auth.getToken()
+            }
+          })    
+          .then(response => {    
+            if(response.ok) {
+              let disciplinas = [...this.state.disciplinas]; 
+              let index = disciplinas.indexOf(disc);
+              disciplinas.splice(index, 1);
+              this.setState({disciplinas});
+              alert("Disciplina "+disc.codigo+" foi deletada com sucesso");  
+            } else {
+              alert("Ocorreu algum erro no sistema.");
+            }
+          });
+      }
+    }
   };
 
   showDetails = (disc) => {
-    fetch(API + 'usuarios/' + disc.criado_por + "/")
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ discUser: data }, () => {
-          disc.criado_em = disc["criado_em"].replace('T', ' ');
-          disc.editado_em = disc["editado_em"].replace('T', ' ');
-          disc.criado_em = disc["criado_em"].substring(0, 19);
-          disc.editado_em = disc["editado_em"].substring(0, 19);
-          this.setState({
-            selectedDisc: disc      
-          }, function()  {
-            this.openDetails();
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      fetch(API + 'usuarios/' + disc.criado_por + "/", {
+        headers: {
+          'Authorization': 'Bearer ' + this.Auth.getToken()
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ discUser: data }, () => {
+            disc.criado_em = disc["criado_em"].replace('T', ' ');
+            disc.editado_em = disc["editado_em"].replace('T', ' ');
+            disc.criado_em = disc["criado_em"].substring(0, 19);
+            disc.editado_em = disc["editado_em"].substring(0, 19);
+            this.setState({
+              selectedDisc: disc      
+            }, function()  {
+              this.openDetails();
+            });
           });
         });
-      });
+    }
   };
 
   openDetails = () => {

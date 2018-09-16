@@ -14,6 +14,8 @@ import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 import ComentarioDetail from './ComentarioDetail.jsx';
 import Textarea from 'react-textarea-autosize';
 
+import AuthService from "views/Components/AuthService.jsx";
+
 const API = 'http://localhost:8000/api/';
 const COMENTARIO = 'comentarios/';
 const COMENTARIO_TOPICO = 'comentarios_topic/';
@@ -32,24 +34,34 @@ class ComentarioList extends React.Component {
       cToDel: {},
       orderString: 'curtidas'         
     };
+    this.Auth = new AuthService();
   }
   
   componentDidMount() {
     this.fetchList();    
   }
 
-  fetchList = () => {  
-    let topicoPai = this.props.topicoPai;
-    console.log(topicoPai);
-    if (topicoPai) {       
-      const commentListUrl = API + COMENTARIO_TOPICO + '?topic_id=' + topicoPai;
-      console.log(commentListUrl);
-      fetch(commentListUrl)
-        .then(response => response.json())
-        .then(data => {        
-          console.log(data);
-          this.setState({ comentarios: data });              
-        }); 
+  fetchList = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let topicoPai = this.props.topicoPai;
+      console.log(topicoPai);
+      if (topicoPai) {       
+        const commentListUrl = API + COMENTARIO_TOPICO + '?topic_id=' + topicoPai;
+        console.log(commentListUrl);
+        fetch(commentListUrl, {
+          headers: {
+            'Authorization': 'Bearer ' + this.Auth.getToken()
+          }
+        })
+          .then(response => response.json())
+          .then(data => {        
+            console.log(data);
+            this.setState({ comentarios: data });              
+          }); 
+      }
     }
   };
 
@@ -64,45 +76,59 @@ class ComentarioList extends React.Component {
     // console.log(this.state.selTopic);  
   }
 
-  createComment = () => {  
-    let comment = this.state.newComment;
-    comment.criado_por = this.props.user.id;
-    comment.topico_pai = this.props.topicoPai;
-    fetch(API + COMENTARIO, {
-      method: 'post',
-      body: JSON.stringify(comment),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    })   
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      this.setState(prevState => ({            
-        comentarios: [...prevState.comentarios, data],        
-        newComment: {
-          texto: ''
+  createComment = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let comment = this.state.newComment;
+      comment.criado_por = this.props.user.id;
+      comment.topico_pai = this.props.topicoPai;
+      fetch(API + COMENTARIO, {
+        method: 'post',
+        body: JSON.stringify(comment),
+        headers:{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.Auth.getToken()
         }
-      }))      
-    }) 
+      })   
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState(prevState => ({            
+          comentarios: [...prevState.comentarios, data],        
+          newComment: {
+            texto: ''
+          }
+        }))      
+      })
+    }
   };
 
   deleteComment = () => {
-    let c = this.state.cToDel;          
-    if (this.props.user.id === c.criado_por) {        
-      const commUrl = API + COMENTARIO + c.id + '/';      
-      fetch(commUrl, {
-        method: 'delete'
-      }) 
-        .then(response => response)
-        .then(data => {        
-          this.setState({ autor: data });              
-          var comentarios = [...this.state.comentarios]; // make a separate copy of the array
-          var index = comentarios.indexOf(c);
-          comentarios.splice(index, 1);
-          this.setState({comentarios});
-          this.handleDialogClose();
-        }); 
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let c = this.state.cToDel;          
+      if (this.props.user.id === c.criado_por) {        
+        const commUrl = API + COMENTARIO + c.id + '/';      
+        fetch(commUrl, {
+          method: 'delete',
+          headers: {
+            'Authorization': 'Bearer ' + this.Auth.getToken()
+          }
+        }) 
+          .then(response => response)
+          .then(data => {        
+            this.setState({ autor: data });              
+            var comentarios = [...this.state.comentarios]; // make a separate copy of the array
+            var index = comentarios.indexOf(c);
+            comentarios.splice(index, 1);
+            this.setState({comentarios});
+            this.handleDialogClose();
+          }); 
+      }
     }
   };
 

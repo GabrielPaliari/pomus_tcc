@@ -38,18 +38,27 @@ class ComentarioList extends React.Component {
     this.fetchList();    
   }
 
-  fetchList = () => {  
-    let comentarioPai = this.props.comentarioPai;
-    console.log(comentarioPai);
-    if (comentarioPai) {       
-      const respListUrl = API + RESPOSTAS_COMMENT + '?comment_id=' + comentarioPai;
-      console.log(respListUrl);
-      fetch(respListUrl)
-        .then(response => response.json())
-        .then(data => {        
-          console.log(data);
-          this.setState({ respostas: data });              
-        }); 
+  fetchList = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let comentarioPai = this.props.comentarioPai;
+      console.log(comentarioPai);
+      if (comentarioPai) {       
+        const respListUrl = API + RESPOSTAS_COMMENT + '?comment_id=' + comentarioPai;
+        console.log(respListUrl);
+        fetch(respListUrl, {
+          headers: {
+            'Authorization': 'Bearer ' + this.Auth.getToken()
+          }
+        })
+          .then(response => response.json())
+          .then(data => {        
+            console.log(data);
+            this.setState({ respostas: data });              
+          }); 
+      }
     }
   };
 
@@ -64,47 +73,61 @@ class ComentarioList extends React.Component {
     // console.log(this.state.selTopic);  
   }
 
-  createResp = () => {  
-    let resp = this.state.newResp;
-    resp.criado_por = this.props.user.id;
-    resp.comentario_pai = this.props.comentarioPai;
-    if (resp.texto) {
-      fetch(API + RESPOSTAS, {
-        method: 'post',
-        body: JSON.stringify(resp),
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })   
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState(prevState => ({            
-          respostas: [...prevState.respostas, data],        
-          newResp: {
-            texto: ''
+  createResp = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let resp = this.state.newResp;
+      resp.criado_por = this.props.user.id;
+      resp.comentario_pai = this.props.comentarioPai;
+      if (resp.texto) {
+        fetch(API + RESPOSTAS, {
+          method: 'post',
+          body: JSON.stringify(resp),
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.Auth.getToken()
           }
-        }))      
-      }) 
+        })   
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          this.setState(prevState => ({            
+            respostas: [...prevState.respostas, data],        
+            newResp: {
+              texto: ''
+            }
+          }))      
+        }) 
+      }
     }
   };
 
   deleteResp = () => {
-    let r = this.state.cToDel;          
-    if (this.props.user.id === r.criado_por) {        
-      const commUrl = API + RESPOSTAS + r.id + '/';      
-      fetch(commUrl, {
-        method: 'delete'
-      }) 
-        .then(response => response)
-        .then(data => {        
-          this.setState({ autor: data });              
-          var respostas = [...this.state.respostas]; // make a separate copy of the array
-          var index = respostas.indexOf(r);
-          respostas.splice(index, 1);
-          this.setState({respostas});
-          this.handleDialogClose();
-        }); 
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let r = this.state.cToDel;          
+      if (this.props.user.id === r.criado_por) {        
+        const commUrl = API + RESPOSTAS + r.id + '/';      
+        fetch(commUrl, {
+          method: 'delete',
+          headers: {
+            'Authorization': 'Bearer ' + this.Auth.getToken()
+          }
+        }) 
+          .then(response => response)
+          .then(data => {        
+            this.setState({ autor: data });              
+            var respostas = [...this.state.respostas]; // make a separate copy of the array
+            var index = respostas.indexOf(r);
+            respostas.splice(index, 1);
+            this.setState({respostas});
+            this.handleDialogClose();
+          }); 
+      }
     }
   };
 

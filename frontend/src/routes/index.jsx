@@ -8,8 +8,8 @@ import SignUpPage from "views/LoginPage/SignUpPage.jsx";
 var indexRoutes = [
   //  { path: "/landing-page", name: "LandingPage", component: LandingPage },
   //  { path: "/profile-page", name: "ProfilePage", component: ProfilePage },
-   { path: "/disciplinas", name: "Disciplinas", component: Disciplinas },
-   { path: "/signup", name: "SignUp", component: SignUpPage },
+  { path: "/disciplinas", name: "Disciplinas", component: Disciplinas },
+  { path: "/signup", name: "SignUp", component: SignUpPage },
   { path: "/", name: "Components", component: LoginPage }
 ];
 
