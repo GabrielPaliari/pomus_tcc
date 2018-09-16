@@ -145,7 +145,7 @@ class ComentarioList extends React.Component {
       <Grid item sm={12}>  
         <div className={classes.section}>
           <span className={classes.orderSpan}>Ordenar por: <Button onClick={() => (this.orderBy('curtidas'))}>curtidas</Button> | <Button onClick={() => (this.orderBy('data'))}>Data de criação</Button></span>
-          <h5>Comentários</h5>
+          <h4>Comentários</h4>
           <ul className={classes.commentsList}>
             {this.state.comentarios
               .sort((a, b) => {

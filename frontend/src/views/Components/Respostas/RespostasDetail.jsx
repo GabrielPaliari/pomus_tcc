@@ -1,20 +1,28 @@
 import React from "react";
 import withStyles from "material-ui/styles/withStyles";
 
-import comentariosStyle from "assets/jss/components/comentariosStyle.jsx";
+import respostasStyle from "assets/jss/components/respostasStyle.jsx";
 
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+
 import Button from '@material-ui/core/Button';
+import Button2 from 'components/CustomButtons/Button.jsx';
+import Divider from '@material-ui/core/Divider';
+import InputLabel from '@material-ui/core/InputLabel';
 import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+
 import Textarea from 'react-textarea-autosize';
 
-import RespostasList from 'views/Components/Respostas/RespostasList.jsx';
+import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 
 const API = 'http://localhost:8000/api/';
+const TOPIC = 'topicos/';
 const USER = 'usuarios/';
 const COMENTARIOS = 'comentarios/';
 
-class ComentarioDetail extends React.Component {
+class RespostasDetail extends React.Component {
   constructor(props) {
     super(props);
     // we use this to make the card to appear after the page has been rendered
@@ -24,7 +32,6 @@ class ComentarioDetail extends React.Component {
       commentEdit: {}, 
       edited: false,  
       liked: false,    
-      showResp: false,
     };
     this.textInput = React.createRef();
   }
@@ -106,39 +113,6 @@ class ComentarioDetail extends React.Component {
     // console.log(this.state.selTopic);  
   }
 
-  likeComment = (comentario) => {
-      let curtidas = comentario.curtidas;
-      let userId = this.props.user.id;
-      let index = curtidas.indexOf(userId);
-      if (index === -1) {
-        curtidas.push(userId);
-        this.setState({liked: true})
-      } else {
-        curtidas.splice(index, 1);
-        this.setState({liked: false})
-      } 
-      comentario.curtidas = curtidas;      
-      console.log(comentario)
-      fetch(API + COMENTARIOS + comentario.id + '/', {
-        method: 'put',
-        body: JSON.stringify(comentario),
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })   
-      .then(response => response.json())
-      .then(data => {        
-        this.props.handleLiked(data);          
-      }) 
-      
-  }
-
-  toggleShow = () => {
-    let showResp = this.state.showResp;
-    showResp = !showResp;
-    this.setState({ showResp });
-  }
-
   truncate(string, maxSize) {        
     if (string.length > maxSize) {
       return (string.substring(0,maxSize) + "...");
@@ -151,22 +125,14 @@ class ComentarioDetail extends React.Component {
     const { comentario, classes, user } = this.props;   
     let delIcon; 
     let editIcon; 
-    
-    //
+    let editing = this.state.editing;
     let edited = this.state.edited || (comentario.criado_em !== comentario.editado_em);
-    let liked = comentario.curtidas.indexOf(user.id) !== -1 || this.state.liked;    
-
-    //Mostra os icones de editar e deletar somente se o usuário logado tiver criado o comentário
     if (comentario.criado_por === user.id) {      
       delIcon = <Icon onClick={() => (this.props.del(comentario))} className='ComIcon'>delete</Icon>;
       editIcon = <Icon onClick={() => (this.editCom())} style={{right: 25, color: '#4caf50'}} className='ComIcon'>edit</Icon>; 
     }
-
-    //Comentário e lista de respostas 
-    let editing = this.state.editing;
     if (comentario && !editing) {
-      return (   
-         <div>          
+      return (             
           <Paper className={classes.commentaryPaper}>
             <b className={classes.userName}>{this.state.autor.username}</b>                                                           
             <span className={classes.date}>
@@ -177,21 +143,8 @@ class ComentarioDetail extends React.Component {
             <p>{comentario.texto}</p>  
             {delIcon}        
             {editIcon}        
-            <Button onClick={() => (this.likeComment(comentario))} className={classes.LikeBtn}>
-              <Icon style={{color: liked ?  '#4caf50' : '#CCCCCC'}}>thumb_up</Icon>               
-            </Button>
-            <span className={classes.LikeCount}>{comentario.curtidas.length}</span> 
-          </Paper>    
-          <div className={classes.RespList}>
-            <RespostasList 
-              user={this.props.user} 
-              comentarioPai={comentario.id} 
-              toggleShow={this.toggleShow} 
-              showResp={this.state.showResp}></RespostasList>
-          </div>          
-        </div>
+          </Paper>                                      
       );
-    // Edição de um comentário
     } else if (comentario && editing) {
       return (
         <Paper className={classes.commentaryPaper}>
@@ -199,15 +152,14 @@ class ComentarioDetail extends React.Component {
           <Icon onClick={() => (this.finishEdit(comentario))} style={{color: '#4caf50'}} className='ComIcon'>done</Icon> 
           <Textarea name="texto"  
                     value={this.state.commentEdit.texto}                
-                    minRows={2}
-                    maxRows={10}
-                    maxLength={1000}
+                    minRows={1}
+                    maxRows={5}
+                    maxLength={300}
                     className={classes.commTextArea}
                     onChange={this.handleInputChange}                      
                     placeholder="Edite o seu comentário..."
                     ref={this.textInput}/>
-        </Paper> 
-
+        </Paper>   
       )   
     } else {
       return (        
@@ -217,4 +169,4 @@ class ComentarioDetail extends React.Component {
   }
 }
 
-export default withStyles(comentariosStyle)(ComentarioDetail);
+export default withStyles(respostasStyle)(RespostasDetail);
