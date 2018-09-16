@@ -143,7 +143,7 @@ class ComentarioList extends React.Component {
 
   render() {   
     const { user, showResp, classes } = this.props;     
-    console.log(showResp);
+    let respCount = this.state.respostas.length;
     if (showResp) {
       return (             
         <Grid item sm={12} style={{marginTop: -30}}>  
@@ -179,7 +179,7 @@ class ComentarioList extends React.Component {
               </li>
             </ul>
             <span onClick={this.props.toggleShow} className={classes.respCountSpan}>
-              <p className={classes.respCount}>{this.state.respostas.length} Respostas</p>
+              <p className={classes.respCount}>{ respCount === 1 ? "1 Resposta" : (respCount + " Respostas") }</p>
               <Icon className="ExpandIcon">expand_less</Icon>
             </span>   
           </div>                
@@ -196,7 +196,7 @@ class ComentarioList extends React.Component {
     } else {
       return (
         <span className={classes.respCountSpan}>
-          <p className={classes.respCount}>{this.state.respostas.length} Respostas</p>
+          <p className={classes.respCount}>{ respCount === 1 ? "1 Resposta" : (respCount + " Respostas") }</p>
           <Icon className="ExpandIcon" onClick={this.props.toggleShow}>expand_more</Icon>
         </span>        
       );
