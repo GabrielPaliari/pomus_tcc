@@ -24,6 +24,7 @@ from rest_framework_simplejwt.views import (
 )
 from rest_framework import views, serializers, status
 from rest_framework.response import Response
+from api.views import DocumentCreateView
 
 class MessageSerializer(serializers.Serializer):
     message = serializers.CharField()

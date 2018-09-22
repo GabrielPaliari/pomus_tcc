@@ -48,11 +48,9 @@ class Forum extends React.Component {
       files: [], 
       prevFiles: [],
       arquivo: {
-        nome: '',
+        name: '',
         upload: '',
         topico_pai: '',
-        formato: '',
-        tamanho: '',
       }
     };
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -66,6 +64,7 @@ class Forum extends React.Component {
     const topicId = this.props.search.split('=')[1];   
     const urlTopic = API + TOPIC + topicId + '/';
     const urlFiles = API + FILESTOPIC + this.props.search;
+    console.log(this.state.files);
     // console.log(url); 
     fetch(urlTopic)
       .then(response => response.json())
@@ -79,24 +78,10 @@ class Forum extends React.Component {
     fetch(urlFiles)
       .then(response => response.json())
       .then(data => {
-        data.forEach(file => {
-          let splited = file.upload.split('/');
-          let path = splited[splited.length - 1];
-          const fileId = file.id;
-          console.log(FILEFOLDER + path);    
-          // Access-Control-Allow-Origin: '*' Header is needed
-          fetch(FILEFOLDER + path)
-            .then(response => response.blob())  
-            .then(blob => {     
-              let fileObject = new File([blob], path);              
-              let url = window.URL.createObjectURL(blob);         
-              fileObject['id'] = fileId;              
-              fileObject['url'] = url;              
-              this.setState(prevState => ({            
-                files: [...prevState.files, fileObject],
-                prevFiles: [...prevState.prevFiles, fileObject],
-              }))
-            })
+        console.log(data);
+        this.setState ({
+          files: data,
+          prevFiles: data,             
         });
       });
   };
@@ -166,9 +151,7 @@ class Forum extends React.Component {
     if ((newFilesList.length) > MAXFILES) {
       this.setState({isFullOfFiles: true});       
     } else {
-      newFilesList.forEach(file => {     
-        let url = window.URL.createObjectURL(file);
-        file['url'] = url; 
+      newFilesList.forEach(file => {             
         this.setState({ files: newFilesList });            
       });        
     }
@@ -188,16 +171,16 @@ class Forum extends React.Component {
       })    
       .then(response => response.json())
       .then(data => {
+          var fileArray;
           console.log(data);          
-          this.state.files.forEach(function(f) {
+          this.state.files.forEach((f, index) => {
             if (!f['id']) {
               let data = new FormData();
               let file = new File([f.slice(0,-1)], Date.now() + '___' + f.name, {type: f.type}); // Grants that the names will be different   
-              data.append("nome", file.name);  
+              data.append("name", file.name);  
               data.append("upload", file);             
-              data.append("topico_pai", topico.id);             
-              data.append("formato", file.type);             
-              data.append("tamanho", file.size);             
+              data.append("topico_pai", topico.id);                        
+              data.append("size", file.size);                        
                       
               fetch(API + FILES, {
                 method: 'post',
@@ -207,11 +190,15 @@ class Forum extends React.Component {
                 },
               })    
               .then(response => response.json())
-              .then(data => {            
-                  console.log(data);                 
+              .then(data => { 
+                let filesOld = this.state.files;
+                filesOld.splice(index, 1);
+                filesOld.push(data);
+                this.setState({ filesOld })                                             
               });
-            } 
+            }             
           }); 
+          console.log(fileArray);
           console.log(this.state.prevFiles);
           this.state.prevFiles.forEach((prevF, index) => {
             let deletedFile = true;
@@ -225,8 +212,6 @@ class Forum extends React.Component {
                 method: 'delete',                                
               })    
               .then(response => {
-                console.log(response);           
-                console.log("data"); 
                 console.log("deleted:");
                 console.log(prevF);                 
               });              
@@ -255,6 +240,10 @@ class Forum extends React.Component {
     this.setState({ dialogOpen: false });
   };
 
+  downloadFile(url) {
+    window.open(url);
+  }
+
   truncate(string, maxSize) {        
     if (string.length > maxSize) {
       return (string.substring(0,maxSize) + "...");
@@ -264,9 +253,6 @@ class Forum extends React.Component {
   }
 
   render() {   
-    // console.log(this.state.selTopic);
-    // console.log(this.props.search);
-    // console.log("Files: ");
     let disciplina = this.state.discPai;
     let selTopic = this.state.selTopic;      
     let commentaryList;
@@ -324,7 +310,7 @@ class Forum extends React.Component {
                               rejectClassName="dropReject" 
                               onDrop={this.onDrop.bind(this)}>
                               <InputLabel>Anexos</InputLabel>
-                              <p>Arraste e solte aqui os arquivos que deseja anexar.</p>
+                              <p>Clique aqui ou arraste e solte os arquivos que deseja anexar.</p>
                             </Dropzone>
                           </div>
                           <aside className="filesDiv">
@@ -348,10 +334,10 @@ class Forum extends React.Component {
                                   <li key={f.name}>
                                     <div>
                                       <Icon className='fileIcon'>attachment</Icon>                                  
-                                      <a className='fileName' href={f.url} download={f.name.split('___')[1]}>
+                                      <a className='fileName' onClick={() => (this.downloadFile(f.upload))} download={f.name.split('___')[1]}>
                                         {(f.name.split('___')[1] ? this.truncate( f.name.split('___')[1], 20) : this.truncate( f.name, 20)) + ' - ' + Math.round(f.size/1000) + ' Kbytes'}
                                       </a>
-                                      <a className='downloadFileIcon' href={f.url} download={f.name.split('___')[1]}>
+                                      <a className='downloadFileIcon' onClick={() => (this.downloadFile(f.upload))} download={f.name.split('___')[1]}>
                                         <Icon>cloud_download</Icon>
                                       </a>
                                       <Icon onClick={() => (this.deleteFile(f))} className='delFileIcon'>close</Icon>
@@ -394,10 +380,10 @@ class Forum extends React.Component {
                                       <li key={f.name}>
                                         <div>
                                           <Icon className='fileIcon'>attachment</Icon>                                  
-                                          <a className='fileName' href={f.url} download={f.name.split('___')[1]}>
+                                          <a className='fileName' onClick={() => (this.downloadFile(f.upload))} download={f.name.split('___')[1]}>
                                             {(f.name.split('___')[1] ? this.truncate( f.name.split('___')[1], 20) : this.truncate( f.name, 20)) + ' - ' + Math.round(f.size/1000) + ' Kbytes'}
                                           </a>
-                                          <a className='downloadFileIcon' href={f.url} download={f.name.split('___')[1]}>
+                                          <a className='downloadFileIcon' onClick={() => (this.downloadFile(f.upload))} download={f.name.split('___')[1]}>
                                             <Icon>cloud_download</Icon>
                                           </a>                      
                                         </div>
