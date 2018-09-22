@@ -18,7 +18,10 @@ class DisciplinaSerializer(serializers.ModelSerializer):
                     'dataFim', 
                     'objetivos', 
                     'programa', 
-                    'preRequisitos')
+                    'preRequisitos',
+                    'criado_por', 
+                    'criado_em',
+                    'editado_em')
 
 class TopicoSerializer(serializers.ModelSerializer):
     class Meta:

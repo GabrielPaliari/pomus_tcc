@@ -110,7 +110,7 @@ class App extends Component {
             <div className={classNames(classes.main, classes.mainRaised)}>
               <div className={classes.container}>
                 <Route path='/app/disciplinas' render={() => (
-                  <UsuarioDisciplinas user={user}/>
+                  <UsuarioDisciplinas user={user} history={this.props.history}/>
                   )}/>                         
                 <Route path='/app/admin' render={() => (
                   <Disciplinas user={user}/>

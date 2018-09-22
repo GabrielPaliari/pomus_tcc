@@ -20,13 +20,14 @@ import Paper from '@material-ui/core/Paper';
 
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 
+import AuthService from "views/Components/AuthService.jsx";
+
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
 const TOPICS_DISC = 'topicos_disc/';
 const TOPIC = 'topicos/';
 const FILES = 'arquivos/';
 const FILESTOPIC = 'arquivos_topic/';
-const FILEFOLDER = 'http://localhost:80/uploads/';
 const MAXFILES = 5;
 const MAXFILESIZE = 5000000; //5MB
 
@@ -53,37 +54,54 @@ class Forum extends React.Component {
         topico_pai: '',
       }
     };
-    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.Auth = new AuthService();
   }
   
   componentDidMount() {
     this.fetchData();
   }
   
-  fetchData = () => {  
-    const topicId = this.props.search.split('=')[1];   
-    const urlTopic = API + TOPIC + topicId + '/';
-    const urlFiles = API + FILESTOPIC + this.props.search;
-    console.log(this.state.files);
-    // console.log(url); 
-    fetch(urlTopic)
-      .then(response => response.json())
-      .then(data => {        
-        this.setState({ selTopic: data });        
-        const urlDisc = API + DISC_QUERY + data.disc_pai + '/';
-        fetch(urlDisc)
-          .then(response => response.json())
-          .then(disc => this.setState({ discPai: disc }));
-      });
-    fetch(urlFiles)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState ({
-          files: data,
-          prevFiles: data,             
+  fetchData = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      const topicId = this.props.search.split('=')[1];   
+      const urlTopic = API + TOPIC + topicId + '/';
+      const urlFiles = API + FILESTOPIC + this.props.search;
+      // console.log(url); 
+      fetch(urlTopic, {
+        headers: {
+          'Authorization': 'Bearer ' + this.Auth.getToken()
+        }
+      })
+        .then(response => response.json())
+        .then(data => {        
+          this.setState({ selTopic: data });        
+          const urlDisc = API + DISC_QUERY + data.disc_pai + '/';
+          fetch(urlDisc, {
+            headers: {
+              'Authorization': 'Bearer ' + this.Auth.getToken()
+            }
+          })
+            .then(response => response.json())
+            .then(disc => this.setState({ discPai: disc }));
         });
-      });
+      fetch(urlFiles, {
+        headers: {
+          'Authorization': 'Bearer ' + this.Auth.getToken()
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          this.setState ({
+            files: data,
+            prevFiles: data,
+          });
+        });
+    }
   };
 
   handleInputChange = (event) => {
@@ -158,7 +176,11 @@ class Forum extends React.Component {
     console.log(this.state.files);
   }
 
-  updateTopic = () => {    
+  updateTopic = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
       let topico = this.state.selTopic;
       topico.criado_por = this.props.user.id;
       topico.disc_pai = this.state.discPai.id;      
@@ -166,7 +188,8 @@ class Forum extends React.Component {
         method: 'put',
         body: JSON.stringify(topico),
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.Auth.getToken()
         }
       })    
       .then(response => response.json())
@@ -187,6 +210,7 @@ class Forum extends React.Component {
                 body: data,
                 headers: {
                   Accept: 'application/json, text/plain, */*',
+                  'Authorization': 'Bearer ' + this.Auth.getToken()
                 },
               })    
               .then(response => response.json())
@@ -209,7 +233,10 @@ class Forum extends React.Component {
             })
             if (deletedFile) {
               fetch(API + FILES + prevF.id + '/', {
-                method: 'delete',                                
+                method: 'delete',
+                headers: {
+                  'Authorization': 'Bearer ' + this.Auth.getToken()
+                }
               })    
               .then(response => {
                 console.log("deleted:");
@@ -221,8 +248,8 @@ class Forum extends React.Component {
           console.log(this.state.topicos);
           alert("Tópico modificado com sucesso!");
           this.handleDialogClose();                 
-      });                         
-        
+      });
+    }
   };
 
   deleteFile = (file) => {                   

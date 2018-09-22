@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AuthService from './AuthService';
 
 export default function withAuth(AuthComponent) {
-  const Auth = new AuthService('http://localhost:8000/api/');
+  const Auth = new AuthService();
   const API = 'http://localhost:8000/api/';
 //   const DISC_QUERY = 'disciplinas/';
   const USER_QUERY = 'usuarios/';
@@ -24,7 +24,11 @@ export default function withAuth(AuthComponent) {
           try {
               const profile = Auth.getProfile();
               console.log(profile);              
-                fetch(API + USER_QUERY + profile.user_id + "/")
+                fetch(API + USER_QUERY + profile.user_id + "/", {
+                  headers: {
+                    'Authorization': 'Bearer ' + Auth.getToken()
+                  }
+                })
                   .then(response => response.json())
                   .then(data => {
                     this.setState({ user: data })
