@@ -25,6 +25,7 @@ from rest_framework_simplejwt.views import (
 from rest_framework import views, serializers, status
 from rest_framework.response import Response
 from api.views import DocumentCreateView
+from django.views.generic import TemplateView
 
 class MessageSerializer(serializers.Serializer):
     message = serializers.CharField()
@@ -40,8 +41,7 @@ class EchoView(views.APIView):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    url(r'^$', generic.RedirectView.as_view(
-         url='/api/', permanent=False)),
+    url(r'^', TemplateView.as_view(template_name="index.html")),
     #url(r'^api/$', get_schema_view()),
     url(r'^api/auth/', include(
         'rest_framework.urls', namespace='rest_framework')),

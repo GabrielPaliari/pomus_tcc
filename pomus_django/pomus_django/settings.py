@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'rest_auth.registration',
     'django.contrib.sites',
+    'webpack_loader',
     'corsheaders',
     'storages',
     'usuarios',
@@ -101,10 +102,10 @@ DATABASES = {
     # },
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pomus_django',
-        'USER': 'root',
-        'PASSWORD': 'patinete',
-        'HOST': '127.0.0.1',
+        'NAME': 'pomusdb',
+        'USER': 'pomusdb',
+        'PASSWORD': 'pomus67patinete',
+        'HOST': 'pomusdb.cgpsswwkssmt.sa-east-1.rds.amazonaws.com',
         'PORT': '3306',        
     }
 }
@@ -209,3 +210,10 @@ STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 DEFAULT_FILE_STORAGE = 'pomus_django.storage_backends.MediaStorage'
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.dev.json'),
+    }
+}
