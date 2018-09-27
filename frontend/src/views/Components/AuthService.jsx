@@ -9,6 +9,20 @@ export default class AuthService {
         this.getProfile = this.getProfile.bind(this)
     }
 
+    getCookie(name) {
+    if (!document.cookie) {
+        return null;
+    }
+    const token = document.cookie.split(';')
+        .map(c => c.trim())
+        .filter(c => c.startsWith(name + '='));
+
+    if (token.length === 0) {
+        return null;
+    }
+    return decodeURIComponent(token[0].split('=')[1]);
+    }
+
     signup(username, name, email, nusp, password) {
         var usuario =  {
             'name': name,
@@ -18,12 +32,16 @@ export default class AuthService {
             'password1': password,
             'password2': password
         };
+        const csrftoken = this.getCookie('csrftoken');
+        console.log(csrftoken);
 
         return fetch(`${this.domain}rest-auth/registration/`, {
             method: 'post',
+            mode: 'same-origin',
             body: JSON.stringify(usuario),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
               }
           })    
           .then(response => {
@@ -40,13 +58,20 @@ export default class AuthService {
     }
 
     login(username, password) {
+        const csrftoken = this.getCookie('csrftoken');
+        console.log(csrftoken);
         // Get a token from api server using the fetch api
         return this.fetch(`${this.domain}auth/token/obtain/`, {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
             body: JSON.stringify({
                 username,
                 password
-            })
+            }),
+            
         }).then(res => {
             this.setToken(res.access); // Setting the token in localStorage            
             this.setRefreshToken(res.refresh);

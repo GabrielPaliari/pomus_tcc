@@ -100,12 +100,20 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'pomusdb',
+    #     'USER': 'pomusdb',
+    #     'PASSWORD': 'pomus67patinete',
+    #     'HOST': 'pomusdb.cgpsswwkssmt.sa-east-1.rds.amazonaws.com',
+    #     'PORT': '3306',        
+    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pomusdb',
-        'USER': 'pomusdb',
-        'PASSWORD': 'pomus67patinete',
-        'HOST': 'pomusdb.cgpsswwkssmt.sa-east-1.rds.amazonaws.com',
+        'NAME': 'pomus_django',
+        'USER': 'root',
+        'PASSWORD': 'patinete',
+        'HOST': '127.0.0.1',
         'PORT': '3306',        
     }
 }
@@ -202,14 +210,16 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 AWS_LOCATION = 'uploads'
+DEFAULT_FILE_STORAGE = 'pomus_django.storage_backends.MediaStorage'
+
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'pomus_django/uploads'),
+    os.path.join(BASE_DIR, 'assets/bundles'),
 ]
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-DEFAULT_FILE_STORAGE = 'pomus_django.storage_backends.MediaStorage'
+# DEFAULT_FILE_STORAGE = 'pomus_django.storage_backends.MediaStorage'
 
 WEBPACK_LOADER = {
     'DEFAULT': {

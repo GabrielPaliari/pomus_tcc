@@ -13,9 +13,9 @@ ReactDOM.render(
     <Router>
         <div>
           <Route path='/app' component={App} />          
-          <Route exact path='/login' component={LoginPage} />
+          <Route exact path='/pomus/login' component={LoginPage} />
           <Route exact path='/signup' component={SignUpPage} />
-          <Route exact path='/' component={LoginPage} />
+          <Route exact path='/pomus' component={LoginPage} />
         </div>
     </Router>,
   document.getElementById("root")
