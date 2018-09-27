@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import 'typeface-roboto';
 import "assets/scss/material-kit-react.css";
 import "assets/scss/pomus-styles.css";
 
