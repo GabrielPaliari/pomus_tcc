@@ -11,11 +11,12 @@ import Dropzone from 'react-dropzone'
 import Grid from '@material-ui/core/Grid';
 
 import AddIcon from '@material-ui/icons/Add';
+import Close from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import Button2 from 'components/CustomButtons/Button.jsx';
 import Divider from '@material-ui/core/Divider';
 import InputLabel from '@material-ui/core/InputLabel';
-import Icon from '@material-ui/core/Icon';
+import Attachment from '@material-ui/icons/Attachment';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 
@@ -64,7 +65,7 @@ class Topicos extends React.Component {
 
   fetchTopics = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       fetch(API + TOPICS_DISC + this.props.search, {
@@ -79,7 +80,7 @@ class Topicos extends React.Component {
   
   fetchDiscPai = () => {     
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       const url = API + DISC_QUERY + this.props.search.slice(-1) + '/';
@@ -164,7 +165,7 @@ class Topicos extends React.Component {
 
   createTopic = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let topico = this.state.selTopic;
@@ -266,7 +267,7 @@ class Topicos extends React.Component {
     if (addOpen) {
       addForm = <Paper className="addFormContainer">
                   <IconButton onClick={this.handleClose} className='closeFormButon'>
-                    <Icon>close</Icon>
+                    <Close />
                   </IconButton>
                   <Grid direction="column" container spacing={24}>
                     <h3 className="greenText">Novo Tópico</h3> 
@@ -323,9 +324,9 @@ class Topicos extends React.Component {
                             this.state.files.map(f => 
                               <li key={f.name}>
                                 <div>
-                                  <Icon className='fileIcon'>attachment</Icon>                                  
+                                  <Attachment className='fileIcon'/>                                  
                                   <p>{this.truncate(f.name, 20) + ' - ' + Math.round(f.size/1000) + ' Kbytes'}</p>
-                                  <Icon onClick={() => (this.deleteFile(f))} className='delFileRight'>close</Icon>
+                                  <Close onClick={() => (this.deleteFile(f))} className='delFileRight'/>
                                 </div>
                               </li>)
                           }

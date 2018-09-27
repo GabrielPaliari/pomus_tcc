@@ -5,7 +5,13 @@ import comentariosStyle from "assets/jss/components/comentariosStyle.jsx";
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
+//Icons
+import Close from '@material-ui/icons/Close';
+import Delete from '@material-ui/icons/Delete';
+import Edit from '@material-ui/icons/Edit';
+import ThumbUp from '@material-ui/icons/ThumbUp';
+import Done from '@material-ui/icons/Done';
+
 import Textarea from 'react-textarea-autosize';
 
 import RespostasList from 'views/Components/Respostas/RespostasList.jsx';
@@ -47,7 +53,7 @@ class ComentarioDetail extends React.Component {
   
   fetchAutor = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       if (this.props.comentario) {       
@@ -82,7 +88,7 @@ class ComentarioDetail extends React.Component {
   
   finishEdit = (comentario) => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let commentEdit = this.state.commentEdit;
@@ -126,7 +132,7 @@ class ComentarioDetail extends React.Component {
 
   likeComment = (comentario) => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let curtidas = comentario.curtidas;
@@ -181,8 +187,8 @@ class ComentarioDetail extends React.Component {
 
     //Mostra os icones de editar e deletar somente se o usuário logado tiver criado o comentário
     if (comentario.criado_por === user.id) {      
-      delIcon = <Icon onClick={() => (this.props.del(comentario))} className='ComIcon'>delete</Icon>;
-      editIcon = <Icon onClick={() => (this.editCom())} style={{right: 25, color: '#4caf50'}} className='ComIcon'>edit</Icon>; 
+      delIcon = <Delete onClick={() => (this.props.del(comentario))} className='ComIcon'/>;
+      editIcon = <Edit onClick={() => (this.editCom())} style={{right: 25, color: '#4caf50'}} className='ComIcon'/>; 
     }
 
     //Comentário e lista de respostas 
@@ -201,7 +207,7 @@ class ComentarioDetail extends React.Component {
             {delIcon}        
             {editIcon}        
             <Button onClick={() => (this.likeComment(comentario))} className={classes.LikeBtn}>
-              <Icon style={{color: liked ?  '#4caf50' : '#CCCCCC'}}>thumb_up</Icon>               
+              <ThumbUp style={{color: liked ?  '#4caf50' : '#CCCCCC'}}/>               
             </Button>
             <span className={classes.LikeCount}>{comentario.curtidas.length}</span> 
           </Paper>    
@@ -218,8 +224,8 @@ class ComentarioDetail extends React.Component {
     } else if (comentario && editing) {
       return (
         <Paper className={classes.commentaryPaper}>
-          <Icon onClick={() => (this.cancelEdit())} style={{right: 25}} className='ComIcon'>close</Icon> 
-          <Icon onClick={() => (this.finishEdit(comentario))} style={{color: '#4caf50'}} className='ComIcon'>done</Icon> 
+          <Close onClick={() => (this.cancelEdit())} style={{right: 25}} className='ComIcon' /> 
+          <Done onClick={() => (this.finishEdit(comentario))} style={{color: '#4caf50'}} className='ComIcon'/> 
           <Textarea name="texto"  
                     value={this.state.commentEdit.texto}                
                     minRows={2}

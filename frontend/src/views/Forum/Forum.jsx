@@ -14,9 +14,13 @@ import Button from '@material-ui/core/Button';
 import Button2 from 'components/CustomButtons/Button.jsx';
 import Divider from '@material-ui/core/Divider';
 import InputLabel from '@material-ui/core/InputLabel';
-import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
+
+import Edit from "@material-ui/icons/Edit";
+import Attachment from "@material-ui/icons/Attachment";
+import Close from "@material-ui/icons/Close";
+import CloudDownload from "@material-ui/icons/CloudDownload";
 
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 
@@ -24,7 +28,6 @@ import AuthService from "views/Components/AuthService.jsx";
 
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
-const TOPICS_DISC = 'topicos_disc/';
 const TOPIC = 'topicos/';
 const FILES = 'arquivos/';
 const FILESTOPIC = 'arquivos_topic/';
@@ -64,13 +67,13 @@ class Forum extends React.Component {
   
   fetchData = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       const topicId = this.props.search.split('=')[1];   
       const urlTopic = API + TOPIC + topicId + '/';
       const urlFiles = API + FILESTOPIC + this.props.search;
-      // console.log(url); 
+       
       fetch(urlTopic, {
         headers: {
           'Authorization': 'Bearer ' + this.Auth.getToken()
@@ -95,7 +98,6 @@ class Forum extends React.Component {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
           this.setState ({
             files: data,
             prevFiles: data,
@@ -112,7 +114,6 @@ class Forum extends React.Component {
     let selTopic = {...this.state.selTopic};
     selTopic[name] = value; 
     this.setState({selTopic});  
-    // console.log(this.state.selTopic);  
 
   }
 
@@ -173,12 +174,11 @@ class Forum extends React.Component {
         this.setState({ files: newFilesList });            
       });        
     }
-    console.log(this.state.files);
   }
 
   updateTopic = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let topico = this.state.selTopic;
@@ -194,17 +194,16 @@ class Forum extends React.Component {
       })    
       .then(response => response.json())
       .then(data => {
-          var fileArray;
-          console.log(data);          
+          var fileArray;         
           this.state.files.forEach((f, index) => {
-            if (!f['id']) {
+            if (!f['id'] && this.Auth.loggedIn()) {
               let data = new FormData();
               let file = new File([f.slice(0,-1)], Date.now() + '___' + f.name, {type: f.type}); // Grants that the names will be different   
               data.append("name", file.name);  
               data.append("upload", file);             
               data.append("topico_pai", topico.id);                        
               data.append("size", file.size);                        
-                      
+              
               fetch(API + FILES, {
                 method: 'post',
                 body: data,
@@ -222,7 +221,6 @@ class Forum extends React.Component {
               });
             }             
           }); 
-          console.log(fileArray);
           console.log(this.state.prevFiles);
           this.state.prevFiles.forEach((prevF, index) => {
             let deletedFile = true;
@@ -231,7 +229,7 @@ class Forum extends React.Component {
                 deletedFile = false;                
               }
             })
-            if (deletedFile) {
+            if (deletedFile && this.Auth.loggedIn()) {
               fetch(API + FILES + prevF.id + '/', {
                 method: 'delete',
                 headers: {
@@ -292,7 +290,7 @@ class Forum extends React.Component {
     if (isEditing) {
       editOrDetail = <Paper className="topicContainer">
                       <IconButton onClick={this.closeEdit} className='closeFormButon'>
-                        <Icon>close</Icon>
+                        <Close />
                       </IconButton>
                       <Grid direction="column" container spacing={24}>
                         <h3 className="greenText">Editar Tópico</h3> 
@@ -360,14 +358,14 @@ class Forum extends React.Component {
                                 this.state.files.map(f => 
                                   <li key={f.name}>
                                     <div>
-                                      <Icon className='fileIcon'>attachment</Icon>                                  
+                                      <Attachment className='fileIcon'/>                                  
                                       <a className='fileName' onClick={() => (this.downloadFile(f.upload))} download={f.name.split('___')[1]}>
                                         {(f.name.split('___')[1] ? this.truncate( f.name.split('___')[1], 20) : this.truncate( f.name, 20)) + ' - ' + Math.round(f.size/1000) + ' Kbytes'}
                                       </a>
                                       <a className='downloadFileIcon' onClick={() => (this.downloadFile(f.upload))} download={f.name.split('___')[1]}>
-                                        <Icon>cloud_download</Icon>
+                                        <CloudDownload />
                                       </a>
-                                      <Icon onClick={() => (this.deleteFile(f))} className='delFileIcon'>close</Icon>
+                                      <Close onClick={() => (this.deleteFile(f))} className='delFileIcon'/>
                                     </div>
                                   </li>)
                               }
@@ -406,12 +404,12 @@ class Forum extends React.Component {
                                     this.state.files.map(f => 
                                       <li key={f.name}>
                                         <div>
-                                          <Icon className='fileIcon'>attachment</Icon>                                  
+                                          <Attachment className='fileIcon' />                                  
                                           <a className='fileName' onClick={() => (this.downloadFile(f.upload))} download={f.name.split('___')[1]}>
                                             {(f.name.split('___')[1] ? this.truncate( f.name.split('___')[1], 20) : this.truncate( f.name, 20)) + ' - ' + Math.round(f.size/1000) + ' Kbytes'}
                                           </a>
                                           <a className='downloadFileIcon' onClick={() => (this.downloadFile(f.upload))} download={f.name.split('___')[1]}>
-                                            <Icon>cloud_download</Icon>
+                                            <CloudDownload />
                                           </a>                      
                                         </div>
                                       </li>)
@@ -422,7 +420,7 @@ class Forum extends React.Component {
                             {this.props.user.id === selTopic.criado_por ? 
                               <Button variant="fab" color="primary" mini aria-label="Edit" className="EditButtonT"
                                 onClick={this.handleOpen}>
-                                <Icon>edit_icon</Icon>
+                                <Edit />
                               </Button> : ''}                                         
                         </Grid>   
                       </Paper> 

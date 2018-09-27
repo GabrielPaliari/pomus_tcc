@@ -12,9 +12,9 @@ import App from "App.js";
 ReactDOM.render(
     <Router>
         <div>
-          <Route path='/app' component={App} />          
+          <Route path='/pomus/app' component={App} />          
           <Route exact path='/pomus/login' component={LoginPage} />
-          <Route exact path='/signup' component={SignUpPage} />
+          <Route exact path='/pomus/signup' component={SignUpPage} />
           <Route exact path='/pomus' component={LoginPage} />
         </div>
     </Router>,

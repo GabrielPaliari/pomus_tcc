@@ -58,7 +58,7 @@ class LoginPage extends React.Component {
 
   componentWillMount(){
     if(this.Auth.loggedIn())
-        this.props.history.replace('/app');
+        this.props.history.replace('/pomus/app');
   }
 
   handleFormSubmit(e) {
@@ -66,7 +66,7 @@ class LoginPage extends React.Component {
 
     this.Auth.login(this.state.username,this.state.password)
     .then(res =>{
-       this.props.history.replace('/app');
+       this.props.history.replace('/pomus/app');
     })
     .catch(err =>{
       this.setState({erro: true});
@@ -89,7 +89,7 @@ class LoginPage extends React.Component {
   }
 
   signUp = (event) => {
-    this.props.history.replace('/signup');
+    this.props.history.replace('/pomus/signup');
   }
 
   render() {

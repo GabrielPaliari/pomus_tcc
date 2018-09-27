@@ -70,7 +70,7 @@ class LoginPage extends React.Component {
   }
 
   back = (event) => {
-    this.props.history.replace('/login');
+    this.props.history.replace('/pomus/login');
   }
 
   handleFormSubmit(e) {
@@ -97,7 +97,7 @@ class LoginPage extends React.Component {
       var that = this;
       this.setState({email: mail}, () => {
         this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password).then(function() {
-          that.props.history.replace('/login');
+          that.props.history.replace('/pomus/login');
         });
       });
     }
@@ -106,7 +106,7 @@ class LoginPage extends React.Component {
       var that = this;
       this.setState({email: mail}, () => {
         this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password).then(function() {
-          that.props.history.replace('/login');
+          that.props.history.replace('/pomus/login');
         });
       });
     }

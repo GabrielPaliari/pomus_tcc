@@ -5,14 +5,15 @@ import respostasStyle from "assets/jss/components/respostasStyle.jsx";
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Icon from '@material-ui/core/Icon';
+import Send from '@material-ui/icons/Send';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 import RespostasDetail from './RespostasDetail.jsx';
 import Textarea from 'react-textarea-autosize';
+
+import AuthService from "views/Components/AuthService.jsx";
 
 const API = 'http://localhost:8000/api/';
 const RESPOSTAS_COMMENT = 'respostas_comment/';
@@ -32,6 +33,7 @@ class ComentarioList extends React.Component {
       cToDel: {},
       orderString: 'data'         
     };
+    this.Auth = new AuthService();
   }
   
   componentDidMount() {
@@ -40,7 +42,7 @@ class ComentarioList extends React.Component {
 
   fetchList = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let comentarioPai = this.props.comentarioPai;
@@ -75,7 +77,7 @@ class ComentarioList extends React.Component {
 
   createResp = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let resp = this.state.newResp;
@@ -106,7 +108,7 @@ class ComentarioList extends React.Component {
 
   deleteResp = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let r = this.state.cToDel;          
@@ -193,17 +195,17 @@ class ComentarioList extends React.Component {
                             className={classes.commTextArea}
                             onChange={this.handleInputChange}                      
                             placeholder="Escreva uma resposta..."/>
-                  <Icon variant="fab"                          
+                  <Send variant="fab"                          
                         aria-label="Adicionar" 
                         onClick={this.createResp} 
                         style={{color: '#4caf50'}} 
-                        className='RespIcon'>send</Icon>                          
+                        className='RespIcon'/>                          
                 </Paper>              
               </li>
             </ul>
             <span onClick={this.props.toggleShow} className={classes.respCountSpan}>
               <p className={classes.respCount}>{ respCount === 1 ? "1 Resposta" : (respCount + " Respostas") }</p>
-              <Icon className="ExpandIcon">expand_less</Icon>
+              <ExpandLess className="ExpandIcon"/>
             </span>   
           </div>                
           <AlertDialog
@@ -220,7 +222,7 @@ class ComentarioList extends React.Component {
       return (
         <span className={classes.respCountSpan}>
           <p className={classes.respCount}>{ respCount === 1 ? "1 Resposta" : (respCount + " Respostas") }</p>
-          <Icon className="ExpandIcon" onClick={this.props.toggleShow}>expand_more</Icon>
+          <ExpandMore className="ExpandIcon" onClick={this.props.toggleShow}/>
         </span>        
       );
     }

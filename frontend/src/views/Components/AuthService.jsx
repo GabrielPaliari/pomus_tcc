@@ -33,7 +33,6 @@ export default class AuthService {
             'password2': password
         };
         const csrftoken = this.getCookie('csrftoken');
-        console.log(csrftoken);
 
         return fetch(`${this.domain}rest-auth/registration/`, {
             method: 'post',
@@ -59,7 +58,6 @@ export default class AuthService {
 
     login(username, password) {
         const csrftoken = this.getCookie('csrftoken');
-        console.log(csrftoken);
         // Get a token from api server using the fetch api
         return this.fetch(`${this.domain}auth/token/obtain/`, {
             method: 'POST',

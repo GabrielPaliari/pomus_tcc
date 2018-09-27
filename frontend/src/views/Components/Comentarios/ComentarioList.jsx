@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import Icon from '@material-ui/core/Icon';
+import Add from '@material-ui/icons/Add';
 
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 import ComentarioDetail from './ComentarioDetail.jsx';
@@ -43,7 +43,7 @@ class ComentarioList extends React.Component {
 
   fetchList = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let topicoPai = this.props.topicoPai;
@@ -78,7 +78,7 @@ class ComentarioList extends React.Component {
 
   createComment = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let comment = this.state.newComment;
@@ -107,7 +107,7 @@ class ComentarioList extends React.Component {
 
   deleteComment = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let c = this.state.cToDel;          
@@ -203,7 +203,7 @@ class ComentarioList extends React.Component {
           </Paper>      
           <Button variant="fab" mini aria-label="Adicionar" className='addCommentBtn'
             disabled={!this.state.newComment.texto} onClick={this.createComment}>
-            <Icon>add_icon</Icon>
+            <Add />
           </Button>
         </div>  
         <AlertDialog

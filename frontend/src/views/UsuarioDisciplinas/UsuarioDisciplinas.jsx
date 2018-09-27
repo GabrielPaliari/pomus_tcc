@@ -72,7 +72,7 @@ class UsuarioDisciplinas extends React.Component {
 
   fetchDisc = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       var that = this;
@@ -106,7 +106,7 @@ class UsuarioDisciplinas extends React.Component {
 
   addDisc = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let disciplina = this.state.addDisciplina;
@@ -139,7 +139,7 @@ class UsuarioDisciplinas extends React.Component {
     let d = window.confirm("Você deseja realmente retirar a disciplina " + disc.codigo + " da sua lista?");
     if (d === true) {
       if (!this.Auth.loggedIn()) {
-        this.props.history.replace('/login')
+        this.props.history.replace('/pomus/login')
       }
       else {
         let user = this.props.user;
@@ -170,7 +170,7 @@ class UsuarioDisciplinas extends React.Component {
 
   showDetails = (disc) => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       fetch(API + 'usuarios/' + disc.criado_por + "/", {

@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
+import Subject from "@material-ui/icons/Subject";
+import Description from "@material-ui/icons/Description";
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
@@ -38,7 +40,7 @@ class ListaDisciplinas extends React.Component {
                       <ListItem button key={disc.id} className="ListItem">
                         <Link  className="ClickContainer" to={'topicos?disc_id=' + disc.id}>
                         <Avatar className="IconAvatar">
-                          <Icon>subject_icon</Icon>
+                          <Subject />
                         </Avatar>
                         <ListItemText 
                           primary={this.truncate((disc.codigo + " - " + disc.nome), 40)} 
@@ -46,7 +48,7 @@ class ListaDisciplinas extends React.Component {
                         </Link>
                         <Tooltip title="Detalhes" placement="right" enterDelay={500}> 
                           <Button variant="fab" color="primary" mini aria-label="Details" className="EditButton" onClick={() => (this.props.showDetails(disc))}>
-                            <Icon>description</Icon>
+                            <Description />
                           </Button>
                         </Tooltip> 
                         <Tooltip title="Deletar" placement="right" enterDelay={500}>

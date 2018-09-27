@@ -8,6 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 // import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+import Subject from "@material-ui/icons/Subject";
+
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import Tooltip from '@material-ui/core/Tooltip';
 
@@ -39,7 +41,7 @@ class ListaTopicos extends React.Component {
                       <ListItem button key={topic.id} className="ListItem">
                         <Link  className="ClickContainer" to={'topicos/forum?topic_id=' + topic.id}>
                         <Avatar className="IconAvatar">
-                          <Icon>subject_icon</Icon>
+                          <Subject />
                         </Avatar>
                         <ListItemText 
                           primary={this.truncate((topic.titulo), 40)} 

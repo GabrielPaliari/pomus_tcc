@@ -41,7 +41,7 @@ class EchoView(views.APIView):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    url(r'^pomus', TemplateView.as_view(template_name="index.html")),
+    url(r'^pomus/', TemplateView.as_view(template_name="index.html")),
     #url(r'^api/$', get_schema_view()),
     url(r'^api/auth/', include(
         'rest_framework.urls', namespace='rest_framework')),

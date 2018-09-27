@@ -97,7 +97,7 @@ class Disciplinas extends React.Component {
 
   fetchDisc = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       fetch(API + DISC_QUERY, {
@@ -112,7 +112,7 @@ class Disciplinas extends React.Component {
 
   createDisc = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let disciplina = this.state.newDisc;
@@ -163,7 +163,7 @@ class Disciplinas extends React.Component {
 
   editDisc = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let disciplina = this.state.newDisc;
@@ -220,7 +220,7 @@ class Disciplinas extends React.Component {
     let d = window.confirm("Você deseja realmente deletar a disciplina " + disc.codigo + "?");
     if (d === true) {
       if (!this.Auth.loggedIn()) {
-        this.props.history.replace('/login')
+        this.props.history.replace('/pomus/login')
       }
       else {
           let url = API + DISC_QUERY + disc.id +"/";
@@ -248,7 +248,7 @@ class Disciplinas extends React.Component {
 
   showDetails = (disc) => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       fetch(API + 'usuarios/' + disc.criado_por + "/", {

@@ -2,25 +2,18 @@ import React from "react";
 import withStyles from "material-ui/styles/withStyles";
 
 import respostasStyle from "assets/jss/components/respostasStyle.jsx";
-
-import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import Button from '@material-ui/core/Button';
-import Button2 from 'components/CustomButtons/Button.jsx';
-import Divider from '@material-ui/core/Divider';
-import InputLabel from '@material-ui/core/InputLabel';
 import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-
+import Close from '@material-ui/icons/Close';
+import Done from '@material-ui/icons/Done';
+import Edit from '@material-ui/icons/Edit';
+import Delete from '@material-ui/icons/Delete';
 import Textarea from 'react-textarea-autosize';
-
-import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 
 import AuthService from "views/Components/AuthService.jsx";
 
 const API = 'http://localhost:8000/api/';
-const TOPIC = 'topicos/';
 const USER = 'usuarios/';
 const COMENTARIOS = 'comentarios/';
 
@@ -54,7 +47,7 @@ class RespostasDetail extends React.Component {
   
   fetchAutor = () => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       if (this.props.comentario) {       
@@ -89,7 +82,7 @@ class RespostasDetail extends React.Component {
   
   finishEdit = (comentario) => {
     if (!this.Auth.loggedIn()) {
-      this.props.history.replace('/login')
+      this.props.history.replace('/pomus/login')
     }
     else {
       let commentEdit = this.state.commentEdit;
@@ -146,8 +139,8 @@ class RespostasDetail extends React.Component {
     let editing = this.state.editing;
     let edited = this.state.edited || (comentario.criado_em !== comentario.editado_em);
     if (comentario.criado_por === user.id) {      
-      delIcon = <Icon onClick={() => (this.props.del(comentario))} className='ComIcon'>delete</Icon>;
-      editIcon = <Icon onClick={() => (this.editCom())} style={{right: 25, color: '#4caf50'}} className='ComIcon'>edit</Icon>; 
+      delIcon = <Delete onClick={() => (this.props.del(comentario))} className='ComIcon'/>;
+      editIcon = <Edit onClick={() => (this.editCom())} style={{right: 25, color: '#4caf50'}} className='ComIcon'/>; 
     }
     if (comentario && !editing) {
       return (             
@@ -166,8 +159,8 @@ class RespostasDetail extends React.Component {
     } else if (comentario && editing) {
       return (
         <Paper className={classes.commentaryPaper}>
-          <Icon onClick={() => (this.cancelEdit())} style={{right: 25}} className='ComIcon'>close</Icon> 
-          <Icon onClick={() => (this.finishEdit(comentario))} style={{color: '#4caf50'}} className='ComIcon'>done</Icon> 
+          <Close onClick={() => (this.cancelEdit())} style={{right: 25}} className='ComIcon'/> 
+          <Done onClick={() => (this.finishEdit(comentario))} style={{color: '#4caf50'}} className='ComIcon'/> 
           <Textarea name="texto"  
                     value={this.state.commentEdit.texto}                
                     minRows={1}

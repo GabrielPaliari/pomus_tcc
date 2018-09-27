@@ -21,6 +21,7 @@ import Icon from '@material-ui/core/Icon';
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Settings from "@material-ui/icons/Settings";
+import Subject from "@material-ui/icons/Subject";
 
 import appStyle from "assets/jss/material-kit-react/views/app.jsx";
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -41,7 +42,7 @@ const appTheme = createMuiTheme({
 class App extends Component {
   handleLogout(){
     Auth.logout();
-    this.props.history.replace('/login');
+    this.props.history.replace('/pomus/login');
   }
   
   render() {                
@@ -63,8 +64,8 @@ class App extends Component {
                         className={classes.navLink}
                         color="transparent"
                       >
-                      <Link to={'/app/disciplinas'}  className={classes.link}>
-                        <Icon  className={classes.icons}>subject_icon</Icon>
+                      <Link to={'/pomus/app/disciplinas'}  className={classes.link}>
+                        <Subject  className={classes.icons}/>
                           Disciplinas
                       </Link>
                       </Button>
@@ -74,7 +75,7 @@ class App extends Component {
                         className={classes.navLink}
                         color="transparent"
                       >
-                      <Link to={'/app/admin'}  className={classes.link}>
+                      <Link to={'/pomus/app/admin'}  className={classes.link}>
                       <Settings className={classes.icons} />
                         Admin
                       </Link>
@@ -85,7 +86,7 @@ class App extends Component {
                         className={classes.navLink}
                         color="transparent"
                       >
-                      <Link to={'/app'}  className={classes.link}>
+                      <Link to={'/pomus/app'}  className={classes.link}>
                       <AccountCircle className={classes.icons} />
                         Perfil
                       </Link>
@@ -97,7 +98,7 @@ class App extends Component {
                           onClick={this.handleLogout.bind(this)}
                           color="transparent"
                         >
-                      <Link to={'/login'}  className={classes.link}>
+                      <Link to={'/pomus/login'}  className={classes.link}>
                         <ExitIcon  className={classes.icons}/>
                           Sair
                       </Link>
@@ -109,21 +110,21 @@ class App extends Component {
             />
             <div className={classNames(classes.main, classes.mainRaised)}>
               <div className={classes.container}>
-                <Route path='/app/disciplinas' render={() => (
+                <Route path='/pomus/app/disciplinas' render={() => (
                   <UsuarioDisciplinas user={user} history={this.props.history}/>
                   )}/>                         
-                <Route path='/app/admin' render={() => (
+                <Route path='/pomus/app/admin' render={() => (
                   <Disciplinas user={user}/>
                   )}/>    
-                <Route exact path='/app' render={() => (
+                <Route exact path='/pomus/app' render={() => (
                   <div>
                     <h3>Perfil - Bem Vinde!</h3>
                   </div>  
                   )}/>    
-                <Route exact path='/app/topicos' render={() => (
+                <Route exact path='/pomus/app/topicos' render={() => (
                   <Topicos user={user} search={this.props.history.location.search}/> 
                   )}/>                                    
-                <Route path='/app/topicos/forum' render={() => (
+                <Route path='/pomus/app/topicos/forum' render={() => (
                   <Forum user={user} search={this.props.history.location.search}/> 
                   )}/>                                    
               </div>              
