@@ -4,4 +4,6 @@
 
 pomus_django/.env
 
+pomus_django/assets/bundles/**
+
 __pycache__/

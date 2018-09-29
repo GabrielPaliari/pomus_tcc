@@ -70,7 +70,7 @@ class Forum extends React.Component {
       const topicId = this.props.search.split('=')[1];   
       const urlTopic = API + TOPIC + topicId + '/';
       const urlFiles = API + FILESTOPIC + this.props.search;
-      // console.log(url); 
+       
       fetch(urlTopic, {
         headers: {
           'Authorization': 'Bearer ' + this.Auth.getToken()
@@ -95,7 +95,6 @@ class Forum extends React.Component {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
           this.setState ({
             files: data,
             prevFiles: data,
@@ -112,7 +111,6 @@ class Forum extends React.Component {
     let selTopic = {...this.state.selTopic};
     selTopic[name] = value; 
     this.setState({selTopic});  
-    // console.log(this.state.selTopic);  
 
   }
 
@@ -173,7 +171,6 @@ class Forum extends React.Component {
         this.setState({ files: newFilesList });            
       });        
     }
-    console.log(this.state.files);
   }
 
   updateTopic = () => {
@@ -195,9 +192,8 @@ class Forum extends React.Component {
       .then(response => response.json())
       .then(data => {
           var fileArray;
-          console.log(data);          
           this.state.files.forEach((f, index) => {
-            if (!f['id']) {
+            if (!f['id'] && this.Auth.loggedIn()) {
               let data = new FormData();
               let file = new File([f.slice(0,-1)], Date.now() + '___' + f.name, {type: f.type}); // Grants that the names will be different   
               data.append("name", file.name);  
@@ -222,7 +218,6 @@ class Forum extends React.Component {
               });
             }             
           }); 
-          console.log(fileArray);
           console.log(this.state.prevFiles);
           this.state.prevFiles.forEach((prevF, index) => {
             let deletedFile = true;
@@ -231,7 +226,7 @@ class Forum extends React.Component {
                 deletedFile = false;                
               }
             })
-            if (deletedFile) {
+            if (deletedFile && this.Auth.loggedIn()) {
               fetch(API + FILES + prevF.id + '/', {
                 method: 'delete',
                 headers: {
