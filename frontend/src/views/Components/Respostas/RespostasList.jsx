@@ -13,10 +13,12 @@ import Icon from '@material-ui/core/Icon';
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 import RespostasDetail from './RespostasDetail.jsx';
 import Textarea from 'react-textarea-autosize';
+import AuthService from "views/Components/AuthService.jsx";
 
 const API = 'http://localhost:8000/api/';
 const RESPOSTAS_COMMENT = 'respostas_comment/';
 const RESPOSTAS = 'respostas/';
+const Auth = new AuthService('http://localhost:8000/api/');
 
 class ComentarioList extends React.Component {
   constructor(props) {
@@ -39,7 +41,7 @@ class ComentarioList extends React.Component {
   }
 
   fetchList = () => {
-    if (!this.Auth.loggedIn()) {
+    if (!Auth.loggedIn()) {
       this.props.history.replace('/login')
     }
     else {
@@ -50,7 +52,7 @@ class ComentarioList extends React.Component {
         console.log(respListUrl);
         fetch(respListUrl, {
           headers: {
-            'Authorization': 'Bearer ' + this.Auth.getToken()
+            'Authorization': 'Bearer ' + Auth.getToken()
           }
         })
           .then(response => response.json())
@@ -74,7 +76,7 @@ class ComentarioList extends React.Component {
   }
 
   createResp = () => {
-    if (!this.Auth.loggedIn()) {
+    if (!Auth.loggedIn()) {
       this.props.history.replace('/login')
     }
     else {
@@ -87,7 +89,7 @@ class ComentarioList extends React.Component {
           body: JSON.stringify(resp),
           headers:{
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.Auth.getToken()
+            'Authorization': 'Bearer ' + Auth.getToken()
           }
         })   
         .then(response => response.json())
@@ -105,7 +107,7 @@ class ComentarioList extends React.Component {
   };
 
   deleteResp = () => {
-    if (!this.Auth.loggedIn()) {
+    if (!Auth.loggedIn()) {
       this.props.history.replace('/login')
     }
     else {
@@ -115,7 +117,7 @@ class ComentarioList extends React.Component {
         fetch(commUrl, {
           method: 'delete',
           headers: {
-            'Authorization': 'Bearer ' + this.Auth.getToken()
+            'Authorization': 'Bearer ' + Auth.getToken()
           }
         }) 
           .then(response => response)
