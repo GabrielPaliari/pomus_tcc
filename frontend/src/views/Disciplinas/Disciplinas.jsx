@@ -16,9 +16,9 @@ import DetailsModal from "views/Disciplinas/DetailsModal.jsx";
 import EditModal from "views/Disciplinas/EditModal.jsx";
 import AuthService from "views/Components/AuthService.jsx";
 
-const API = 'http://localhost:8000/api/';
+const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const DISC_QUERY = 'disciplinas/';
-const Auth = new AuthService('http://localhost:8000/api/');
+const Auth = new AuthService('http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/');
 var profile =  {
   user_id: 0
 };

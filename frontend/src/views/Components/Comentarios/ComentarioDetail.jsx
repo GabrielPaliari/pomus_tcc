@@ -12,7 +12,7 @@ import RespostasList from 'views/Components/Respostas/RespostasList.jsx';
 
 import AuthService from "views/Components/AuthService.jsx";
 
-const API = 'http://localhost:8000/api/';
+const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const USER = 'usuarios/';
 const COMENTARIOS = 'comentarios/';
 
