@@ -51,8 +51,6 @@ class Topicos extends React.Component {
         nome: '',
         upload: '',
         topico_pai: '',
-        formato: '',
-        tamanho: '',
       }    
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -184,14 +182,13 @@ class Topicos extends React.Component {
       .then(data => {
           console.log(data);
           let topico_pai = data.id;
-          this.state.files.forEach(function(f) {
+          this.state.files.forEach((f, index) => {
             let data = new FormData();
             let file = new File([f.slice(0,-1)], Date.now() + '___' + f.name, {type: f.type}); // Grants that the names will be different   
-            data.append("nome", file.name);  
+            data.append("name", file.name);  
             data.append("upload", file);             
             data.append("topico_pai", topico_pai);             
-            data.append("formato", file.type);             
-            data.append("tamanho", file.size);             
+            data.append("size", file.size);             
                     
             fetch(API + FILES, {
               method: 'post',
@@ -202,8 +199,11 @@ class Topicos extends React.Component {
               },
             })    
             .then(response => response.json())
-            .then(data => {            
-                console.log(data);                 
+            .then(data => { 
+              let filesOld = this.state.files;
+              filesOld.splice(index, 1);
+              filesOld.push(data);
+              this.setState({ filesOld })                                             
             });
           });
           this.setState(prevState => ({            
@@ -310,7 +310,7 @@ class Topicos extends React.Component {
                           rejectClassName="dropReject" 
                           onDrop={this.onDrop.bind(this)}>
                           <InputLabel>Anexos</InputLabel>
-                          <p>Arraste e solte aqui os arquivos que deseja anexar.</p>
+                          <p>Clique aqui ou arraste e solte os arquivos que deseja anexar.</p>
                         </Dropzone>
                       </div>
                       <aside className="filesDiv">

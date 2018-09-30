@@ -39,11 +39,10 @@ class ArquivoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Arquivo
         fields =   ('id',
-                    'nome',
+                    'name',
                     'upload',
                     'topico_pai',
-                    'formato',
-                    'tamanho')
+                    'size')
 
 class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:

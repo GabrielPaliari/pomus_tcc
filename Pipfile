@@ -12,6 +12,8 @@ django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 coreapi = "*"
 djangorestframework-jwt = "*"
+"boto3" = "*"
+python-decouple = "*"
 
 [dev-packages]
 

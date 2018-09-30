@@ -3,6 +3,8 @@ from django.conf import settings
 import datetime
 from django.utils import timezone
 
+MAX_FILE_SIZE = 5000000
+
 class Disciplina(models.Model):
   codigo    = models.CharField(max_length=200, unique=True)
   nome      = models.CharField(max_length=200)
@@ -50,11 +52,22 @@ class Topico(models.Model):
 
 
 class Arquivo(models.Model):
-  nome        = models.CharField(max_length=200)
-  upload      = models.FileField(upload_to='uploads/')
+  name        = models.CharField(max_length=200)
+  uploaded_at = models.DateTimeField(auto_now_add=True)
+  upload      = models.FileField()
   topico_pai  = models.ForeignKey(Topico, on_delete=models.CASCADE, blank=True)
-  formato = models.CharField(max_length=10, blank=True)
-  tamanho = models.DecimalField(max_digits=12, decimal_places=1, blank=True)
+  size = models.DecimalField(max_digits=12, decimal_places=1, default=0, blank=True)
+  
+  def save(self, *args, **kwargs):
+    ''' On save, validate file size timestamps '''
+    if not self.id:        
+      size = len(self.upload)
+      if size > MAX_FILE_SIZE:
+        print("File size is bigger than the max size allowed (%i KB):" % (MAX_FILE_SIZE)) 
+        print("File size: %d" % (size))
+      else: 
+        print("File size ok: %d" % (size))
+        return super(Arquivo, self).save(*args, **kwargs)
 
 
 class Comentario(models.Model):

@@ -1,9 +1,9 @@
-frontend-basics/**
-
 .vscode/*
 
 .pyc
 
-uploads/
+pomus_django/.env
+
+pomus_django/assets/bundles/**
 
 __pycache__/
