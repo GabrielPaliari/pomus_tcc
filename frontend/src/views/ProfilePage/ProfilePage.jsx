@@ -5,6 +5,7 @@ import classNames from "classnames";
 import withStyles from "material-ui/styles/withStyles";
 // @material-ui/icons
 import Camera from "@material-ui/icons/Camera";
+import Lista from "@material-ui/icons/LibraryBooks";
 import Palette from "@material-ui/icons/Palette";
 import Favorite from "@material-ui/icons/Favorite";
 // core components
@@ -17,7 +18,7 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import NavPills from "components/NavPills/NavPills.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
-import profile from "assets/img/faces/christian.jpg";
+import profile from "assets/img/faces/avatar.png";
 
 import studio1 from "assets/img/examples/studio-1.jpg";
 import studio2 from "assets/img/examples/studio-2.jpg";
@@ -32,7 +33,14 @@ import work5 from "assets/img/examples/clem-onojegaw.jpg";
 
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
 
+import AuthService from "views/Components/AuthService.jsx";
+
 class ProfilePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.Auth = new AuthService();
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     const imageClasses = classNames(
@@ -43,17 +51,6 @@ class ProfilePage extends React.Component {
     const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
     return (
       <div>
-        <Header
-          color="transparent"
-          brand="Material Kit React"
-          rightLinks={<HeaderLinks />}
-          fixed
-          changeColorOnScroll={{
-            height: 200,
-            color: "white"
-          }}
-          {...rest}
-        />
         <Parallax small filter image={require("assets/img/profile-bg.jpg")} />
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div>
@@ -65,31 +62,14 @@ class ProfilePage extends React.Component {
                       <img src={profile} alt="..." className={imageClasses} />
                     </div>
                     <div className={classes.name}>
-                      <h3 className={classes.title}>Christian Louboutin</h3>
-                      <h6>DESIGNER</h6>
-                      <IconButton
-                        color="transparent"
-                        className={classes.margin5}
-                      >
-                        <i className={classes.socials + " fab fa-twitter"} />
-                      </IconButton>
-                      <IconButton
-                        color="transparent"
-                        className={classes.margin5}
-                      >
-                        <i className={classes.socials + " fab fa-instagram"} />
-                      </IconButton>
-                      <IconButton
-                        color="transparent"
-                        className={classes.margin5}
-                      >
-                        <i className={classes.socials + " fab fa-facebook"} />
-                      </IconButton>
+                      <h3 className={classes.title}>{this.props.user.name} ( {this.props.user.username} )</h3>
+                      <h6>{this.props.user.nusp}</h6>
+                      <h6>{this.props.user.email}</h6>
                     </div>
                   </div>
                 </GridItem>
               </GridContainer>
-              <div className={classes.description}>
+              {/* <div className={classes.description}>
                 <p>
                   An artist of considerable range, Chet Faker — the name taken
                   by Melbourne-raised, Brooklyn-based Nick Murphy — writes,
@@ -104,8 +84,8 @@ class ProfilePage extends React.Component {
                     color="primary"
                     tabs={[
                       {
-                        tabButton: "Studio",
-                        tabIcon: Camera,
+                        tabButton: "Disciplinas",
+                        tabIcon: Lista,
                         tabContent: (
                           <GridContainer justify="center">
                             <GridItem xs={12} sm={12} md={4}>
@@ -212,7 +192,7 @@ class ProfilePage extends React.Component {
                     ]}
                   />
                 </GridItem>
-              </GridContainer>
+              </GridContainer> */}
             </div>
           </div>
         </div>

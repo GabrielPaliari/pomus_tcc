@@ -3,6 +3,7 @@ import AuthService from 'views/Components/AuthService';
 import withAuth from 'views/Components/withAuth';
 import Disciplinas from "views/Disciplinas/Disciplinas.jsx";
 import UsuarioDisciplinas from "views/UsuarioDisciplinas/UsuarioDisciplinas.jsx";
+import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
 import Topicos from "views/Topicos/Topicos.jsx";
 import Forum from "views/Forum/Forum.jsx";
 
@@ -113,11 +114,12 @@ class App extends Component {
                   <UsuarioDisciplinas user={user} history={this.props.history}/>
                   )}/>                         
                 <Route path='/app/admin' render={() => (
-                  <Disciplinas user={user}/>
+                  <Disciplinas user={user} history={this.props.history}/>
                   )}/>    
                 <Route exact path='/app' render={() => (
                   <div>
-                    <h3>Perfil - Bem Vinde!</h3>
+                    {/* <h3>Perfil - Bem Vinde!</h3> */}
+                    <ProfilePage user={user} history={this.props.history}/>
                   </div>  
                   )}/>    
                 <Route exact path='/app/topicos' render={() => (
