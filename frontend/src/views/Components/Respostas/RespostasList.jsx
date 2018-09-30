@@ -13,7 +13,6 @@ import Icon from '@material-ui/core/Icon';
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 import RespostasDetail from './RespostasDetail.jsx';
 import Textarea from 'react-textarea-autosize';
-import AuthService from "views/Components/AuthService.jsx";
 
 import AuthService from "views/Components/AuthService.jsx";
 
@@ -36,7 +35,6 @@ class ComentarioList extends React.Component {
       cToDel: {},
       orderString: 'data'         
     };
-    this.Auth = new AuthService();
   }
   
   componentDidMount() {
