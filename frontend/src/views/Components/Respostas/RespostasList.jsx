@@ -15,6 +15,8 @@ import RespostasDetail from './RespostasDetail.jsx';
 import Textarea from 'react-textarea-autosize';
 import AuthService from "views/Components/AuthService.jsx";
 
+import AuthService from "views/Components/AuthService.jsx";
+
 const API = 'http://localhost:8000/api/';
 const RESPOSTAS_COMMENT = 'respostas_comment/';
 const RESPOSTAS = 'respostas/';
@@ -34,6 +36,7 @@ class ComentarioList extends React.Component {
       cToDel: {},
       orderString: 'data'         
     };
+    this.Auth = new AuthService();
   }
   
   componentDidMount() {
