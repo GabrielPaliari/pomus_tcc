@@ -21,7 +21,7 @@ class TopicoListView(generics.ListAPIView):
       """
       queryset = Topico.objects.all()
       disciplina = self.request.query_params.get('disc_id', None)
-      print(disciplina)
+      #print(disciplina)
       if disciplina is not None:
           queryset = queryset.filter(disc_pai=disciplina)
       return queryset
