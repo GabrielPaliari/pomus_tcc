@@ -25,6 +25,10 @@ import image from "assets/img/bg7.jpg";
 import green from '@material-ui/core/colors/green';
 
 import AuthService from 'views/Components/AuthService';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import CustomSnack from 'views/Components/Alerts/SnackBar.jsx';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const theme = createMuiTheme({
   palette: {
@@ -37,21 +41,26 @@ class LoginPage extends React.Component {
     super(props);
     this.state = {
       cardAnimaton: "cardHidden",
-      username: "",
-      name: "",
-      email: "",
-      nusp: 0,
-      password: "",
-      passwordConfirm: "",
-      erro: false,
+      usuario: {
+        username: "",
+        name: "",
+        email: "",
+        nusp: 0,
+        password1: "",
+        password2: "",
+      },      
+      loading: false,
+      erro: '',
       senhasDistintas: false,
+      snackOpen: false,
+      emailUsp: true,
     };    
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleContinuousChange = this.handleContinuousChange.bind(this);
     this.back = this.back.bind(this);
     this.Auth = new AuthService();
+    this.domain = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
   }
   componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
@@ -73,53 +82,73 @@ class LoginPage extends React.Component {
     this.props.history.replace('/login');
   }
 
-  handleFormSubmit(e) {
-    e.preventDefault();
-
+  handleSubmit = () => {
+    this.setState({erro: ''});
+    let error = false;
+    const usuario = this.state.usuario;
     /* Validações */
-
-    if(this.state.password != this.state.passwordConfirm) {
-      this.setState({erro: true});
-      return;
-    } else {
-      this.setState({erro: false});
-    }
-
-    if(this.state.password.length < 8) {
-      this.setState({erro: true});
-      return;
-    } else {
-      this.setState({erro: false});
-    }
-
-    var mail = this.state.email;
-    if (mail.substring(mail.length-7) === "@usp.br") {
-      var that = this;
-      this.setState({email: mail}, () => {
-        this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password).then(function() {
-          that.props.history.replace('/login');
-        });
-      });
-    }
-    else {
-      mail = mail + "@usp.br";
-      var that = this;
-      this.setState({email: mail}, () => {
-        this.Auth.signup(this.state.username, this.state.name, this.state.email, this.state.nusp, this.state.password).then(function() {
-          that.props.history.replace('/login');
-        });
-      });
-    }
+    if(usuario.password1.length < 8) {
+      this.setState({erro: 'A senha deve ter no mínimo 8 caracteres'});      
+      error = true;
+    } else if(usuario.password1 != usuario.password2) {
+      this.setState({erro: 'A senha e a confirmação devem ser iguais'});
+      error = true;
+    }          
+    if (!error) {
+      this.signup();
+    }  
     
+  }
+  
+
+  signup = () => {
+    const usuario = this.state.usuario;
+    this.state.loading = true;
+    var mail = usuario.email;
+    if (mail.substring(mail.length-7) !== "@usp.br" && this.state.emailUsp) {
+      usuario.email = mail + "@usp.br";
+    }      
+
+    fetch(`${this.domain}rest-auth/registration/`, {
+        method: 'post',
+        body: JSON.stringify(usuario),
+        headers: {
+            'Content-Type': 'application/json'
+          }
+      })    
+      .then(response => {
+          this.state.loading = false;
+          if (response.ok) {
+            this.handleSnackOpen();                        
+            return Promise.resolve();
+          } else {
+            response.json().then(data => {          
+              if(data.username) {
+                this.setState({erro: 'Nome de usuário já existente'});
+              } else if (data.email) {
+                this.setState({erro: 'Email inválido ou já existente'});
+              } else {
+                this.setState({erro: 'Ocorreu um erro no sistema'});
+              }          
+            })
+          }
+        }
+      )
   }
 
   handleInputChange = (event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-    this.setState({[name]: value});    
+
+    let usuario = {...this.state.usuario};
+    usuario[name] = value; 
+    this.setState({usuario}); 
   };
 
+  handleSwitch = name => event => {
+    this.setState({ [name]: event.target.checked });
+  }
   handleNumberChange = (event) => {
     const target = event.target;
     const name = target.name;
@@ -128,18 +157,17 @@ class LoginPage extends React.Component {
 			// Filter non-digits from input value.
       target.value = target.value.replace(/\D/g, '');
     }
-    this.setState({[name]: target.value});
+    let usuario = {...this.state.usuario};
+    usuario[name] = target.value; 
+    this.setState({usuario}); 
   };
 
   handleContinuousChange = (event) => {
     const target = event.target;
     const name = target.name;
-
-    if (/[^a-zA-Z0-9_.-]/g.test(target.value)){
-			// Filter non-digits from input value.
-      target.value = target.value.replace(/[^a-zA-Z0-9_.-]/g, '');
-    }
-    this.setState({[name]: target.value});
+    let usuario = {...this.state.usuario};
+    usuario[name] = target.value; 
+    this.setState({usuario}); 
   };
 
   showError() {
@@ -148,14 +176,27 @@ class LoginPage extends React.Component {
     }
     else {
       return (<div className="alert-danger alert-login" name="erroSignUp">
-                Usuário ou senha inválidos
+                {this.state.erro}
               </div>);
     }
   }
-  
+
+  handleSnackOpen = () => {
+    this.setState({ snackOpen: true });
+  };
+
+  handleSnackClose = (event, reason) => {
+    this.setState({ snackOpen: false });
+    this.props.history.replace('/');
+  };
 
   render() {
-    const { classes, ...rest } = this.props;            
+    const { classes, ...rest } = this.props;   
+    const usuario = this.state.usuario;    
+    let progress;
+    if (this.state.loading) {
+      progress = <LinearProgress color="primary" /> 
+    }    
     return (
       <div>
       <MuiThemeProvider theme={theme}>
@@ -182,7 +223,13 @@ class LoginPage extends React.Component {
                     <CardHeader color="success" className={classes.cardHeader}>
                       <h4>Pomus - Sign Up</h4>
                     </CardHeader>
+                    {progress}
                     {this.showError()}
+                    <CustomSnack 
+                      open={this.state.snackOpen} 
+                      handleClick={this.handleSnackOpen} 
+                      handleClose={this.handleSnackClose}
+                      message={"Usuário criado e link de confirmação enviado para o seu Email"}/>
                     <CardBody>
                       <TextField
                         model="username"
@@ -224,10 +271,10 @@ class LoginPage extends React.Component {
                             width: 230,
                             marginRight: '0px',
                           }}
-                        />
+                        />                                                                     
                         <TextField
                           margin="normal"
-                          label="@usp.br"
+                          label={this.state.emailUsp ? '@usp.br' : ""}
                           className={classes.textField}
                           style = {{
                             width: 60,
@@ -236,6 +283,17 @@ class LoginPage extends React.Component {
                           }}
                           disabled
                         />
+                        <FormControlLabel
+                          label="Email Usp"
+                          control={
+                            <Switch
+                              checked={this.state.emailUsp}
+                              onChange={this.handleSwitch('emailUsp')}
+                              value="emailUsp"
+                              color="primary"
+                            />
+                          }                          
+                        />                         
                       </div>
                       <TextField
                         model="nusp"
@@ -250,8 +308,8 @@ class LoginPage extends React.Component {
                         onChange={this.handleNumberChange}
                       />
                       <TextField
-                        model="password"
-                        name="password"
+                        model="password1"
+                        name="password1"
                         label="Senha"
                         placeholder="Senha"
                         margin="normal"
@@ -263,8 +321,8 @@ class LoginPage extends React.Component {
                         onChange={this.handleInputChange} 
                       />
                       <TextField
-                        model="passwordConfirm"
-                        name="passwordConfirm"
+                        model="password2"
+                        name="password2"
                         type="passwordConfirm"
                         label="Confirme Senha"
                         placeholder="Confirme Senha"
@@ -282,7 +340,15 @@ class LoginPage extends React.Component {
                         onClick={this.back}>
                         Voltar
                       </Button>
-                      <Button type="submit" color="success" size="lg">
+                      <Button onClick={this.handleSubmit} 
+                              disabled={!usuario.username || 
+                                        !usuario.name || 
+                                        !usuario.email || 
+                                        !usuario.nusp || 
+                                        !usuario.password1 || 
+                                        !usuario.password2} 
+                              color="success" 
+                              size="lg">
                         Registrar
                       </Button>
                     </CardFooter>

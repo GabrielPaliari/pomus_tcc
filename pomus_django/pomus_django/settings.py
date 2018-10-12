@@ -100,12 +100,12 @@ DATABASES = {
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # },
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pomusdb',
-        'USER': 'pomusdb',
-        'PASSWORD': 'pomus67patinete',
-        'HOST': 'pomusdb.cgpsswwkssmt.sa-east-1.rds.amazonaws.com',
-        'PORT': '3306',        
+        'ENGINE': config('ENGINE'),
+        'NAME': config('NAME'),
+        'USER': config('USER'), 
+        'PASSWORD': config('PASSWORD'), 
+        'HOST': config('HOST'), 
+        'PORT': config('PORT'),        
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
@@ -121,20 +121,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+AUTH_PASSWORD_VALIDATORS = []
 
 
 # Internationalization
@@ -166,13 +153,13 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Pomus] '
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Pomus Poli] '
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'hostEmail@gmail.com'
-EMAIL_HOST_PASSWORD = 'password'
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = config('EMAILUSER')
+EMAIL_HOST_PASSWORD = config('EMAILPASS')
 
 # Permite apenas requisições de usuários logados:
 REST_FRAMEWORK = {
