@@ -9,7 +9,7 @@ interação entre as pessoas.
 
 Voce está recebendo este email porque se cadastrou com o nome de usuário "{{ user_display }}" na plataforma.
 
-Para confirmar o seu email e fazer o login, acesse a seguinte URL: {{ activate_url }} 
+Para confirmar o seu email e fazer o login, acesse a seguinte URL: http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:3000/ 
 
 {% endblocktrans %}{% endautoescape %}
 {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Agradeçemos muito a sua Participação!

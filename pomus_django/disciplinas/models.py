@@ -3,7 +3,7 @@ from django.conf import settings
 import datetime
 from django.utils import timezone
 
-MAX_FILE_SIZE = 5000000
+MAX_FILE_SIZE = 50000000
 
 class Disciplina(models.Model):
   codigo    = models.CharField(max_length=200, unique=True)

@@ -29,7 +29,7 @@ const TOPIC = 'topicos/';
 const FILES = 'arquivos/';
 const FILESTOPIC = 'arquivos_topic/';
 const MAXFILES = 5;
-const MAXFILESIZE = 5000000; //5MB
+const MAXFILESIZE = 50000000; //50MB
 
 class Forum extends React.Component {
   constructor(props) {

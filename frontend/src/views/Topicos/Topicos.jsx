@@ -27,7 +27,7 @@ const TOPICS_DISC = 'topicos_disc/';
 const TOPIC = 'topicos/';
 const FILES = 'arquivos/';
 const MAXFILES = 5;
-const MAXFILESIZE = 5000000; //5MB
+const MAXFILESIZE = 50000000; //50MB
 
 class Topicos extends React.Component {
   constructor(props) {

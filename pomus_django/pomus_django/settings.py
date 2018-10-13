@@ -100,12 +100,12 @@ DATABASES = {
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # },
     'default': {
-        'ENGINE': config('ENGINE'),
-        'NAME': config('NAME'),
-        'USER': config('USER'), 
-        'PASSWORD': config('PASSWORD'), 
-        'HOST': config('HOST'), 
-        'PORT': config('PORT'),        
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pomusdb',
+        'USER': 'pomusdb', 
+        'PASSWORD': 'pomus67patinete', 
+        'HOST': 'pomusdb.cgpsswwkssmt.sa-east-1.rds.amazonaws.com', 
+        'PORT': '3306', 
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
@@ -174,7 +174,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=5),
 }
 

@@ -64,7 +64,7 @@ export default class AuthService {
         try {
             const decoded = decode(token);
             // const refreshed = decode(this.getRefreshToken());
-            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired. N)
+            if (decoded.exp < Date.now() / 10000 ) { // Checking if token is expired. N)
                 return true;
             }
             else
