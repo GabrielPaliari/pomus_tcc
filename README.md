@@ -1,7 +1,7 @@
 # pomus_tcc
 O índice de evasão e de reprovação no curso de engenharia é bastante elevado. Pensando nisso, o foco deste projeto foi desenvolver protótipo para verificar se uma plataforma de software que permite o compartilhamento de arquivos e uma maior interação entre os alunos pode melhorar a qualidade dos estudos dos alunos de alguma maneira. 
 
-Este projeto foi deito como Trabalho de TCC de Victor Funabashi e Gabriel Paliari Zanoni.
+Pomus significa Árvore em Latim, e essa palavra foi usada como nome deste projeto porque a plataforma visa se tornar uma árvore do conhecimento. Este projeto foi deito como Trabalho de TCC de Victor Funabashi e Gabriel Paliari Zanoni.
 
 ## Primeiro setup
 
