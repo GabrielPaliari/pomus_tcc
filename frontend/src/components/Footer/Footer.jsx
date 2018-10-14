@@ -27,7 +27,7 @@ function Footer({ ...props }) {
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
               <a href="https://github.com/GabrielPaliari/pomus_tcc" target="_blank" className={classes.block}>
-                projeto
+                projeto no github
               </a>
             </ListItem>
           </List>

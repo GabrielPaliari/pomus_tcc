@@ -118,7 +118,32 @@ class App extends Component {
                 <Route exact path='/app' render={() => (
                   <div>
                     <h3>Perfil - Bem Vinde!</h3>
-                  </div>  
+                    <p>
+                      Você já deve ter percebido que a vida na poli não é fácil... 
+                      Foi pensando nas dificuldades de ensino e aprendizagem que esta 
+                      plataforma foi feita, focando em você e em seus estudos.
+                    </p>
+                    <p>
+
+                      O objetivo dela é permitir o compartilhamento de arquivos úteis para as disciplinas, 
+                      e também ser um meio de aumentar a interação entre alunos/as da poli, auxiliando no 
+                      esclarecimento de dúvidas e na socialização do conhecimento.
+                    </p>
+                    <p>
+                      Na aba <b>admin</b> é posível criar e editar disciplinas no sistema. Na aba <b>disciplinas </b> 
+                      você pode criar uma lista com as suas disciplinas no semestre e acessar os tópicos de cada uma. 
+                      Ao clicar na disciplina você pode visualizar seus tópicos e criar novos tópicos. 
+                      Em cada tópico é possível fazer o upload de até 5 arquivos e há uma discussão 
+                      com comentários e respostas em forma de fórum. 
+                    </p>
+                    <p>
+                      Depois que tiver usado a plataforma por algum tempo, responda este <b><a href="http://www.gmail.com" target="_blank">questionário </a></b>  
+                       caso tenha interesse. Seu feedback irá ajudar muito para melhorarmos o site para você e seus colegas!
+                    </p>      
+                    <h5>              
+                      Pomus - Colabore, compartilhe e cultive o conhecimento!   
+                    </h5>
+                  </div>                    
                   )}/>    
                 <Route exact path='/app/topicos' render={() => (
                   <Topicos user={user} search={this.props.history.location.search}/> 
