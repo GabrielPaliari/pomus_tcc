@@ -100,12 +100,13 @@ const styles2 = theme => ({
 
 class CustomSnack extends React.Component {  
   render() {
-    const { classes } = this.props;
+    const { classes, position } = this.props;
 
     return (
       <div>
         <Snackbar
-          anchorOrigin={{
+          anchorOrigin={position ? position : 
+          {
             vertical: 'top',
             horizontal: 'right',
           }}

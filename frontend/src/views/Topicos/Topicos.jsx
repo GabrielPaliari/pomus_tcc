@@ -19,6 +19,8 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 
+import CustomSnack from 'views/Components/Alerts/SnackBar.jsx';
+
 import AuthService from "views/Components/AuthService.jsx";
 
 const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
@@ -27,7 +29,7 @@ const TOPICS_DISC = 'topicos_disc/';
 const TOPIC = 'topicos/';
 const FILES = 'arquivos/';
 const MAXFILES = 5;
-const MAXFILESIZE = 50000000; //50MB
+const MAXFILESIZE = 5000000; //5MB
 
 class Topicos extends React.Component {
   constructor(props) {
@@ -40,6 +42,7 @@ class Topicos extends React.Component {
       isFullOfFiles: false,
       sameFileName: false,
       maxSizeOn: false,
+      snackOpen: false,
       selTopic: {
         titulo: '',
         explicacao: '',
@@ -119,6 +122,14 @@ class Topicos extends React.Component {
         explicacao:  '',
       }  
     });    
+  };
+  
+  handleSnackOpen = () => {
+    this.setState({ snackOpen: true });
+  };
+
+  handleSnackClose = (event, reason) => {
+    this.setState({ snackOpen: false });
   };
 
   onDrop(files) {
@@ -211,7 +222,7 @@ class Topicos extends React.Component {
           }))
           this.handleClose();
           console.log(this.state.topicos);
-          alert("Tópico criado com sucesso!");                 
+          this.handleSnackOpen();            
       });
     }
   };
@@ -338,7 +349,7 @@ class Topicos extends React.Component {
                       color="success"
                       className="createTopicBtn"
                       disabled={!this.state.selTopic.titulo || !this.state.selTopic.explicacao}>Criar Tópico</Button2>      
-                  </Grid>            
+                  </Grid>                              
                 </Paper> 
     } else {
       addForm = <Button variant="fab" mini aria-label="Adicionar" className="AddButton"
@@ -355,6 +366,15 @@ class Topicos extends React.Component {
             topicos={this.state.topicos} />
           <Divider className="BottomDivider"/>
           {addForm}
+          <CustomSnack 
+            position={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            open={this.state.snackOpen} 
+            handleClick={this.handleSnackOpen} 
+            handleClose={this.handleSnackClose}
+            message={"Tópico criado. O upload dos arquivos pode demorar alguns instantes"}/>
         </GridContainer>                            
       
     );
