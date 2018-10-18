@@ -319,7 +319,8 @@ class Disciplinas extends React.Component {
             disciplinas={this.state.disciplinas} 
             deleteDisc={this.deleteDisc}
             showDetails={this.showDetails}
-            openEdit={this.openEdit}/>
+            openEdit={this.openEdit}
+            history={this.props.history}/>
           <Divider className="BottomDivider"/>
           <Button variant="fab" mini aria-label="Adicionar" className="AddButton"
                   onClick={this.handleOpen}>

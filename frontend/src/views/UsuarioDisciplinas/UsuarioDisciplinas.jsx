@@ -243,7 +243,8 @@ class UsuarioDisciplinas extends React.Component {
             disciplinas={this.state.disciplinasUsuario} 
             deleteDisc={this.deleteDisc}
             showDetails={this.showDetails}
-            openEdit={this.openEdit}/>
+            openEdit={this.openEdit}
+            history={this.props.history}/>
           <Divider className="BottomDivider"/>
           <Tooltip title="Adicionar Disciplina" placement="right" enterDelay={500}>
             <Button variant="fab" mini aria-label="Adicionar" className="AddButton"

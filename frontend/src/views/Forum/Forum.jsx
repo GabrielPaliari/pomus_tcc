@@ -289,7 +289,7 @@ class Forum extends React.Component {
     let selTopic = this.state.selTopic;      
     let commentaryList;
     if (selTopic.id) {
-      commentaryList = <ComentarioList user={this.props.user} topicoPai={selTopic.id}></ComentarioList>;
+      commentaryList = <ComentarioList history={this.props.history} user={this.props.user} topicoPai={selTopic.id}></ComentarioList>;
     }
 
     const isEditing = this.state.isEditing;

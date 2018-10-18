@@ -183,7 +183,7 @@ class ComentarioList extends React.Component {
                 })
                 .map(r => 
                   <li key={r.id}>
-                    <RespostasDetail user={user} comentario={r} del={this.prepareDel} handleLiked={this.handleLiked}></RespostasDetail>
+                    <RespostasDetail history={this.props.history} user={user} comentario={r} del={this.prepareDel} handleLiked={this.handleLiked}></RespostasDetail>
                   </li>)
               }
               <li>

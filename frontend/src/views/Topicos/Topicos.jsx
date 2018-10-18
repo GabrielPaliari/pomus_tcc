@@ -363,7 +363,8 @@ class Topicos extends React.Component {
           {pageHeader}
           <Divider className="TopDivider"/>  
           <ListaTopicos 
-            topicos={this.state.topicos} />
+            topicos={this.state.topicos} 
+            history={this.props.history}/>
           <Divider className="BottomDivider"/>
           {addForm}
           <CustomSnack 

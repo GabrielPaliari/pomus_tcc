@@ -210,7 +210,8 @@ class ComentarioDetail extends React.Component {
               user={this.props.user} 
               comentarioPai={comentario.id} 
               toggleShow={this.toggleShow} 
-              showResp={this.state.showResp}></RespostasList>
+              showResp={this.state.showResp}
+              history={this.props.history}></RespostasList>
           </div>          
         </div>
       );
