@@ -56,7 +56,8 @@ class Disciplinas extends React.Component {
         criado_por: profile.user_id,
       },      
       preRequisitos: [],   
-      codigoExiste: false        
+      codigoExiste: false,
+      disabled: true
     };
     this.handleInputChange = this.handleInputChange.bind(this)
     this.deleteDisc = this.deleteDisc.bind(this);
@@ -342,7 +343,8 @@ class Disciplinas extends React.Component {
           createDisc={this.createDisc}
           open={this.state.open}
           preRequisitos={this.state.preRequisitos}
-          handleChangeMultiSel={this.handleChangeMultiSel}/>
+          handleChangeMultiSel={this.handleChangeMultiSel}
+          disabled={this.state.disabled}/>
         <EditModal 
           disciplinas={this.state.disciplinas} 
           selectedDisc={this.state.newDisc}

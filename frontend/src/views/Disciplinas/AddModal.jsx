@@ -81,7 +81,7 @@ class AddModal extends React.Component {
               className={classes.textField} 
               //value={this.props.newDisc.nome}
               onChange={this.props.handleInputChange}
-              required
+              disabled = {(this.props.disabled)? "disabled" : ""}
             />
             <TextField
               name="descricao"
@@ -96,6 +96,7 @@ class AddModal extends React.Component {
               className={classes.bigField} 
               //value={this.props.newDisc.descricao}
               onChange={this.props.handleInputChange}
+              disabled = {(this.props.disabled)? "disabled" : ""}
             />
             <TextField
               name="creditosA"
@@ -106,6 +107,7 @@ class AddModal extends React.Component {
               className={classes.textField}
               //value={this.props.newDisc.creditosA}
               onChange={this.props.handleInputChange}
+              disabled = {(this.props.disabled)? "disabled" : ""}
             />
             <TextField
               name="creditosT"
@@ -116,6 +118,7 @@ class AddModal extends React.Component {
               className={classes.textField}
               //value={this.props.newDisc.creditosT}
               onChange={this.props.handleInputChange}
+              disabled = {(this.props.disabled)? "disabled" : ""}
             />
             <TextField
               name="dataIni"
@@ -148,6 +151,7 @@ class AddModal extends React.Component {
               className={classes.bigField} 
               //value={this.props.newDisc.objetivos}
               onChange={this.props.handleInputChange}
+              disabled = {(this.props.disabled)? "disabled" : ""}
             />
             <TextField
               name="programa"
@@ -162,11 +166,13 @@ class AddModal extends React.Component {
               className={classes.bigField} 
               //value={this.props.newDisc.programa}
               onChange={this.props.handleInputChange}
+              disabled = {(this.props.disabled)? "disabled" : ""}
             />
             <AutoComplete 
               preRequisitos={this.props.preRequisitos} 
               disciplinas={this.props.disciplinas}
               handleChange={this.props.handleChangeMultiSel}/>
+            <Button onClick={this.props.createDisc} className={classes.createButton} type="button" color="success">Pesquisar Disciplina</Button>            
             <Button onClick={this.props.createDisc} className={classes.createButton} type="button" color="success">Criar Disciplina</Button>            
             </div>
             <AddModalWrapped />
