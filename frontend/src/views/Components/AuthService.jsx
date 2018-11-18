@@ -3,7 +3,7 @@ import decode from 'jwt-decode';
 export default class AuthService {
     // Initializing important variables
     constructor(domain) {
-        this.domain = domain || 'http://localhost:8000/api/' // API server domain
+        this.domain = domain || 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/' // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
@@ -64,7 +64,7 @@ export default class AuthService {
         try {
             const decoded = decode(token);
             // const refreshed = decode(this.getRefreshToken());
-            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired. N)
+            if (decoded.exp < Date.now() / 1000 ) { // Checking if token is expired. N)
                 return true;
             }
             else

@@ -18,7 +18,7 @@ import AuthService from "views/Components/AuthService.jsx";
 
 import Tooltip from '@material-ui/core/Tooltip';
 
-const API = 'http://localhost:8000/api/';
+const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const DISC_QUERY = 'disciplinas/';
 const USER_QUERY = 'usuarios/';
 
@@ -243,7 +243,8 @@ class UsuarioDisciplinas extends React.Component {
             disciplinas={this.state.disciplinasUsuario} 
             deleteDisc={this.deleteDisc}
             showDetails={this.showDetails}
-            openEdit={this.openEdit}/>
+            openEdit={this.openEdit}
+            history={this.props.history}/>
           <Divider className="BottomDivider"/>
           <Tooltip title="Adicionar Disciplina" placement="right" enterDelay={500}>
             <Button variant="fab" mini aria-label="Adicionar" className="AddButton"

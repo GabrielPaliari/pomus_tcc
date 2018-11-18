@@ -13,12 +13,13 @@ import Icon from '@material-ui/core/Icon';
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 import RespostasDetail from './RespostasDetail.jsx';
 import Textarea from 'react-textarea-autosize';
+
 import AuthService from "views/Components/AuthService.jsx";
 
-const API = 'http://localhost:8000/api/';
+const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const RESPOSTAS_COMMENT = 'respostas_comment/';
 const RESPOSTAS = 'respostas/';
-const Auth = new AuthService('http://localhost:8000/api/');
+const Auth = new AuthService('http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/');
 
 class ComentarioList extends React.Component {
   constructor(props) {
@@ -182,7 +183,7 @@ class ComentarioList extends React.Component {
                 })
                 .map(r => 
                   <li key={r.id}>
-                    <RespostasDetail user={user} comentario={r} del={this.prepareDel} handleLiked={this.handleLiked}></RespostasDetail>
+                    <RespostasDetail history={this.props.history} user={user} comentario={r} del={this.prepareDel} handleLiked={this.handleLiked}></RespostasDetail>
                   </li>)
               }
               <li>

@@ -10,9 +10,5 @@ class Document(models.Model):
         ''' On save, validate file size timestamps '''
         if not self.id:        
             size = len(self.upload)
-            if size > MAX_FILE_SIZE:
-                print("File size is bigger than the max size allowed (%i KB):" % (MAX_FILE_SIZE)) 
-                print("File size: %d" % (size))
-            else: 
-                print("File size ok: %d" % (size))
+            if size < MAX_FILE_SIZE:
                 return super(Document, self).save(*args, **kwargs)

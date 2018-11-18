@@ -40,8 +40,8 @@ class EchoView(views.APIView):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    url(r'^$', generic.RedirectView.as_view(
-         url='/api/', permanent=False)),
+    # url(r'^$', generic.RedirectView.as_view(
+    #      url='/api/', permanent=False)),
     #url(r'^api/$', get_schema_view()),
     url(r'^api/auth/', include(
         'rest_framework.urls', namespace='rest_framework')),

@@ -16,7 +16,7 @@ import Textarea from 'react-textarea-autosize';
 
 import AuthService from "views/Components/AuthService.jsx";
 
-const API = 'http://localhost:8000/api/';
+const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const COMENTARIO = 'comentarios/';
 const COMENTARIO_TOPICO = 'comentarios_topic/';
 
@@ -183,7 +183,7 @@ class ComentarioList extends React.Component {
               })
               .map(c => 
                 <li key={c.id}>
-                  <ComentarioDetail user={user} comentario={c} del={this.prepareDel} handleLiked={this.handleLiked}></ComentarioDetail>
+                  <ComentarioDetail history={this.props.history} user={user} comentario={c} del={this.prepareDel} handleLiked={this.handleLiked}></ComentarioDetail>
                 </li>)
             }
           </ul>

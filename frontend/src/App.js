@@ -114,19 +114,37 @@ class App extends Component {
                   <UsuarioDisciplinas user={user} history={this.props.history}/>
                   )}/>                         
                 <Route path='/app/admin' render={() => (
-                  <Disciplinas user={user} history={this.props.history}/>
+                  <Disciplinas history={this.props.history} user={user}/>
                   )}/>    
                 <Route exact path='/app' render={() => (
                   <div>
-                    {/* <h3>Perfil - Bem Vinde!</h3> */}
-                    <ProfilePage user={user} history={this.props.history}/>
-                  </div>  
+                    <h3>Bem Vinde!</h3>
+                    <h5>A vida na poli não é fácil...</h5>
+                    <p> 
+                      Foi focando em você e em seus estudos que esta 
+                      plataforma foi feita.
+                    </p>
+                    <p>
+                      O objetivo dela é permitir o compartilhamento de arquivos úteis para as disciplinas, 
+                      e também ser um forum para esclarecimento de dúvidas.  
+                    </p>
+                    <h5>Como utilizar:</h5>
+                    <ul>
+                      <li>Na aba <b>admin</b> é posível criar e editar disciplinas no sistema. </li>
+                      <li>Na aba <b>disciplinas </b> você pode criar uma lista com as suas disciplinas no semestre e acessar os tópicos de cada uma. </li>
+                      <li>Ao clicar na disciplina você pode visualizar seus tópicos e criar novos tópicos. </li>
+                      <li>Em cada tópico é possível fazer o upload de até 5 arquivos e há uma discussão com comentários e respostas em forma de fórum.</li>
+                    </ul>  
+                    <h4>              
+                      Pomus - Colabore, compartilhe e cultive o conhecimento!   
+                    </h4>
+                  </div>                    
                   )}/>    
                 <Route exact path='/app/topicos' render={() => (
-                  <Topicos user={user} search={this.props.history.location.search}/> 
+                  <Topicos history={this.props.history} user={user} search={this.props.history.location.search}/> 
                   )}/>                                    
                 <Route path='/app/topicos/forum' render={() => (
-                  <Forum user={user} search={this.props.history.location.search}/> 
+                  <Forum history={this.props.history} user={user} search={this.props.history.location.search}/> 
                   )}/>                                    
               </div>              
             </div>

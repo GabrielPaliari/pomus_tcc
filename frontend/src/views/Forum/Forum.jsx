@@ -21,8 +21,9 @@ import Paper from '@material-ui/core/Paper';
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
 
 import AuthService from "views/Components/AuthService.jsx";
+import CustomSnack from 'views/Components/Alerts/SnackBar.jsx';
 
-const API = 'http://localhost:8000/api/';
+const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const DISC_QUERY = 'disciplinas/';
 const TOPICS_DISC = 'topicos_disc/';
 const TOPIC = 'topicos/';
@@ -42,6 +43,7 @@ class Forum extends React.Component {
       sameFileName: false,
       maxSizeOn: false,
       dialogOpen: false,
+      snackOpen: false,
       selTopic: {
         titulo:  '',
         explicacao:  '',
@@ -135,6 +137,14 @@ class Forum extends React.Component {
     });    
   };
 
+  handleSnackOpen = () => {
+    this.setState({ snackOpen: true });
+  };
+
+  handleSnackClose = (event, reason) => {
+    this.setState({ snackOpen: false });
+  };
+  
   onDrop(files) {
     // Reset state
     this.setState({
@@ -240,9 +250,9 @@ class Forum extends React.Component {
             }
           })         
           this.handleClose();
-          console.log(this.state.topicos);
-          alert("Tópico modificado com sucesso!");
-          this.handleDialogClose();                 
+          console.log(this.state.topicos);          
+          this.handleDialogClose();       
+          this.handleSnackOpen();            
       });
     }
   };
@@ -279,7 +289,7 @@ class Forum extends React.Component {
     let selTopic = this.state.selTopic;      
     let commentaryList;
     if (selTopic.id) {
-      commentaryList = <ComentarioList user={this.props.user} topicoPai={selTopic.id}></ComentarioList>;
+      commentaryList = <ComentarioList history={this.props.history} user={this.props.user} topicoPai={selTopic.id}></ComentarioList>;
     }
 
     const isEditing = this.state.isEditing;
@@ -430,6 +440,15 @@ class Forum extends React.Component {
             {editOrDetail}
           <Divider className="BottomDivider"/>
           {commentaryList}
+          <CustomSnack 
+            position={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            open={this.state.snackOpen} 
+            handleClick={this.handleSnackOpen} 
+            handleClose={this.handleSnackClose}
+            message={"Tópico editado. O upload de arquivos pode demorar alguns instantes"}/>
         </GridContainer>                            
       
     );
