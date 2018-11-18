@@ -51,146 +51,149 @@ const theme = createMuiTheme({
 
 class AddModal extends React.Component {  
   render() {
-    const { classes } = this.props;        
-    return (
-      <div>
-        <MuiThemeProvider theme={theme}>
-        <Modal          
-          open={this.props.open}
-          onClose={this.props.handleClose}
-        >
-          <div className={classes.paper}>
-            <h2 variant="title" id="modal-title">
-              Nova Disciplina
-            </h2>          
-            <Divider />
-            <div className={classes.container}>
-            <TextField
-              name="codigo"
-              label="Código da Disciplina"
-              placeholder="ex.: MAT2454"
-              margin="normal"
-              inputProps={{
-                maxLength: 7,
-              }}  
-              className={classes.textField}     
-              //value={this.props.newDisc.codigo}       
-              onChange={this.props.handleInputChange}
-              required
-            />
-            <TextField
-              name="nome"
-              label="Nome"
-              placeholder="ex.: Cálculo"
-              margin="normal"
-              inputProps={{
-                maxLength: 70,
-              }}
-              className={classes.textField} 
-              //value={this.props.newDisc.nome}
-              onChange={this.props.handleInputChange}
-              disabled = {(this.props.disabled)? "disabled" : ""}
-            />
-            <TextField
-              name="descricao"
-              label="Descrição"
-              placeholder="Máx.: 400 caracteres"
-              inputProps={{
-                maxLength: 400,
-              }}
-              margin="normal"
-              multiline
-              rowsMax="3"
-              className={classes.bigField} 
-              //value={this.props.newDisc.descricao}
-              onChange={this.props.handleInputChange}
-              disabled = {(this.props.disabled)? "disabled" : ""}
-            />
-            <TextField
-              name="creditosA"
-              label="Créditos Aula"
-              placeholder=""
-              margin="normal"
-              type="number"
-              className={classes.textField}
-              //value={this.props.newDisc.creditosA}
-              onChange={this.props.handleInputChange}
-              disabled = {(this.props.disabled)? "disabled" : ""}
-            />
-            <TextField
-              name="creditosT"
-              label="Créditos Trabalho"
-              placeholder=""
-              margin="normal"
-              type="number"
-              className={classes.textField}
-              //value={this.props.newDisc.creditosT}
-              onChange={this.props.handleInputChange}
-              disabled = {(this.props.disabled)? "disabled" : ""}
-            />
-            <TextField
-              name="dataIni"
-              label="Data de Início"
-              type="date"
-              defaultValue="2018-08-01"
-              className={classes.textField}   
-              //value={this.props.newDisc.dataIni}
-              onChange={this.props.handleInputChange}           
-            />
-            <TextField
-              name="dataFim"
-              label="Data de Fim"
-              type="date"
-              defaultValue="2018-12-01"
-              className={classes.textField}    
-              //value={this.props.newDisc.dataFim}
-              onChange={this.props.handleInputChange}          
-            />
-            <TextField
-              name="objetivos"
-              label="Objetivos"
-              placeholder="Máx.: 500 caracteres"
-              margin="normal"
-              inputProps={{
-                maxLength: 400,
-              }}
-              multiline
-              rowsMax="3"
-              className={classes.bigField} 
-              //value={this.props.newDisc.objetivos}
-              onChange={this.props.handleInputChange}
-              disabled = {(this.props.disabled)? "disabled" : ""}
-            />
-            <TextField
-              name="programa"
-              label="Programa"
-              placeholder="Máx.: 1000 caracteres"
-              margin="normal"
-              inputProps={{
-                maxLength: 600,
-              }}
-              multiline
-              rowsMax="3"
-              className={classes.bigField} 
-              //value={this.props.newDisc.programa}
-              onChange={this.props.handleInputChange}
-              disabled = {(this.props.disabled)? "disabled" : ""}
-            />
-            <AutoComplete 
-              preRequisitos={this.props.preRequisitos} 
-              disciplinas={this.props.disciplinas}
-              handleChange={this.props.handleChangeMultiSel}/>
-            <div className={classes.buttonsLine}>
-              <Button onClick={this.props.createDisc} className={classes.searchButton} type="button">Pesquisar Disciplina</Button>
-              <Button onClick={this.props.createDisc} className={classes.createButton} type="button" color="success">Criar Disciplina</Button>
+    const { classes, newDisc } = this.props;
+    if (newDisc) {
+      return (
+        <div>
+          <MuiThemeProvider theme={theme}>
+          <Modal          
+            open={this.props.open}
+            onClose={this.props.handleClose}
+          >
+            <div className={classes.paper}>
+              <h2 variant="title" id="modal-title">
+                Nova Disciplina
+              </h2>          
+              <Divider />
+              <div className={classes.container}>
+              <TextField
+                name="codigo"
+                label="Código da Disciplina"
+                placeholder="ex.: MAT2454"
+                margin="normal"
+                inputProps={{
+                  maxLength: 7,
+                }}  
+                className={classes.textField}     
+                value={newDisc.codigo}       
+                onChange={this.props.handleInputChange}
+                required
+              />
+              <TextField
+                name="nome"
+                label="Nome"
+                placeholder="ex.: Cálculo"
+                margin="normal"
+                inputProps={{
+                  maxLength: 70,
+                }}
+                className={classes.textField} 
+                value={newDisc.nome}
+                onChange={this.props.handleInputChange}
+                disabled = {(this.props.disabled)? "disabled" : ""}
+              />
+              <TextField
+                name="descricao"
+                label="Descrição"
+                placeholder="Máx.: 400 caracteres"
+                inputProps={{
+                  maxLength: 400,
+                }}
+                margin="normal"
+                multiline
+                rowsMax="3"
+                className={classes.bigField} 
+                value={newDisc.descricao}
+                onChange={this.props.handleInputChange}
+              />
+              <TextField
+                name="creditosA"
+                label="Créditos Aula"
+                placeholder=""
+                margin="normal"
+                type="number"
+                className={classes.textField}
+                value={newDisc.creditosA}
+                onChange={this.props.handleInputChange}
+                disabled = {(this.props.disabled)? "disabled" : ""}
+              />
+              <TextField
+                name="creditosT"
+                label="Créditos Trabalho"
+                placeholder=""
+                margin="normal"
+                type="number"
+                className={classes.textField}
+                value={newDisc.creditosT}
+                onChange={this.props.handleInputChange}
+                disabled = {(this.props.disabled)? "disabled" : ""}
+              />
+              <TextField
+                name="dataIni"
+                label="Data de Início"
+                type="date"
+                defaultValue="2018-08-01"
+                className={classes.textField}   
+                //value={this.props.newDisc.dataIni}
+                onChange={this.props.handleInputChange}           
+              />
+              <TextField
+                name="dataFim"
+                label="Data de Fim"
+                type="date"
+                defaultValue="2018-12-01"
+                className={classes.textField}    
+                //value={this.props.newDisc.dataFim}
+                onChange={this.props.handleInputChange}          
+              />
+              <TextField
+                name="objetivos"
+                label="Objetivos"
+                placeholder="Máx.: 500 caracteres"
+                margin="normal"
+                inputProps={{
+                  maxLength: 400,
+                }}
+                multiline
+                rowsMax="3"
+                className={classes.bigField} 
+                value={newDisc.objetivos}
+                onChange={this.props.handleInputChange}
+                disabled = {(this.props.disabled)? "disabled" : ""}
+              />
+              <TextField
+                name="programa"
+                label="Programa"
+                placeholder="Máx.: 1000 caracteres"
+                margin="normal"
+                inputProps={{
+                  maxLength: 600,
+                }}
+                multiline
+                rowsMax="3"
+                className={classes.bigField} 
+                value={newDisc.programa}
+                onChange={this.props.handleInputChange}
+                disabled = {(this.props.disabled)? "disabled" : ""}
+              />
+              <AutoComplete 
+                preRequisitos={this.props.preRequisitos} 
+                disciplinas={this.props.disciplinas}
+                handleChange={this.props.handleChangeMultiSel}/>
+              <div className={classes.buttonsLine}>
+                <Button onClick={this.props.searchDisc} className={classes.searchButton} type="button">Pesquisar Disciplina</Button>
+                <Button onClick={this.props.createDisc} className={classes.createButton} type="button" color="success">Criar Disciplina</Button>
+              </div>
+              </div>
+              <AddModalWrapped />
             </div>
-            </div>
-            <AddModalWrapped />
-          </div>
-        </Modal>
-        </MuiThemeProvider>
-      </div>
-    );
+          </Modal>
+          </MuiThemeProvider>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
   }
 }
 

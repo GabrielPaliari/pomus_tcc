@@ -18,6 +18,7 @@ import AuthService from "views/Components/AuthService.jsx";
 
 const API = 'http://localhost:8000/api/';
 const DISC_QUERY = 'disciplinas/';
+const DISC_JUPITER_QUERY = 'disciplina_jupiter/';
 const Auth = new AuthService('http://localhost:8000/api/');
 var profile =  {
   user_id: 0
@@ -59,7 +60,7 @@ class Disciplinas extends React.Component {
       codigoExiste: false,
       disabled: true
     };
-    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.deleteDisc = this.deleteDisc.bind(this);
     this.showDetails = this.showDetails.bind(this);
     this.Auth = new AuthService();
@@ -156,6 +157,40 @@ class Disciplinas extends React.Component {
             }))
             this.handleClose();
             alert("Disciplina "+disciplina.codigo+" criada com sucesso!"); 
+          }
+        });                         
+      }
+    }
+  };
+
+  searchDisc = () => {
+    if (!this.Auth.loggedIn()) {
+      this.props.history.replace('/login')
+    }
+    else {
+      let disciplina = this.state.newDisc;
+      
+      let codeNull = (disciplina.codigo === "");
+
+      if (codeNull) {
+        let alertString = "O campo seguinte não pode ser deixado em branco: \n"
+        alertString += "Código da Disciplina";
+        alert(alertString);
+      } else {
+        fetch(API + DISC_JUPITER_QUERY + "?sigla="+disciplina.codigo, {
+          headers:{
+            'Authorization': 'Bearer ' + this.Auth.getToken()
+          }
+        })    
+        .then(response => response.json())
+        .then(data => {
+          let nomeNull = (data.nome === "");
+          if (nomeNull) {
+            let alertString = "Disciplina " + data.codigo + " não encontrada no sistema Júpiter: \n"
+            alertString += "Certifique-se de que o código está correto";
+            alert(alertString);
+          } else {
+            this.setState({newDisc: data});
           }
         });                         
       }
@@ -341,6 +376,7 @@ class Disciplinas extends React.Component {
           handleClose={this.handleClose} 
           handleInputChange={this.handleInputChange}
           createDisc={this.createDisc}
+          searchDisc={this.searchDisc}
           open={this.state.open}
           preRequisitos={this.state.preRequisitos}
           handleChangeMultiSel={this.handleChangeMultiSel}
