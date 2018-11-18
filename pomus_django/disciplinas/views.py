@@ -3,6 +3,9 @@ from rest_framework import viewsets, generics
 from .models import Disciplina, Topico, Arquivo, Comentario, Resposta
 from .serializers import DisciplinaSerializer, TopicoSerializer, ArquivoSerializer, ComentarioSerializer, RespostaSerializer
 
+import urllib3
+from lxml import html
+
 class DisciplinaView(viewsets.ModelViewSet):
     queryset = Disciplina.objects.all()
     serializer_class = DisciplinaSerializer
@@ -19,7 +22,7 @@ class DisciplinaOneView(generics.RetrieveAPIView):
         sigla = self.request.query_params.get('sigla', None)
         disciplina = Disciplina()
         if sigla is not None:
-            disciplina = queryset.get(codigo=sigla)
+            disciplina = getDisciplinaDoJupiter(sigla)
         return disciplina
 
 class TopicoView(viewsets.ModelViewSet):
@@ -93,3 +96,67 @@ class RespostaListView(generics.ListAPIView):
         if comentario is not None:
             queryset = queryset.filter(comentario_pai=comentario)
         return queryset
+
+def getDisciplinaDoJupiter(sigla):
+    disciplina = Disciplina(codigo=sigla)
+
+    # url
+    quote_page = 'https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis='+sigla
+    print(quote_page)
+
+    http = urllib3.PoolManager()
+
+    # pega o html da pagina
+    page = http.request('GET', quote_page)
+    # print("\nHTML:\n",page)
+
+    # parse the html
+    lmx = html.fromstring(page.data)
+    # print("\nHTML parsed:\n",lmx)
+    
+    #Pega o cabeçalho
+    headerElement = lmx.xpath("//div[@id='my_web_cabecalho']")
+    headerText = headerElement[0].text.strip()
+
+    if(headerText == "Informações da Disciplina"):
+
+        # Pega o objetivo
+        elementoObjetivo = lmx.xpath('//td//table[5]//tr[2]//span')
+        objetivoDisciplina = elementoObjetivo[0].text.strip() # strip() is used to remove starting and trailing
+
+        # print("\nObjetivo:\n",objetivoDisciplina)
+
+        # Pega o programa resumido
+        n = 7
+        elementoProgramaTitulo = lmx.xpath('//td//table['+str(n)+']//tr[1]//span//b')
+
+        titulo = elementoProgramaTitulo[0].text.strip() # strip() is used to remove starting and trailing
+
+        if titulo != "Programa Resumido":   # Não tem professores
+            n = 6
+
+        elementoPrograma = lmx.xpath('//td//table['+str(n)+']//tr[2]//span')
+        programaDisciplina = elementoPrograma[0].text.strip() # strip() is used to remove starting and trailing
+        # print("\nPrograma Resumido:\n",programaDisciplina)
+
+        # Pega o credito aula
+        elementoCreditoAula = lmx.xpath('//td//table[4]//tr[1]//td[2]//span')
+        creditoAula = elementoCreditoAula[0].text.strip() # strip() is used to remove starting and trailing
+        # print("\nCréditos Aula:",creditoAula)
+
+        # Pega o credito trabalho
+        elementoCreditoTrabalho = lmx.xpath('//td//table[4]//tr[2]//td[2]//span')
+        creditoTrabalho = elementoCreditoTrabalho[0].text.strip() # strip() is used to remove starting and trailing
+        # print("\nCréditos Trabalho:",creditoTrabalho)
+
+        # Pega o nome da disciplina
+        elementoNome = lmx.xpath('//td//table[3]//tr[5]//b')
+        nomeDisciplina = elementoNome[0].text.strip() # strip() is used to remove starting and trailing
+        nomeDisciplina = nomeDisciplina[12:] # Codigo - nome
+        nomeDisciplina = nomeDisciplina[10:] # nome (supondo q toda disciplina - até as puramente numericas - tem codigo c 7 digitos)
+        print("\nDisciplina:",nomeDisciplina)
+
+        disciplina = Disciplina(codigo=sigla, nome=nomeDisciplina, creditosA=creditoAula, creditosT=creditoTrabalho, objetivos=objetivoDisciplina, programa=programaDisciplina)
+    
+    print(disciplina)
+    return disciplina
