@@ -18,4 +18,5 @@ urlpatterns = [
   path('arquivos_topic/', views.ArquivoListView.as_view()),
   path('comentarios_topic/', views.ComentarioListView.as_view()),
   path('respostas_comment/', views.RespostaListView.as_view()),
+  path('disciplina_jupiter/', views.DisciplinaOneView.as_view()),
 ]
