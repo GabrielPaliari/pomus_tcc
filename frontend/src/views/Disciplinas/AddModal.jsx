@@ -31,8 +31,16 @@ const styles = theme => ({
     overflow: "auto"
   },
   createButton: {
-    marginLeft: 260,
-  }  
+    marginLeft: 80,
+  },
+  searchButton: {
+    backgroundColor: "#FCB421",
+    color: "#1094AB",
+    fontWeight: "bold",
+  },
+  buttonsLine: {
+    flexDirection: 'row',
+  }
 });
 
 const theme = createMuiTheme({
@@ -172,8 +180,10 @@ class AddModal extends React.Component {
               preRequisitos={this.props.preRequisitos} 
               disciplinas={this.props.disciplinas}
               handleChange={this.props.handleChangeMultiSel}/>
-            <Button onClick={this.props.createDisc} className={classes.createButton} type="button" color="success">Pesquisar Disciplina</Button>            
-            <Button onClick={this.props.createDisc} className={classes.createButton} type="button" color="success">Criar Disciplina</Button>            
+            <div className={classes.buttonsLine}>
+              <Button onClick={this.props.createDisc} className={classes.searchButton} type="button">Pesquisar Disciplina</Button>
+              <Button onClick={this.props.createDisc} className={classes.createButton} type="button" color="success">Criar Disciplina</Button>
+            </div>
             </div>
             <AddModalWrapped />
           </div>
