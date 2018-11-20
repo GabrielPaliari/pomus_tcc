@@ -229,7 +229,7 @@ class LoginPage extends React.Component {
                       open={this.state.snackOpen} 
                       handleClick={this.handleSnackOpen} 
                       handleClose={this.handleSnackClose}
-                      message={"Usuário criado e link de confirmação enviado para o seu Email"}/>
+                      message={"Usuário criado com sucesso!"}/>
                     <CardBody>
                       <TextField
                         model="username"
