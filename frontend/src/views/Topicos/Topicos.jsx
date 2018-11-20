@@ -85,14 +85,20 @@ class Topicos extends React.Component {
       this.props.history.replace('/login')
     }
     else {
-      const url = API + DISC_QUERY + this.props.search.slice(-1) + '/';
+      console.log(this.props.search);
+      const discId = this.props.search.split("=")[1];
+      console.log(discId); 
+      const url = API + DISC_QUERY + discId + '/';
       fetch(url, {
         headers: {
           'Authorization': 'Bearer ' + this.Auth.getToken()
         }
       })
         .then(response => response.json())
-        .then(data => this.setState({ discPai: data }));
+        .then(data => {
+          this.setState({ discPai: data })
+          console.log(data);
+        });         
     }
   };
 
