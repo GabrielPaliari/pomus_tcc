@@ -31,7 +31,7 @@ class TopicoView(viewsets.ModelViewSet):
     queryset = Topico.objects.all()
     serializer_class = TopicoSerializer
     filter_backends = (filters.SearchFilter,)
-    search_fields = ['titulo', 'explicacao']
+    search_fields = ['titulo', 'explicacao', 'criado_por__username']
 
 class TopicoListView(generics.ListAPIView):
     serializer_class = TopicoSerializer
