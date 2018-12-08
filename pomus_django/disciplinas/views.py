@@ -10,7 +10,7 @@ class DisciplinaView(viewsets.ModelViewSet):
     queryset = Disciplina.objects.all()
     serializer_class = DisciplinaSerializer
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('codigo', 'nome', 'descricao')
+    search_fields = ['codigo', 'nome', 'descricao']
 
 class DisciplinaOneView(generics.RetrieveAPIView):
     serializer_class = DisciplinaSerializer
@@ -31,7 +31,7 @@ class TopicoView(viewsets.ModelViewSet):
     queryset = Topico.objects.all()
     serializer_class = TopicoSerializer
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('titulo', 'explicacao')
+    search_fields = ['titulo', 'explicacao']
 
 class TopicoListView(generics.ListAPIView):
     serializer_class = TopicoSerializer
@@ -68,6 +68,8 @@ class ArquivoListView(generics.ListAPIView):
 class ComentarioView(viewsets.ModelViewSet):
     queryset = Comentario.objects.all()
     serializer_class = ComentarioSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['texto']
 
 class ComentarioListView(generics.ListAPIView):
     serializer_class = ComentarioSerializer
