@@ -30,6 +30,8 @@ class DisciplinaOneView(generics.RetrieveAPIView):
 class TopicoView(viewsets.ModelViewSet):
     queryset = Topico.objects.all()
     serializer_class = TopicoSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('titulo', 'explicacao')
 
 class TopicoListView(generics.ListAPIView):
     serializer_class = TopicoSerializer
