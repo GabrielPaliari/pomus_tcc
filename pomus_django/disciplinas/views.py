@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics,  filters
 from .models import Disciplina, Topico, Arquivo, Comentario, Resposta
 from .serializers import DisciplinaSerializer, TopicoSerializer, ArquivoSerializer, ComentarioSerializer, RespostaSerializer
 
@@ -9,6 +9,8 @@ from lxml import html
 class DisciplinaView(viewsets.ModelViewSet):
     queryset = Disciplina.objects.all()
     serializer_class = DisciplinaSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('codigo', 'nome', 'descricao')
 
 class DisciplinaOneView(generics.RetrieveAPIView):
     serializer_class = DisciplinaSerializer
