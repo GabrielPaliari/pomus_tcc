@@ -88,6 +88,8 @@ class ComentarioListView(generics.ListAPIView):
 class RespostaView(viewsets.ModelViewSet):
     queryset = Resposta.objects.all()
     serializer_class = RespostaSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['texto']
 
 class RespostaListView(generics.ListAPIView):
     serializer_class = RespostaSerializer
