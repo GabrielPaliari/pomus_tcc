@@ -60,8 +60,8 @@ class LoginPage extends React.Component {
     this.handleContinuousChange = this.handleContinuousChange.bind(this);
     this.back = this.back.bind(this);
     this.Auth = new AuthService();
-    // this.domain = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
-    this.domain = 'http://localhost:8000/api/';
+    this.domain = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
+    // this.domain = 'http://localhost:8000/api/';
   }
   componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
