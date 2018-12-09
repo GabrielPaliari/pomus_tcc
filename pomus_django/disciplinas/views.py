@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics,  filters
 from .models import Disciplina, Topico, Arquivo, Comentario, Resposta
 from .serializers import DisciplinaSerializer, TopicoSerializer, ArquivoSerializer, ComentarioSerializer, RespostaSerializer
 
@@ -9,6 +9,8 @@ from lxml import html
 class DisciplinaView(viewsets.ModelViewSet):
     queryset = Disciplina.objects.all()
     serializer_class = DisciplinaSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['codigo', 'nome', 'descricao']
 
 class DisciplinaOneView(generics.RetrieveAPIView):
     serializer_class = DisciplinaSerializer
@@ -28,6 +30,8 @@ class DisciplinaOneView(generics.RetrieveAPIView):
 class TopicoView(viewsets.ModelViewSet):
     queryset = Topico.objects.all()
     serializer_class = TopicoSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['titulo', 'explicacao']
 
 class TopicoListView(generics.ListAPIView):
     serializer_class = TopicoSerializer
@@ -64,6 +68,8 @@ class ArquivoListView(generics.ListAPIView):
 class ComentarioView(viewsets.ModelViewSet):
     queryset = Comentario.objects.all()
     serializer_class = ComentarioSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['texto']
 
 class ComentarioListView(generics.ListAPIView):
     serializer_class = ComentarioSerializer
@@ -82,6 +88,8 @@ class ComentarioListView(generics.ListAPIView):
 class RespostaView(viewsets.ModelViewSet):
     queryset = Resposta.objects.all()
     serializer_class = RespostaSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['texto']
 
 class RespostaListView(generics.ListAPIView):
     serializer_class = RespostaSerializer

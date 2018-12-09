@@ -3,7 +3,8 @@ import AuthService from './AuthService';
 
 export default function withAuth(AuthComponent) {
   const Auth = new AuthService();
-  const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
+  // const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
+  const API = 'http://localhost:8000/api/';
 //   const DISC_QUERY = 'disciplinas/';
   const USER_QUERY = 'usuarios/';
 
