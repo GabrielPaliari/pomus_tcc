@@ -3,7 +3,6 @@ import AuthService from 'views/Components/AuthService';
 import withAuth from 'views/Components/withAuth';
 import Disciplinas from "views/Disciplinas/Disciplinas.jsx";
 import UsuarioDisciplinas from "views/UsuarioDisciplinas/UsuarioDisciplinas.jsx";
-import ProfilePage from "views/ProfilePage/ProfilePage.jsx";
 import Topicos from "views/Topicos/Topicos.jsx";
 import Forum from "views/Forum/Forum.jsx";
 
@@ -12,16 +11,15 @@ import classNames from "classnames";
 import List from "material-ui/List";
 import ListItem from "material-ui/List/ListItem";
 import Header from "components/Header/Header.jsx";
-// import CustomInput from "components/CustomInput/CustomInput.jsx";
-// import IconButton from "components/CustomButtons/IconButton.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-// import Search from "@material-ui/icons/Search";
-// import HomeIcon from "@material-ui/icons/Home";
-import ExitIcon from "@material-ui/icons/ExitToApp";
-import Icon from '@material-ui/core/Icon';
+
+import Search from "views/Components/Search/Search.jsx";
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Settings from "@material-ui/icons/Settings";
+import SubjectIcon from "@material-ui/icons/Subject";
+import SearchIcon from '@material-ui/icons/Search';
+import ExitIcon from "@material-ui/icons/ExitToApp";
 
 import appStyle from "assets/jss/material-kit-react/views/app.jsx";
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -64,8 +62,19 @@ class App extends Component {
                         className={classes.navLink}
                         color="transparent"
                       >
+                      <Link to={'/app/search'}  className={classes.link}>
+                        <SearchIcon className={classes.icons}></SearchIcon>
+                          Busca
+                      </Link>
+                      </Button>
+                    </ListItem>                    
+                    <ListItem className={classes.listItem}>
+                      <Button
+                        className={classes.navLink}
+                        color="transparent"
+                      >
                       <Link to={'/app/disciplinas'}  className={classes.link}>
-                        <Icon  className={classes.icons}>subject_icon</Icon>
+                        <SubjectIcon  className={classes.icons}>subject_icon</SubjectIcon>
                           Disciplinas
                       </Link>
                       </Button>
@@ -110,6 +119,9 @@ class App extends Component {
             />
             <div className={classNames(classes.main, classes.mainRaised)}>
               <div className={classes.container}>
+                <Route path='/app/search' render={() => (
+                  <Search user={user} history={this.props.history}/>
+                  )}/>                         
                 <Route path='/app/disciplinas' render={() => (
                   <UsuarioDisciplinas user={user} history={this.props.history}/>
                   )}/>                         

@@ -13,13 +13,12 @@ import Divider from '@material-ui/core/Divider';
 
 import UsuarioAddModal from "views/UsuarioDisciplinas/UsuarioAddModal.jsx";
 import DetailsModal from "views/Disciplinas/DetailsModal.jsx";
-// import EditModal from "views/Disciplinas/EditModal.jsx";
 import AuthService from "views/Components/AuthService.jsx";
 
 import Tooltip from '@material-ui/core/Tooltip';
 
-const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
-// const API = 'http://localhost:8000/api/';
+const API = 'http://localhost:8000/api/';
+
 const DISC_QUERY = 'disciplinas/';
 const USER_QUERY = 'usuarios/';
 

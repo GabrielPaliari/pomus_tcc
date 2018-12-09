@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
@@ -100,7 +99,7 @@ const styles2 = theme => ({
 
 class CustomSnack extends React.Component {  
   render() {
-    const { classes, position } = this.props;
+    const { position } = this.props;
 
     return (
       <div>

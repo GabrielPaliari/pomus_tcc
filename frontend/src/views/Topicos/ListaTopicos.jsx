@@ -6,10 +6,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-// import Button from '@material-ui/core/Button';
+
 import Icon from '@material-ui/core/Icon';
-// import DeleteIcon from '@material-ui/icons/Delete';
-// import Tooltip from '@material-ui/core/Tooltip';
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 

@@ -13,7 +13,6 @@ import Footer from "components/Footer/Footer.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import IconButton from "components/CustomButtons/IconButton.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -60,7 +59,7 @@ class LoginPage extends React.Component {
     this.handleContinuousChange = this.handleContinuousChange.bind(this);
     this.back = this.back.bind(this);
     this.Auth = new AuthService();
-    this.domain = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
+    this.domain = 'http://localhost:8000/api/';
     // this.domain = 'http://localhost:8000/api/';
   }
   componentDidMount() {

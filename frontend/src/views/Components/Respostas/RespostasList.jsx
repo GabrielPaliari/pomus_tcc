@@ -6,8 +6,6 @@ import respostasStyle from "assets/jss/components/respostasStyle.jsx";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
 
 import AlertDialog from 'views/Components/Alerts/AlertDialog.jsx';
@@ -16,7 +14,7 @@ import Textarea from 'react-textarea-autosize';
 
 import AuthService from "views/Components/AuthService.jsx";
 
-const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
+const API = 'http://localhost:8000/api/';
 // const API = 'http://localhost:8000/api/';
 const RESPOSTAS_COMMENT = 'respostas_comment/';
 const RESPOSTAS = 'respostas/';
