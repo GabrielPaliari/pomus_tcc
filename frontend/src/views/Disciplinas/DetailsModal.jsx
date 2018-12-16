@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-// import TextField from '@material-ui/core/TextField';
-// import Button from 'components/CustomButtons/Button.jsx';
 import green from '@material-ui/core/colors/green';
 
 import Divider from '@material-ui/core/Divider';

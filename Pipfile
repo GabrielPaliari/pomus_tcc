@@ -15,6 +15,7 @@ djangorestframework-jwt = "*"
 "boto3" = "*"
 python-decouple = "*"
 pymysql = "*"
+lxml = "*"
 
 [dev-packages]
 
