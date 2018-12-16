@@ -52,7 +52,7 @@ class App extends Component {
             <Header
               color="info"
               absolute
-              brand={"Pomus - Cultive o Conhecimento" }
+              brand={"Pomus" }
               {...rest}
               rightLinks={
                 
