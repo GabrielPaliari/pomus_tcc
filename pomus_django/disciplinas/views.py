@@ -110,7 +110,7 @@ def getDisciplinaDoJupiter(sigla):
 
     # url
     quote_page = 'https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis='+sigla
-    print(quote_page)
+    # print(quote_page)
 
     http = urllib3.PoolManager()
 
@@ -162,9 +162,9 @@ def getDisciplinaDoJupiter(sigla):
         nomeDisciplina = elementoNome[0].text.strip() # strip() is used to remove starting and trailing
         nomeDisciplina = nomeDisciplina[12:] # Codigo - nome
         nomeDisciplina = nomeDisciplina[10:] # nome (supondo q toda disciplina - até as puramente numericas - tem codigo c 7 digitos)
-        print("\nDisciplina:",nomeDisciplina)
+        # print("\nDisciplina:",nomeDisciplina)
 
         disciplina = Disciplina(codigo=sigla, nome=nomeDisciplina, creditosA=creditoAula, creditosT=creditoTrabalho, objetivos=objetivoDisciplina, programa=programaDisciplina)
     
-    print(disciplina)
+    # print(disciplina)
     return disciplina
