@@ -17,7 +17,6 @@ import Textarea from 'react-textarea-autosize';
 import AuthService from "views/Components/AuthService.jsx";
 
 const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
-// const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const COMENTARIO = 'comentarios/';
 const COMENTARIO_TOPICO = 'comentarios_topic/';
 

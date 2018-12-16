@@ -18,8 +18,6 @@ class ListaDisciplinas extends React.Component {
     }
   }
   render() {
-    // const { classes, ...rest } = this.props;
-    //  console.log(this.props.disciplinas);
     return (
         <List className="DiscList">
           {this.props.disciplinas.map(disc =>

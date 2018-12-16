@@ -24,7 +24,6 @@ import AuthService from "views/Components/AuthService.jsx";
 import CustomSnack from 'views/Components/Alerts/SnackBar.jsx';
 
 const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
-// const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const DISC_QUERY = 'disciplinas/';
 const TOPIC = 'topicos/';
 const FILES = 'arquivos/';
