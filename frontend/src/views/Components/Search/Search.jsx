@@ -21,7 +21,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { MuiThemeProvider } from "@material-ui/core";
 import { FormControl } from "material-ui";
 
-const API = 'http://localhost:8000/api/';
+const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const SEARCH_PREFIX = '?search=';
 
 const DISC = 'disciplinas/';

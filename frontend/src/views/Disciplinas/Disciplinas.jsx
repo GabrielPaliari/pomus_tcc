@@ -16,7 +16,7 @@ import DetailsModal from "views/Disciplinas/DetailsModal.jsx";
 import EditModal from "views/Disciplinas/EditModal.jsx";
 import AuthService from "views/Components/AuthService.jsx";
 
-const API = 'http://localhost:8000/api/';
+const API = 'http://ec2-18-231-198-111.sa-east-1.compute.amazonaws.com:8000/api/';
 const DISC_QUERY = 'disciplinas/';
 const DISC_JUPITER_QUERY = 'disciplina_jupiter/';
 const Auth = new AuthService(API);
